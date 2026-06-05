@@ -1,0 +1,20 @@
+'Log files:
+D:\RECM\crmeb_java\app\.npm-cache\_logs\2026-05-28T06_25_24_765Z-debug-0.log
+
+# npm resolution error report
+
+While resolving: crmeb-app@1.0.0
+Found: webpack@4.47.0
+node_modules/webpack
+  dev webpack@"^4.0.0" from the root project
+
+Could not resolve dependency:
+peer webpack@"^5.1.0" from copy-webpack-plugin@14.0.0
+node_modules/copy-webpack-plugin
+  peer copy-webpack-plugin@">=5" from @dcloudio/vue-cli-plugin-uni@2.0.2-5000720260410001
+  node_modules/@dcloudio/vue-cli-plugin-uni
+    dev @dcloudio/vue-cli-plugin-uni@"*" from the root project
+
+Fix the upstream dependency conflict, or retry
+this command with --force or --legacy-peer-deps
+to accept an incorrect (and potentially broken) dependency resolution.

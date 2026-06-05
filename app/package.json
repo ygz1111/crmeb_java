@@ -1,0 +1,27 @@
+{
+  "name": "crmeb-app",
+  "version": "1.0.0",
+  "scripts": {
+    "dev:h5": "uniapp-cli serve",
+    "build:h5": "uniapp-cli build"
+  },
+  "dependencies": {
+    "@dcloudio/uni-app": "*",
+    "@dcloudio/uni-cli-i18n": "^2.0.2-5000720260410001",
+    "@dcloudio/uni-h5": "*",
+    "@dcloudio/uni-i18n": "*",
+    "@dcloudio/uni-shared": "*",
+    "@dcloudio/uni-stat": "*",
+    "mp-html": "^2.5.0",
+    "vue": "^2.6.11",
+    "vuex": "^3.6.2"
+  },
+  "devDependencies": {
+    "@dcloudio/uni-cli-shared": "*",
+    "@dcloudio/uni-template-compiler": "*",
+    "@dcloudio/vue-cli-plugin-uni": "*",
+    "@vue/cli-service": "^4.5.0",
+    "vue-template-compiler": "^2.6.11",
+    "webpack": "^4.0.0"
+  }
+}

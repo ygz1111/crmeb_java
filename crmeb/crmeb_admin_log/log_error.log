@@ -1,0 +1,141 @@
+{
+                    "app": "Crmeb",
+                    "timestamp":"2026-06-01 17:00:00.303",
+                    "level": "ERROR",
+                    "thread": "task-executor-15",
+                    "class": "c.z.s.service.impl.OrderTaskServiceImpl",
+                    "message": "订单自动完成：订单记录最后一条不是收货状态，orderId = 35" }
+                    
+{
+                    "app": "Crmeb",
+                    "timestamp":"2026-06-01 19:40:17.780",
+                    "level": "ERROR",
+                    "thread": "main",
+                    "class": "o.s.b.d.LoggingFailureAnalysisReporter",
+                    "message": "
+
+***************************
+APPLICATION FAILED TO START
+***************************
+
+Description:
+
+Web server failed to start. Port 20500 was already in use.
+
+Action:
+
+Identify and stop the process that's listening on port 20500 or configure this application to listen on another port.
+" }
+                    
+{
+                    "app": "Crmeb",
+                    "timestamp":"2026-06-01 22:49:32.828",
+                    "level": "ERROR",
+                    "thread": "http-nio-20500-exec-25",
+                    "class": "com.zbkj.service.util.OnePassUtil",
+                    "message": "一号通平台接口接口请求失败:accessKey或者secretKey不正确" }
+                    
+{
+                    "app": "Crmeb",
+                    "timestamp":"2026-06-01 22:49:36.872",
+                    "level": "ERROR",
+                    "thread": "http-nio-20500-exec-11",
+                    "class": "com.zbkj.service.util.OnePassUtil",
+                    "message": "一号通平台接口接口请求失败:accessKey或者secretKey不正确" }
+                    
+{
+                    "app": "Crmeb",
+                    "timestamp":"2026-06-01 22:49:40.623",
+                    "level": "ERROR",
+                    "thread": "http-nio-20500-exec-28",
+                    "class": "com.zbkj.service.util.OnePassUtil",
+                    "message": "一号通平台接口接口请求失败:accessKey或者secretKey不正确" }
+                    
+{
+                    "app": "Crmeb",
+                    "timestamp":"2026-06-01 22:49:53.737",
+                    "level": "ERROR",
+                    "thread": "http-nio-20500-exec-25",
+                    "class": "c.z.s.service.impl.WechatNewServiceImpl",
+                    "message": "获取微信小程序accessToken失败：微信接口调用失败：40013invalid appid rid: 6a1d9c11-71b9ecba-311b52a6" }
+                    
+{
+                    "app": "Crmeb",
+                    "timestamp":"2026-06-01 22:49:59.486",
+                    "level": "ERROR",
+                    "thread": "http-nio-20500-exec-27",
+                    "class": "com.zbkj.service.util.OnePassUtil",
+                    "message": "一号通平台接口接口请求失败:accessKey或者secretKey不正确" }
+                    
+{
+                    "app": "Crmeb",
+                    "timestamp":"2026-06-01 22:50:06.483",
+                    "level": "ERROR",
+                    "thread": "http-nio-20500-exec-5",
+                    "class": "com.zbkj.service.util.OnePassUtil",
+                    "message": "一号通平台接口接口请求失败:accessKey或者secretKey不正确" }
+                    
+{
+                    "app": "Crmeb",
+                    "timestamp":"2026-06-01 22:50:50.381",
+                    "level": "ERROR",
+                    "thread": "http-nio-20500-exec-13",
+                    "class": "com.zbkj.service.util.OnePassUtil",
+                    "message": "一号通平台接口接口请求失败:accessKey或者secretKey不正确" }
+                    
+{
+                    "app": "Crmeb",
+                    "timestamp":"2026-06-01 22:51:25.693",
+                    "level": "ERROR",
+                    "thread": "http-nio-20500-exec-19",
+                    "class": "c.z.s.service.impl.WechatNewServiceImpl",
+                    "message": "获取微信小程序accessToken失败：微信接口调用失败：40013invalid appid rid: 6a1d9c6d-2bd21cf1-3cccba34" }
+                    
+{
+                    "app": "Crmeb",
+                    "timestamp":"2026-06-01 22:54:35.070",
+                    "level": "ERROR",
+                    "thread": "http-nio-20500-exec-6",
+                    "class": "com.zbkj.service.util.OnePassUtil",
+                    "message": "一号通平台接口接口请求失败:accessKey或者secretKey不正确" }
+                    
+{
+                    "app": "Crmeb",
+                    "timestamp":"2026-06-01 22:57:41.356",
+                    "level": "ERROR",
+                    "thread": "http-nio-20500-exec-2",
+                    "class": "com.zbkj.service.util.OnePassUtil",
+                    "message": "一号通平台接口接口请求失败:accessKey或者secretKey不正确" }
+                    
+{
+                    "app": "Crmeb",
+                    "timestamp":"2026-06-01 22:57:55.600",
+                    "level": "ERROR",
+                    "thread": "http-nio-20500-exec-10",
+                    "class": "c.z.s.service.impl.WechatNewServiceImpl",
+                    "message": "获取微信小程序accessToken失败：微信接口调用失败：40013invalid appid rid: 6a1d9df3-46a73d03-7932cab2" }
+                    
+{
+                    "app": "Crmeb",
+                    "timestamp":"2026-06-01 22:57:59.884",
+                    "level": "ERROR",
+                    "thread": "http-nio-20500-exec-8",
+                    "class": "c.z.s.service.impl.WechatNewServiceImpl",
+                    "message": "获取微信小程序accessToken失败：微信接口调用失败：40013invalid appid rid: 6a1d9df7-113b7eab-666ba39e" }
+                    
+{
+                    "app": "Crmeb",
+                    "timestamp":"2026-06-01 23:00:00.177",
+                    "level": "ERROR",
+                    "thread": "task-executor-19",
+                    "class": "c.z.s.service.impl.OrderTaskServiceImpl",
+                    "message": "订单自动完成：订单记录最后一条不是收货状态，orderId = 35" }
+                    
+{
+                    "app": "Crmeb",
+                    "timestamp":"2026-06-01 23:16:56.864",
+                    "level": "ERROR",
+                    "thread": "http-nio-20500-exec-17",
+                    "class": "com.zbkj.service.util.OnePassUtil",
+                    "message": "一号通平台接口接口请求失败:accessKey或者secretKey不正确" }
+                    
