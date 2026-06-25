@@ -1,0 +1,4 @@
+﻿
+> crmeb-app@1.0.0 build:h5
+> uniapp-cli build
+

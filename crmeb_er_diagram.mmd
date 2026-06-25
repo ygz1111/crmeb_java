@@ -1,0 +1,921 @@
+erDiagram
+
+    %% User
+    eb_user {
+        int uid PK
+        varchar account
+        varchar pwd
+        varchar real_name
+        varchar birthday
+        varchar card_id
+        varchar mark
+        int partner_id
+        varchar group_id
+        varchar tag_id
+    }
+
+    eb_user_address {
+        int id PK
+        int uid
+        varchar real_name
+        varchar phone
+        varchar province
+        varchar city
+        int city_id
+        varchar district
+        varchar detail
+        int post_code
+    }
+
+    eb_user_bill {
+        int id PK
+        int uid
+        varchar link_id
+        int pm
+        varchar title
+        varchar category
+        varchar type
+        decimal number
+        decimal balance
+        varchar mark
+    }
+
+    eb_user_brokerage_record {
+        int id PK
+        int uid
+        varchar link_id
+        varchar link_type
+        int type
+        varchar title
+        decimal price
+        decimal balance
+        varchar mark
+        int status
+    }
+
+    eb_user_experience_record {
+        int id PK
+        int uid
+        varchar link_id
+        varchar link_type
+        int type
+        varchar title
+        int experience
+        int balance
+        varchar mark
+        int status
+    }
+
+    eb_user_extract {
+        int id PK
+        int uid
+        varchar real_name
+        varchar extract_type
+        varchar bank_code
+        varchar bank_address
+        varchar alipay_code
+        decimal extract_price
+        varchar mark
+        decimal balance
+    }
+
+    eb_user_group {
+        int id PK
+        varchar group_name
+        string eb_user_group
+        string eb_user_group
+        string eb_user_group
+    }
+
+    eb_user_integral_record {
+        int id PK
+        int uid
+        varchar link_id
+        varchar link_type
+        int type
+        varchar title
+        int integral
+        int balance
+        varchar mark
+        int status
+    }
+
+    eb_user_level {
+        int id PK
+        int uid
+        int level_id
+        int grade
+        int status
+        varchar mark
+        int remind
+        int is_del
+        int discount
+        datetime create_time
+    }
+
+    eb_user_recharge {
+        int id PK
+        int uid
+        varchar order_id
+        decimal price
+        decimal give_price
+        varchar recharge_type
+        int paid
+        datetime pay_time
+        datetime create_time
+        decimal refund_price
+    }
+
+    eb_user_sign {
+        int id PK
+        int uid
+        varchar title
+        int number
+        int balance
+        int type
+        datetime create_day
+        datetime create_time
+        string eb_user_sign
+        string eb_user_sign
+    }
+
+    eb_user_tag {
+        int id PK
+        varchar name
+        string eb_user_tag
+        string eb_user_tag
+        string eb_user_tag
+        string eb_user_tag
+        string eb_user_tag
+    }
+
+    eb_user_token {
+        int id PK
+        int uid
+        varchar token
+        int type
+        datetime create_time
+        datetime expires_time
+        varchar login_ip
+    }
+
+    eb_user_visit_record {
+        int id PK
+        varchar date
+        int uid
+        int visit_type
+    }
+
+    %% Product
+    eb_store_product {
+        int id PK
+        int mer_id
+        varchar image
+        varchar slider_image
+        varchar store_name
+        varchar store_info
+        varchar keyword
+        varchar bar_code
+        varchar cate_id
+        decimal price
+    }
+
+    eb_store_product_attr {
+        int id PK
+        int product_id
+        varchar attr_name
+        varchar attr_values
+        int type
+        int is_del
+        string eb_store_product_attr
+        string eb_store_product_attr
+        string eb_store_product_attr
+        string eb_store_product_attr
+    }
+
+    eb_store_product_attr_result {
+        int id PK
+        int product_id
+        text result
+        int change_time
+        int type
+    }
+
+    eb_store_product_attr_value {
+        int id PK
+        int product_id
+        varchar suk
+        int stock
+        int sales
+        decimal price
+        varchar image
+        char unique
+        decimal cost
+        varchar bar_code
+    }
+
+    eb_store_product_cate {
+        int id PK
+        int product_id
+        int cate_id
+        int add_time
+    }
+
+    eb_store_product_coupon {
+        int id PK
+        int product_id
+        int issue_coupon_id
+        int add_time
+    }
+
+    eb_store_product_description {
+        int product_id
+        text description
+        int type
+        int id PK
+        string eb_store_product_description
+        string eb_store_product_description
+        string eb_store_product_description
+        string eb_store_product_description
+        string eb_store_product_description
+        string eb_store_product_description
+    }
+
+    eb_store_product_log {
+        int id PK
+        varchar type
+        int product_id
+        int uid
+        int visit_num
+        int cart_num
+        int order_num
+        int pay_num
+        decimal pay_price
+        decimal cost_price
+    }
+
+    eb_store_product_relation {
+        int id PK
+        int uid
+        int product_id
+        varchar type
+        varchar category
+        datetime create_time
+        datetime update_time
+    }
+
+    eb_store_product_reply {
+        int id PK
+        int uid
+        int oid
+        varchar unique
+        int product_id
+        varchar reply_type
+        int product_score
+        int service_score
+        varchar comment
+        text pics
+    }
+
+    eb_store_product_rule {
+        int id PK
+        varchar rule_name
+        text rule_value
+        string eb_store_product_rule
+    }
+
+    eb_store_cart {
+        bigint id PK
+        int uid
+        varchar type
+        int product_id
+        varchar product_attr_unique
+        int cart_num
+        int is_new
+        int combination_id
+        int seckill_id
+        int bargain_id
+    }
+
+    %% Marketing
+    eb_store_bargain {
+        int id PK
+        int product_id
+        varchar title
+        varchar image
+        varchar unit_name
+        int stock
+        int sales
+        varchar images
+        bigint start_time
+        bigint stop_time
+    }
+
+    eb_store_bargain_user {
+        int id PK
+        int uid
+        int bargain_id
+        decimal bargain_price_min
+        decimal bargain_price
+        decimal price
+        int status
+        bigint add_time
+        int is_del
+        string eb_store_bargain_user
+    }
+
+    eb_store_bargain_user_help {
+        int id PK
+        int uid
+        int bargain_id
+        int bargain_user_id
+        decimal price
+        bigint add_time
+        string eb_store_bargain_user_help
+        string eb_store_bargain_user_help
+    }
+
+    eb_store_combination {
+        int id PK
+        int product_id
+        int mer_id
+        varchar image
+        varchar images
+        varchar title
+        varchar attr
+        int people
+        varchar info
+        decimal price
+    }
+
+    eb_store_pink {
+        int id PK
+        int uid
+        varchar order_id
+        int order_id_key
+        int total_num
+        decimal total_price
+        int cid
+        int pid
+        int people
+        decimal price
+    }
+
+    eb_store_seckill {
+        int id PK
+        int product_id
+        varchar image
+        varchar images
+        varchar title
+        varchar info
+        decimal price
+        decimal cost
+        decimal ot_price
+        decimal give_integral
+    }
+
+    eb_store_seckill_manger {
+        int id PK
+        varchar name
+        int start_time
+        int end_time
+        text img
+        text silder_imgs
+        int sort
+        varchar status
+        datetime create_time
+        datetime update_time
+    }
+
+    eb_activity_style {
+        int id PK
+        varchar name
+        string type
+        datetime starttime
+        datetime endtime
+        varchar style
+        string status
+        int method
+        varchar products
+        datetime createtime
+    }
+
+    %% Order
+    eb_store_order {
+        int id PK
+        varchar order_id
+        int uid
+        varchar real_name
+        varchar user_phone
+        varchar user_address
+        decimal freight_price
+        int total_num
+        decimal total_price
+        decimal total_postage
+    }
+
+    eb_store_order_info {
+        int id PK
+        int order_id
+        int product_id
+        text info
+        char unique
+        datetime create_time
+        datetime update_time
+        varchar order_no
+        varchar product_name
+        int attr_value_id
+    }
+
+    eb_store_order_status {
+        int oid
+        varchar change_type
+        varchar change_message
+        datetime create_time
+        string eb_store_order_status
+        string eb_store_order_status
+        string eb_store_order_status
+        string eb_store_order_status
+        string eb_store_order_status
+        string eb_store_order_status
+    }
+
+    %% Coupon
+    eb_store_coupon {
+        int id PK
+        varchar name
+        decimal money
+        int is_limited
+        int total
+        int last_total
+        int use_type
+        varchar primary_key
+        decimal min_price
+        datetime receive_start_time
+    }
+
+    eb_store_coupon_user {
+        int id PK
+        int coupon_id
+        int cid
+        int uid
+        varchar name
+        decimal money
+        decimal min_price
+        varchar type
+        int status
+        datetime create_time
+    }
+
+    %% Shipping
+    eb_shipping_templates {
+        int id PK
+        varchar name
+        int type
+        int appoint
+        int sort
+        datetime create_time
+        datetime update_time
+        string eb_shipping_templates
+        string eb_shipping_templates
+    }
+
+    eb_shipping_templates_free {
+        int id PK
+        int temp_id
+        int city_id
+        text title
+        decimal number
+        decimal price
+        int type
+        varchar uniqid
+        int status
+        datetime create_time
+    }
+
+    eb_shipping_templates_region {
+        int id PK
+        int temp_id
+        int city_id
+        text title
+        decimal first
+        decimal first_price
+        decimal renewal
+        decimal renewal_price
+        int type
+        varchar uniqid
+    }
+
+    eb_express {
+        int id PK
+        varchar code
+        varchar name
+        int partner_id
+        int partner_key
+        int net
+        varchar account
+        varchar password
+        varchar net_name
+        int sort
+    }
+
+    %% WeChat
+    eb_wechat_callback {
+        int id PK
+        varchar to_user_name
+        varchar from_user_name
+        bigint create_time
+        varchar msg_type
+        varchar event
+        text content
+        datetime add_time
+    }
+
+    eb_wechat_exceptions {
+        int id PK
+        varchar errcode
+        varchar errmsg
+        text data
+        text remark
+        datetime create_time
+        datetime update_time
+    }
+
+    eb_wechat_pay_info {
+        int id PK
+        varchar app_id
+        varchar mch_id
+        varchar device_info
+        varchar open_id
+        varchar nonce_str
+        varchar sign
+        varchar sign_type
+        varchar body
+        text detail
+    }
+
+    eb_wechat_program_my_temp {
+        int id PK
+        int tid
+        varchar title
+        varchar kid
+        varchar scene_desc
+        varchar temp_id
+        text extra
+        int status
+        varchar type
+        datetime create_time
+    }
+
+    eb_wechat_program_public_temp {
+        int id PK
+        int tid
+        varchar title
+        int type
+        int category_id
+        datetime create_time
+        datetime update_time
+        string eb_wechat_program_public_temp
+        string eb_wechat_program_public_temp
+        string eb_wechat_program_public_temp
+    }
+
+    eb_wechat_reply {
+        int id PK
+        varchar keywords
+        varchar type
+        text data
+        int status
+        datetime create_time
+        datetime update_time
+        string eb_wechat_reply
+        string eb_wechat_reply
+        string eb_wechat_reply
+    }
+
+    eb_template_message {
+        int id PK
+        int type
+        char temp_key
+        char name
+        varchar content
+        char temp_id
+        int status
+        datetime create_time
+        datetime update_time
+        string eb_template_message
+    }
+
+    %% SMS
+    eb_sms_record {
+        int id PK
+        varchar uid
+        char phone
+        text content
+        varchar add_ip
+        datetime create_time
+        varchar template
+        int resultcode
+        int record_id
+        text memo
+    }
+
+    eb_sms_template {
+        int id PK
+        varchar temp_id
+        int temp_type
+        varchar title
+        varchar type
+        varchar temp_key
+        int status
+        varchar content
+        datetime create_time
+        string eb_sms_template
+    }
+
+    %% System
+    eb_system_admin {
+        int id PK
+        varchar account
+        char pwd
+        varchar real_name
+        varchar roles
+        varchar last_ip
+        datetime update_time
+        datetime create_time
+        int login_count
+        int level
+    }
+
+    eb_system_attachment {
+        int att_id PK
+        varchar name
+        varchar att_dir
+        varchar satt_dir
+        char att_size
+        char att_type
+        int pid
+        int image_type
+        datetime create_time
+        datetime update_time
+    }
+
+    eb_system_city {
+        int id
+        int city_id
+        int level
+        int parent_id
+        varchar area_code
+        varchar name
+        varchar merger_name
+        varchar lng
+        varchar lat
+        int is_show
+    }
+
+    eb_system_config {
+        int id PK
+        varchar name
+        varchar title
+        int form_id
+        varchar value
+        int status
+        datetime create_time
+        datetime update_time
+        string eb_system_config
+        string eb_system_config
+    }
+
+    eb_system_group {
+        int id PK
+        varchar name
+        varchar info
+        int form_id
+        datetime create_time
+        datetime update_time
+        string eb_system_group
+        string eb_system_group
+        string eb_system_group
+        string eb_system_group
+    }
+
+    eb_system_group_data {
+        int id PK
+        int gid
+        text value
+        int sort
+        int status
+        datetime create_time
+        datetime update_time
+        string eb_system_group_data
+        string eb_system_group_data
+        string eb_system_group_data
+    }
+
+    eb_system_menu {
+        int id PK
+        int pid
+        varchar name
+        varchar icon
+        varchar perms
+        varchar component
+        varchar menu_type
+        int sort
+        int is_show
+        int is_delte
+    }
+
+    eb_system_notification {
+        int id PK
+        varchar mark
+        varchar type
+        varchar description
+        int is_wechat
+        int wechat_id
+        int is_routine
+        int routine_id
+        int is_sms
+        int sms_id
+    }
+
+    eb_system_role {
+        int id PK
+        varchar role_name
+        text rules
+        int level
+        int status
+        datetime create_time
+        datetime update_time
+        string eb_system_role
+        string eb_system_role
+        string eb_system_role
+    }
+
+    eb_system_role_menu {
+        int rid
+        int menu_id
+        string eb_system_role_menu
+        string eb_system_role_menu
+        string eb_system_role_menu
+        string eb_system_role_menu
+        string eb_system_role_menu
+        string eb_system_role_menu
+        string eb_system_role_menu
+        string eb_system_role_menu
+    }
+
+    eb_system_store {
+        int id PK
+        varchar name
+        varchar introduction
+        char phone
+        varchar address
+        varchar detailed_address
+        varchar image
+        char latitude
+        char longitude
+        varchar valid_time
+    }
+
+    eb_system_store_staff {
+        int id PK
+        int uid
+        varchar avatar
+        int store_id
+        varchar staff_name
+        char phone
+        int verify_status
+        int status
+        datetime create_time
+        datetime update_time
+    }
+
+    eb_system_user_level {
+        int id PK
+        varchar name
+        int experience
+        int is_show
+        int grade
+        int discount
+        varchar icon
+        int is_del
+        datetime create_time
+        datetime update_time
+    }
+
+    %% Content
+    eb_article {
+        int id PK
+        varchar cid
+        varchar title
+        varchar author
+        varchar image_input
+        varchar synopsis
+        varchar share_title
+        varchar share_synopsis
+        varchar visit
+        int sort
+    }
+
+    eb_category {
+        int id PK
+        int pid
+        varchar path
+        varchar name
+        int type
+        varchar url
+        text extra
+        int status
+        int sort
+        datetime create_time
+    }
+
+    eb_exception_log {
+        int id PK
+        varchar exp_url
+        text exp_params
+        varchar exp_type
+        varchar exp_controller
+        varchar exp_method
+        text exp_detail
+        datetime create_time
+    }
+
+    %% Relationships
+    eb_system_admin ||--o{ eb_article : "ref"
+    eb_store_product ||--o{ eb_article : "ref"
+    eb_category ||--o{ eb_page_category : "ref"
+    eb_category ||--o{ eb_page_link : "ref"
+    eb_shipping_templates ||--o{ eb_shipping_templates_free : "free"
+    eb_shipping_templates ||--o{ eb_shipping_templates_region : "region"
+    eb_user ||--o{ eb_sms_record : "ref"
+    eb_shipping_templates ||--o{ eb_sms_template : "ref"
+    eb_store_product ||--o{ eb_store_bargain : "bargain"
+    eb_shipping_templates ||--o{ eb_store_bargain : "ref"
+    eb_user ||--o{ eb_store_bargain_user : "bargain"
+    eb_store_bargain ||--o{ eb_store_bargain_user : "joiner"
+    eb_user ||--o{ eb_store_bargain_user_help : "ref"
+    eb_store_bargain ||--o{ eb_store_bargain_user_help : "ref"
+    eb_user ||--o{ eb_store_cart : "cart"
+    eb_store_product ||--o{ eb_store_cart : "cart"
+    eb_store_combination ||--o{ eb_store_cart : "ref"
+    eb_store_seckill ||--o{ eb_store_cart : "ref"
+    eb_store_bargain ||--o{ eb_store_cart : "ref"
+    eb_store_product ||--o{ eb_store_combination : "group"
+    eb_shipping_templates ||--o{ eb_store_combination : "ref"
+    eb_store_coupon ||--o{ eb_store_coupon_user : "claimed"
+    eb_user ||--o{ eb_store_coupon_user : "coupon"
+    eb_user ||--o{ eb_store_order : "order"
+    eb_store_coupon ||--o{ eb_store_order : "ref"
+    eb_store_combination ||--o{ eb_store_order : "ref"
+    eb_store_seckill ||--o{ eb_store_order : "ref"
+    eb_store_bargain ||--o{ eb_store_order : "ref"
+    eb_system_store ||--o{ eb_store_order : "store_order"
+    eb_store_order ||--o{ eb_store_order_info : "items"
+    eb_store_product ||--o{ eb_store_order_info : "in_order"
+    eb_store_order ||--o{ eb_store_order_status : "status"
+    eb_user ||--o{ eb_store_pink : "pink"
+    eb_store_order ||--o{ eb_store_pink : "ref"
+    eb_category ||--o{ eb_store_pink : "ref"
+    eb_category ||--o{ eb_store_product : "ref"
+    eb_shipping_templates ||--o{ eb_store_product : "ref"
+    eb_store_product ||--o{ eb_store_product_attr : "attr"
+    eb_store_product ||--o{ eb_store_product_attr_result : "ref"
+    eb_store_product ||--o{ eb_store_product_attr_value : "sku"
+    eb_store_product ||--o{ eb_store_product_cate : "category"
+    eb_category ||--o{ eb_store_product_cate : "ref"
+    eb_store_product ||--o{ eb_store_product_coupon : "ref"
+    eb_store_product ||--o{ eb_store_product_description : "desc"
+    eb_store_product ||--o{ eb_store_product_log : "ref"
+    eb_user ||--o{ eb_store_product_log : "ref"
+    eb_user ||--o{ eb_store_product_relation : "collect"
+    eb_store_product ||--o{ eb_store_product_relation : "fav"
+    eb_user ||--o{ eb_store_product_reply : "reply"
+    eb_store_order ||--o{ eb_store_product_reply : "ref"
+    eb_store_product ||--o{ eb_store_product_reply : "review"
+    eb_store_product ||--o{ eb_store_seckill : "seckill"
+    eb_shipping_templates ||--o{ eb_store_seckill : "ref"
+    eb_category ||--o{ eb_system_attachment : "ref"
+    eb_store_product ||--o{ eb_system_group_data : "ref"
+    eb_category ||--o{ eb_system_menu : "ref"
+    eb_system_menu ||--o{ eb_system_role_menu : "role"
+    eb_user ||--o{ eb_system_store_staff : "ref"
+    eb_system_store ||--o{ eb_system_store_staff : "staff"
+    eb_shipping_templates ||--o{ eb_template_message : "ref"
+    eb_system_group ||--o{ eb_user : "ref"
+    eb_user_tag ||--o{ eb_user : "users-tagged"
+    eb_user ||--o{ eb_user_address : "address"
+    eb_user ||--o{ eb_user_bill : "bill"
+    eb_user ||--o{ eb_user_brokerage_record : "brokerage"
+    eb_user ||--o{ eb_user_experience_record : "experience"
+    eb_user ||--o{ eb_user_extract : "withdraw"
+    eb_user ||--o{ eb_user_integral_record : "integral"
+    eb_user ||--o{ eb_user_level : "level"
+    eb_system_user_level ||--o{ eb_user_level : "ref"
+    eb_user ||--o{ eb_user_recharge : "recharge"
+    eb_store_order ||--o{ eb_user_recharge : "ref"
+    eb_user ||--o{ eb_user_sign : "sign"
+    eb_user ||--o{ eb_user_token : "token"
+    eb_user ||--o{ eb_user_visit_record : "visit"
+    eb_store_product ||--o{ eb_wechat_pay_info : "ref"
+    eb_shipping_templates ||--o{ eb_wechat_program_my_temp : "ref"

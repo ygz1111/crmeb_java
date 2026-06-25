@@ -161,63 +161,6 @@ const marketingRouter = {
         },
       ],
     },
-    {
-      path: 'atmosphere',
-      name: 'atmosphere',
-      meta: {
-        title: '活动氛围',
-        noCache: true,
-      },
-      component: () => import('@/views/marketing/atmosphere/index'),
-      children: [
-        {
-          path: 'list',
-          name: `atmosphereList`,
-          meta: {
-            title: '氛围列表',
-            noCache: true,
-          },
-          component: () => import('@/views/marketing/atmosphere/atmosphereList/list'),
-        },
-        {
-          path: 'add/:id?',
-          name: `addAtmosphere`,
-          meta: {
-            title: '添加活动氛围',
-            noCache: true,
-            activeMenu: `/marketing/atmosphere/list`,
-          },
-          component: () => import('@/views/marketing/atmosphere/atmosphereList/addAtmosphere'),
-        },
-      ],
-    },
-    {
-      path: 'border',
-      name: 'border',
-      meta: { title: '活动边框', icon: '' },
-      component: () => import('@/views/marketing/border/index'),
-      children: [
-        {
-          path: 'list',
-          name: `borderList`,
-          meta: {
-            title: '活动边框列表',
-            noCache: true,
-          },
-          component: () => import('@/views/marketing/atmosphere/atmosphereList/list'),
-        },
-        {
-          path: 'add/:id?',
-          name: `addBorder`,
-          meta: {
-            title: '添加活动边框',
-            noCache: true,
-            activeMenu: `/marketing/border/list`,
-          },
-          component: () => import('@/views/marketing/atmosphere/atmosphereList/addAtmosphere'),
-        },
-      ],
-    },
   ],
 };
 

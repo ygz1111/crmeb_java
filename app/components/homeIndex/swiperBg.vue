@@ -1,9 +1,9 @@
-﻿<template>
+<template>
 	<!-- 轮播图 -->
 	<view class="swiperBg" :style="[boxStyle]">
 		<view class="swiper page_swiper" :class="docConfig" v-if="imgUrls.length">
 			<swiper :autoplay="true" :circular="true" :interval="3000" :duration="500"
-				:indicator-active-color="docColor" :current="swiperCur" :previous-margin="swiperType==0?'40rpx':''" :next-margin="swiperType==0?'40rpx':''"
+				:indicator-active-color="docColor" :current="swiperCur"
 				@change="swiperChange">
 				<block v-for="(item,index) in imgUrls" :key="index">
 					<swiper-item :class="{ active: index == swiperCur }">
@@ -59,7 +59,7 @@
 				indicatorDots: false,
 				imgUrls: [], //图片轮播数据
 				txtStyle: this.dataConfig.txtStyle.type, //指示器位置
-				imageH: 310,
+				imageH: 380,
 				swiperCur: 0,
 				themeColor:this.$options.filters.filterTheme(app.globalData.theme)
 			};
@@ -92,9 +92,9 @@
 				return {
 					borderRadius: this.dataConfig.bgStyle.val * 2 + 'rpx',
 					background: `linear-gradient(${this.dataConfig.bgColor.color[0].item}, ${this.dataConfig.bgColor.color[1].item})`,
-					margin: this.dataConfig.mbConfig.val * 2 + 'rpx' + ' ' + this.dataConfig.lrConfig.val * 2 + 'rpx' +
+					margin: (this.dataConfig.mbConfig.val + 10) * 2 + 'rpx' + ' ' + 0 +
 						' ' + 0,
-					padding: this.dataConfig.upConfig.val * 2 + 'rpx' + ' ' + '20rpx' + ' ' + this.dataConfig.downConfig.val *
+					padding: (this.dataConfig.upConfig.val + 12) * 2 + 'rpx' + ' ' + '0rpx' + ' ' + this.dataConfig.downConfig.val *
 						2 + 'rpx'
 				}
 			},
@@ -131,7 +131,7 @@
 						that.$set(that, 'imageH', res.height);
 					},
 					fail: function(error) {
-						that.$set(that, 'imageH', 310);
+						that.$set(that, 'imageH', 380);
 					}
 				})
 			})
@@ -235,7 +235,6 @@
 			}
 
 			image {
-				transform: scale(0.93);
 				transition: all 0.6s ease;
 			}
 

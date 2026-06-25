@@ -14,3 +14,7 @@ export function getMySecondHandList(page, limit) {
 export function deleteSecondHand(id) {
     return request.post('secondhand/delete/' + id);
 }
+
+export function getMyPublishStats() {
+    return request.get('secondhand/stats');
+}

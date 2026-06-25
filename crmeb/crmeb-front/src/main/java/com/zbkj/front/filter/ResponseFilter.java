@@ -12,17 +12,7 @@ import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 
 
-/**
- * +----------------------------------------------------------------------
- * | CRMEB [ CRMEB赋能开发者，助力企业发展 ]
- * +----------------------------------------------------------------------
- * | Copyright (c) 2016~2025 https://www.crmeb.com All rights reserved.
- * +----------------------------------------------------------------------
- * | Licensed CRMEB并不是自由软件，未经许可不能去掉CRMEB相关版权
- * +----------------------------------------------------------------------
- * | Author: CRMEB Team <admin@crmeb.com>
- * +----------------------------------------------------------------------
- * 返回值输出过滤器
+/*** 返回值输出过滤器
  */
 //@Component
 public class ResponseFilter implements Filter {
@@ -50,7 +40,7 @@ public class ResponseFilter implements Filter {
             //把返回值输出到客户端
             ServletOutputStream outputStream = response.getOutputStream();
             if (str.length() > 0) {
-                outputStream.write(str.getBytes());
+                outputStream.write(str.getBytes(StandardCharsets.UTF_8));
                 outputStream.flush();
                 outputStream.close();
                 //最后添加这一句，输出到客户端

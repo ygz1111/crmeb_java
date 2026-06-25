@@ -67,10 +67,10 @@
 						// #endif
 					},
 					{
-						"name": "模拟支付",
+						"name": "快捷支付",
 						"icon": "icon-yuezhifu",
 						value: "mock",
-						title: "答辩演示-直接支付成功",
+						title: "快速完成支付",
 						payStatus: 1,
 					},
 										{

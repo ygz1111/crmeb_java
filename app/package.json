@@ -12,6 +12,7 @@
     "@dcloudio/uni-i18n": "*",
     "@dcloudio/uni-shared": "*",
     "@dcloudio/uni-stat": "*",
+    "@dcloudio/webpack-uni-pages-loader": "^2.0.2-5000720260410001",
     "mp-html": "^2.5.0",
     "vue": "^2.6.11",
     "vuex": "^3.6.2"

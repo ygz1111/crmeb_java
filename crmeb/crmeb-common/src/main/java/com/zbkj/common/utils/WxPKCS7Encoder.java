@@ -4,17 +4,7 @@ import java.nio.charset.Charset;
 import java.util.Arrays;
 
 /**
- *  微信小程序加解密
- *  +----------------------------------------------------------------------
- *  | CRMEB [ CRMEB赋能开发者，助力企业发展 ]
- *  +----------------------------------------------------------------------
- *  | Copyright (c) 2016~2025 https://www.crmeb.com All rights reserved.
- *  +----------------------------------------------------------------------
- *  | Licensed CRMEB并不是自由软件，未经许可不能去掉CRMEB相关版权
- *  +----------------------------------------------------------------------
- *  | Author: CRMEB Team <admin@crmeb.com>
- *  +----------------------------------------------------------------------
- */
+ *  微信小程序加解密*/
 public class WxPKCS7Encoder {
 
     private static final Charset CHARSET = Charset.forName("utf-8");

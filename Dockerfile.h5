@@ -1,0 +1,6 @@
+FROM docker.1ms.run/library/node:16-alpine
+WORKDIR /app
+COPY app/package*.json ./
+RUN npm install --legacy-peer-deps
+COPY app/ ./
+RUN npx vue-cli-service build

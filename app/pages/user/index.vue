@@ -1,4 +1,4 @@
-<template>
+﻿<template>
 	<view :data-theme="theme">
 		<view class="crmeb-profile">
 			<scroll-view scroll-y="true" class="crmeb-profile__scroll">
@@ -9,7 +9,7 @@
 							<image class="crmeb-profile__avatar" :src='userInfo.avatar' v-if="userInfo.avatar && uid">
 							</image>
 							<image v-else class="crmeb-profile__avatar"
-								:src="urlDomain+'crmebimage/perset/staticImg/f.png'" mode=""></image>
+									src="/static/brand/avatar_default.png" mode=""></image>
 							<view class="crmeb-profile__info">
 								<view class="crmeb-profile__name" v-if="!isLogin" @tap="openAuto">
 									点击登录账号
@@ -78,18 +78,40 @@
 				</view>
 				<!-- 内容区 -->
 				<view class="crmeb-profile__body">
-					<!-- 轮播 -->
-					<view class="crmeb-profile__banner" @click.native="bindEdit('userBanner')"
-						v-if="imgUrls != null && imgUrls.length > 0">
-						<swiper indicator-dots="true" :autoplay="autoplay" :circular="circular" :interval="interval"
-							:duration="duration" indicator-color="rgba(255,255,255,0.6)" indicator-active-color="#fff">
-							<swiper-item class="crmeb-profile__banner-item" v-for="(item, index) in imgUrls"
-								:key="index">
-								<image :src="item.pic" class="crmeb-profile__banner-img" @click="navito(item.url)">
-								</image>
-							</swiper-item>
-						</swiper>
+					<!-- 我的发布（独立一级菜单） -->
+					<view class="crmeb-profile__publish">
+						<view class="crmeb-profile__publish-header">
+							<view class="crmeb-profile__publish-title">我的发布</view>
+							<view class="crmeb-profile__publish-all" @click="goMyPublish">
+								查看全部 ›
+							</view>
+						</view>
+						<view class="crmeb-profile__publish-stats">
+							<view class="crmeb-profile__publish-stat-item">
+								<text class="crmeb-profile__publish-stat-num">{{ publishStats.total || 0 }}</text>
+								<view class="crmeb-profile__publish-stat-label">全部</view>
+							</view>
+							<view class="crmeb-profile__publish-stat-item">
+								<text class="crmeb-profile__publish-stat-num on-sale">{{ publishStats.onSale || 0 }}</text>
+								<view class="crmeb-profile__publish-stat-label">在售中</view>
+							</view>
+							<view class="crmeb-profile__publish-stat-item">
+								<text class="crmeb-profile__publish-stat-num sold-out">{{ publishStats.soldOut || 0 }}</text>
+								<view class="crmeb-profile__publish-stat-label">已售罄</view>
+							</view>
+							<view class="crmeb-profile__publish-stat-item">
+								<text class="crmeb-profile__publish-stat-num off-shelf">{{ publishStats.offShelf || 0 }}</text>
+								<view class="crmeb-profile__publish-stat-label">已下架</view>
+							</view>
+						</view>
+						<view class="crmeb-profile__publish-action">
+							<button class="publish-btn" @click="goPublish">
+								<text class="btn-icon">+</text>
+								<text>立即发布</text>
+							</button>
+						</view>
 					</view>
+					
 					<!-- 我的服务 -->
 					<view class="crmeb-profile__services" @click.native="bindEdit('userMenus')">
 						<view class="crmeb-profile__services-title">我的服务</view>
@@ -129,7 +151,6 @@
 							<!-- #endif -->
 						</view>
 					</view>
-					<image :src="copyImage" alt="" class="crmeb-profile__footer-img" />
 				</view>
 			</scroll-view>
 		</view>
@@ -147,12 +168,14 @@
 		BACK_URL
 	} from '@/config/cache';
 	import {
-		getMenuList,
-		copyrightApi
+		getMenuList
 	} from '@/api/user.js';
 	import {
 		orderData
 	} from '@/api/order.js';
+	import {
+		getMyPublishStats
+	} from '@/api/secondhand.js';
 	import {
 		getCity,
 		tokenIsExistApi
@@ -194,31 +217,33 @@
 					num: 0 },
 				],
 				imgUrls: [],
-				userMenu: [],
-				autoplay: true,
-				circular: true,
-				interval: 3000,
-				duration: 500,
-				isAuto: false,
+					userMenu: [],
+					isAuto: false,
 				isShowAuth: false,
 				orderStatusNum: {},
 				MyMenus: [],
 				wechatUrl: [],
 				servicePic: `${this.$Cache.get("imgHost")}crmebimage/perset/staticImg/customer.png`,
+				publishPic: '/static/brand/tabbar/publishwei.png',
 				sysHeight: sysHeight,
 				pageHeight: '100%',
 				configApi: {},
 				theme: '',
-				bgColor: '#059669',
+				bgColor: '#FF6B35',
 				chatConfig: {
 					consumer_hotline: '',
 					telephone_service_switch: 'close',
 					wx_chant_independent: 'open'
 				},
 				userInfo: {},
-				copyImage: '',
-			}
-		},
+				publishStats: {
+					total: 0,
+					onSale: 0,
+					soldOut: 0,
+					offShelf: 0
+				},
+ 				}
+ 			},
 		onLoad() {
 			app.globalData.theme = this.$Cache.get('theme')
 			if (app.globalData.isIframe) {
@@ -264,7 +289,7 @@
 		onShow: function() {
 			this.getMyMenus();
 			this.getTokenIsExist();
-			this.copyrightImage();
+			this.getPublishStats();
 			this.theme = this.$Cache.get('theme')
 			app.globalData.theme = this.$Cache.get('theme')
 			if (!this.$Cache.getItem('cityList')) getCityList();
@@ -294,19 +319,6 @@
 					}
 				})
 			},
-			copyrightImage() {
-				copyrightApi().then(res => {
-					if (res.data) {
-						this.copyImage = res.data.companyImage;
-					} else {
-						this.copyImage = `${this.urlDomain}crmebimage/perset/staticImg/support.png`;
-					}
-				}).catch(err => {
-					return this.$util.Tips({
-						title: err
-					})
-				});
-			},
 			bindEdit(name) {
 				if (app.globalData.isIframe) {
 					window.parent.postMessage({ name: name }, '*');
@@ -326,23 +338,27 @@
 					})
 				}
 			},
-			navito(url) {
-				if (url.indexOf("http") !== -1) {
-					// #ifdef H5
-					location.href = url
-					// #endif
-					// #ifdef APP-PLUS || MP
+			goMyPublish() {
+				if (this.isLogin) {
 					uni.navigateTo({
-						url: '/pages/users/web_page/index?webUel=' + url
-					})
-					// #endif
+						url: '/pages/secondhand/mylist'
+					});
 				} else {
-					if (['/pages/goods_cate/goods_cate', '/pages/order_addcart/order_addcart', '/pages/user/index']
-						.indexOf(url) == -1) {
-						uni.navigateTo({ url: url })
-					} else {
-						uni.switchTab({ url: url })
-					}
+					this.openAuto();
+				}
+			},
+			goPublish() {
+				uni.switchTab({ url: '/pages/secondhand/publish' });
+			},
+			getPublishStats() {
+				if (this.isLogin) {
+					getMyPublishStats().then(res => {
+						if (res.data) {
+							this.publishStats = res.data;
+						}
+					}).catch(err => {
+						console.log('获取发布统计失败', err);
+					});
 				}
 			},
 			onClickService() {
@@ -479,15 +495,15 @@
 </script>
 
 <style lang="scss" scoped>
-	/* ===== CRMEB Design System: Profile ===== */
-	$primary: #059669;
-	$primary-light: #ECFDF5;
-	$secondary: #10B981;
-	$accent: #D97706;
-	$fg: #0F172A;
-	$muted: #F0F8F6;
-	$radius: 16rpx;
-	$radius-lg: 24rpx;
+	/* ===== 转享 Design System: Profile ===== */
+		$primary: #FF6B35;
+		$primary-light: #FFF8F3;
+		$secondary: #FFB627;
+		$accent: #FF6B35;
+		$fg: #1A1A2E;
+		$muted: #FFF8F3;
+		$radius: 16rpx;
+		$radius-lg: 24rpx;
 
 	page,
 	body {
@@ -507,15 +523,15 @@
 	}
 
 	/* ===== Header Card ===== */
-	.crmeb-profile__header {
-		background: linear-gradient(135deg, $primary, $secondary);
-		padding: 0 24rpx 30rpx;
-		border-radius: 0 0 $radius-lg $radius-lg;
-	}
+		.crmeb-profile__header {
+			background: linear-gradient(135deg, $primary, $secondary);
+			padding: 0 32rpx 40rpx;
+			border-radius: 0 0 32rpx 32rpx;
+		}
 
-	.crmeb-profile__card {
-		padding: 30rpx 0 20rpx;
-	}
+		.crmeb-profile__card {
+			padding: 36rpx 0 24rpx;
+		}
 
 	.crmeb-profile__user {
 		display: flex;
@@ -523,12 +539,13 @@
 	}
 
 	.crmeb-profile__avatar {
-		width: 120rpx;
-		height: 120rpx;
-		border-radius: 50%;
-		border: 4rpx solid rgba(255, 255, 255, 0.3);
-		flex-shrink: 0;
-	}
+			width: 128rpx;
+			height: 128rpx;
+			border-radius: 50%;
+			border: 4rpx solid rgba(255, 255, 255, 0.4);
+			flex-shrink: 0;
+			box-shadow: 0 4rpx 16rpx rgba(255, 107, 53, 0.25);
+		}
 
 	.crmeb-profile__info {
 		flex: 1;
@@ -598,9 +615,10 @@
 	}
 
 	.crmeb-profile__stat-num {
-		font-size: 38rpx;
-		font-weight: 700;
-	}
+			font-size: 38rpx;
+			font-weight: 700;
+			font-feature-settings: 'tnum';
+		}
 
 	.crmeb-profile__stat-label {
 		font-size: 24rpx;
@@ -609,13 +627,15 @@
 	}
 
 	/* ===== Orders ===== */
-	.crmeb-profile__orders {
-		background: #fff;
-		border-radius: $radius-lg;
-		padding: 28rpx 24rpx;
-		margin-top: 20rpx;
-		box-shadow: 0 4rpx 20rpx rgba(0, 0, 0, 0.06);
-	}
+		.crmeb-profile__orders {
+			background: #fff;
+			border-radius: $radius-lg;
+			padding: 32rpx 28rpx;
+				margin-top: 40rpx;
+			position: relative;
+			z-index: 2;
+			box-shadow: 0 8rpx 32rpx rgba(255, 107, 53, 0.1);
+		}
 
 	.crmeb-profile__orders-header {
 		display: flex;
@@ -679,31 +699,108 @@
 	}
 
 	/* ===== Body ===== */
-	.crmeb-profile__body {
-		padding: 0 24rpx 30rpx;
-	}
+		.crmeb-profile__body {
+			padding: 24rpx 24rpx 30rpx;
+		}
 
-	/* Banner */
-	.crmeb-profile__banner {
-		margin: 24rpx 0;
-		height: 138rpx;
-		border-radius: $radius;
-		overflow: hidden;
-	}
+		/* My Publish */
+		.crmeb-profile__publish {
+			background: #fff;
+			border-radius: $radius-lg;
+			padding: 32rpx 28rpx;
+			box-shadow: 0 4rpx 20rpx rgba(255, 107, 53, 0.06);
+			margin-bottom: 24rpx;
+		}
 
-	.crmeb-profile__banner-item,
-	.crmeb-profile__banner-img {
-		width: 100%;
-		height: 100%;
-	}
+		.crmeb-profile__publish-header {
+			display: flex;
+			justify-content: space-between;
+			align-items: center;
+			margin-bottom: 24rpx;
+		}
 
-	/* Services */
-	.crmeb-profile__services {
-		background: #fff;
-		border-radius: $radius-lg;
-		padding: 28rpx 24rpx;
-		box-shadow: 0 2rpx 12rpx rgba(0, 0, 0, 0.04);
-	}
+		.crmeb-profile__publish-title {
+			font-size: 30rpx;
+			font-weight: 600;
+			color: $fg;
+		}
+
+		.crmeb-profile__publish-all {
+			font-size: 24rpx;
+			color: #999;
+		}
+
+		.crmeb-profile__publish-stats {
+			display: flex;
+			justify-content: space-around;
+			padding: 20rpx 0;
+			background: $primary-light;
+			border-radius: $radius;
+			margin-bottom: 24rpx;
+		}
+
+		.crmeb-profile__publish-stat-item {
+			display: flex;
+			flex-direction: column;
+			align-items: center;
+		}
+
+		.crmeb-profile__publish-stat-num {
+			font-size: 36rpx;
+			font-weight: 700;
+			color: $fg;
+			margin-bottom: 8rpx;
+		}
+
+		.crmeb-profile__publish-stat-num.on-sale {
+			color: #4CAF50;
+		}
+
+		.crmeb-profile__publish-stat-num.sold-out {
+			color: #9E9E9E;
+		}
+
+		.crmeb-profile__publish-stat-num.off-shelf {
+			color: #FF9800;
+		}
+
+		.crmeb-profile__publish-stat-label {
+			font-size: 22rpx;
+			color: #666;
+		}
+
+		.crmeb-profile__publish-action {
+			display: flex;
+			justify-content: center;
+		}
+
+		.publish-btn {
+			background: linear-gradient(135deg, $primary 0%, #FF4444 100%);
+			color: #fff;
+			border-radius: 50rpx;
+			font-size: 28rpx;
+			padding: 0 40rpx;
+			height: 72rpx;
+			line-height: 72rpx;
+			border: none;
+			box-shadow: 0 6rpx 16rpx rgba(255, 107, 53, 0.3);
+			display: flex;
+			align-items: center;
+			gap: 8rpx;
+		}
+
+		.publish-btn .btn-icon {
+			font-size: 32rpx;
+			font-weight: bold;
+		}
+
+		/* Services */
+		.crmeb-profile__services {
+			background: #fff;
+			border-radius: $radius-lg;
+			padding: 32rpx 28rpx;
+			box-shadow: 0 4rpx 20rpx rgba(255, 107, 53, 0.06);
+		}
 
 	.crmeb-profile__services-title {
 		font-size: 30rpx;
@@ -735,22 +832,14 @@
 	}
 
 	.crmeb-profile__service-icon {
-		width: 52rpx;
-		height: 52rpx;
-		margin-bottom: 12rpx;
-		border-radius: 12rpx;
-	}
+			width: 56rpx;
+			height: 56rpx;
+			margin-bottom: 12rpx;
+			border-radius: 14rpx;
+		}
 
-	.crmeb-profile__service-name {
-		font-size: 24rpx;
-		color: #333;
-	}
-
-	/* Footer */
-	.crmeb-profile__footer-img {
-		width: 219rpx;
-		height: 74rpx;
-		margin: 40rpx auto;
-		display: block;
-	}
-</style>
+		.crmeb-profile__service-name {
+			font-size: 24rpx;
+			color: #333;
+		}
+	</style>

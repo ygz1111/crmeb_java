@@ -2,24 +2,10 @@
 	<view :data-theme="theme">
 		<view class="crmeb-cart">
 			<!-- Header -->
-			<view class="crmeb-cart__header" :style="'height:'+navH+'rpx;'">
+			<view class="crmeb-cart__header">
 				<view class="crmeb-cart__header-inner">
-					<!-- #ifdef MP -->
-					<view class="crmeb-cart__nav-left" id="home" :style="{ top: homeTop + 'rpx' }">
-						<text class="crmeb-cart__nav-btn" @tap="returns">&#8592;</text>
-						<text class="crmeb-cart__nav-btn" @tap="showNav">&#8942;</text>
-						<text class="crmeb-cart__nav-divider"></text>
-					</view>
-					<!-- #endif -->
-					<!-- #ifdef H5 -->
-					<view class="crmeb-cart__nav-back" :style="{ top: homeTop + 'rpx' }" @tap="returns">&#8592;</view>
-					<!-- #endif -->
-					<!-- #ifndef APP-PLUS -->
-					<view class="crmeb-cart__nav-title" :style="{ top: homeTop + 'rpx' }">购物车</view>
-					<!-- #endif -->
-					<!-- #ifdef H5 || APP-PLUS -->
-					<view class="crmeb-cart__nav-more" :style="{ top: homeTop + 'rpx' }" @tap="showNav">&#8942;</view>
-					<!-- #endif -->
+					<view class="crmeb-cart__nav-title">购物车</view>
+					<view class="crmeb-cart__nav-more" @tap="showNav">•••</view>
 				</view>
 			</view>
 			<view class="crmeb-cart__dropdown" v-show="currentPage">
@@ -701,13 +687,13 @@
 </script>
 
 <style lang="scss" scoped>
-	/* ===== CRMEB Design System: Cart ===== */
-	$primary: #059669;
-	$primary-light: #ECFDF5;
-	$secondary: #10B981;
-	$accent: #D97706;
+	/* ===== 转享 Design System: Cart ===== */
+	$primary: #FF6B35;
+	$primary-light: #FFF8F3;
+	$secondary: #FFB627;
+	$accent: #FF6B35;
 	$fg: #0F172A;
-	$muted-bg: #F0F8F6;
+	$muted-bg: #FFF0E8;
 	$radius: 16rpx;
 	$radius-sm: 12rpx;
 	$radius-lg: 24rpx;
@@ -718,30 +704,18 @@
 	.crmeb-cart__header {
 		position: fixed; top: 0; left: 0; z-index: 99; width: 100%;
 		background: linear-gradient(135deg, $primary, $secondary);
+		padding-top: var(--status-bar-height);
 	}
-	.crmeb-cart__header-inner { position: absolute; bottom: 0; height: 100rpx; width: 100%; display: flex; align-items: center; }
-	.crmeb-cart__nav-left { display: flex; gap: 12rpx; position: fixed; left: 14rpx; z-index: 1000; }
-	.crmeb-cart__nav-btn {
-		width: 60rpx; height: 60rpx; border-radius: 50%;
-		background: rgba(255,255,255,0.3); border: 1rpx solid rgba(255,255,255,0.2);
-		display: flex; align-items: center; justify-content: center;
-		font-size: 32rpx; color: #fff;
-	}
-	.crmeb-cart__nav-divider {
-		display: inline-block; width: 1px; height: 34rpx;
-		background: rgba(255,255,255,0.5); position: absolute; left: 84rpx; top: 50%; margin-top: -17rpx;
-	}
-	.crmeb-cart__nav-back {
-		position: fixed; left: 20rpx; z-index: 100;
-		font-size: 40rpx; color: #fff; width: 60rpx;
+	.crmeb-cart__header-inner {
+		height: 88rpx; width: 100%; display: flex; align-items: center;
+		justify-content: center; position: relative;
 	}
 	.crmeb-cart__nav-title {
-		position: fixed; left: 0; right: 0; margin: auto; text-align: center;
 		font-size: 36rpx; color: #fff; font-weight: 600;
 	}
 	.crmeb-cart__nav-more {
-		position: fixed; right: 20rpx; z-index: 100;
-		font-size: 40rpx; color: #fff;
+		position: absolute; right: 30rpx; z-index: 100;
+		font-size: 36rpx; color: #fff; letter-spacing: 2rpx;
 	}
 	.crmeb-cart__dropdown {
 		position: fixed; right: 14rpx; width: 240rpx;
@@ -754,12 +728,13 @@
 	}
 
 	/* Body */
-	.crmeb-cart__body { position: absolute; width: 100%; }
+	.crmeb-cart__body { position: absolute; width: 100%; padding-top: 180rpx; }
 
 	/* Guarantee */
 	.crmeb-cart__guarantee {
-		display: flex; justify-content: space-around; padding: 30rpx 24rpx 0;
+		display: flex; justify-content: space-around; padding: 24rpx 24rpx;
 		font-size: 22rpx; color: #fff; background: $primary;
+		border-radius: 0 0 $radius-lg $radius-lg;
 	}
 
 	/* Content */
@@ -768,21 +743,22 @@
 	/* Toolbar */
 	.crmeb-cart__toolbar {
 		display: flex; justify-content: space-between; align-items: center;
-		height: 90rpx; background: #fff; border-radius: $radius $radius 0 0;
-		padding: 0 24rpx; margin-top: -40rpx;
+		height: 88rpx; background: #fff; border-radius: $radius;
+		padding: 0 24rpx; margin-top: 20rpx;
 		font-size: 28rpx; color: $fg;
+		box-shadow: 0 2rpx 12rpx rgba(0,0,0,0.04);
 	}
 	.crmeb-cart__count { margin-left: 12rpx; color: $primary; font-weight: 600; }
 	.crmeb-cart__manage { font-size: 28rpx; color: #333; }
 
 	/* Items */
-	.crmeb-cart__items { background: #fff; border-radius: 0 0 $radius $radius; overflow: hidden; }
+	.crmeb-cart__items { background: #fff; border-radius: $radius; overflow: hidden; margin-top: 16rpx; }
 	.crmeb-cart__item {
 		padding: 24rpx; border-bottom: 1rpx solid $muted-bg;
 		display: flex; align-items: flex-start;
 	}
 	.crmeb-cart__item-body { display: flex; flex: 1; margin-left: 12rpx; position: relative; }
-	.crmeb-cart__item-img { width: 160rpx; height: 160rpx; border-radius: $radius-sm; overflow: hidden; flex-shrink: 0; }
+	.crmeb-cart__item-img { width: 160rpx; height: 160rpx; border-radius: $radius-sm; overflow: hidden; flex-shrink: 0; box-shadow: 0 2rpx 8rpx rgba(255, 107, 53, 0.1); }
 	.crmeb-cart__item-img image { width: 100%; height: 100%; }
 	.crmeb-cart__item-info { flex: 1; margin-left: 16rpx; }
 	.crmeb-cart__item-name { font-size: 26rpx; color: $fg; line-height: 36rpx; }
@@ -840,6 +816,10 @@
 		width: 226rpx; height: 70rpx; border-radius: 50rpx; text-align: center; line-height: 70rpx; border: none;
 	}
 	.crmeb-cart__checkout::after { border: none; }
+	.crmeb-cart__checkout:active {
+		opacity: 0.9;
+		transform: scale(0.97);
+	}
 	.crmeb-cart__footer-actions { margin-left: auto; display: flex; gap: 17rpx; }
 	.crmeb-cart__action-btn { font-size: 14px; border-radius: 25px; padding: 0 30rpx; height: 60rpx; line-height: 60rpx; }
 	.crmeb-cart__action-btn.collect { color: $primary; border: 1rpx solid $primary; background: #fff; }

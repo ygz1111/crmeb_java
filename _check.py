@@ -1,0 +1,7 @@
+content = open(r'D:\RECM\crmeb_java\app\pages\goods\goods_details\index.vue', encoding='utf-8').read()
+print(f'Total length: {len(content)} chars')
+print(f'Has script: {"script" in content}')
+print(f'Has computed: {"computed" in content}')
+print(f'Has data: {"data()" in content}')
+print(f'Has ifdef: {"ifdef" in content}')
+print(f'Lines: {len(content.splitlines())}')

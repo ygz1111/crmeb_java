@@ -13,4 +13,7 @@ public interface SecondHandService {
     Map<String, Object> publish(SecondHandProductRequest request);
 
     Boolean delete(Integer productId);
+    
+    // 获取用户发布商品统计
+    Map<String, Integer> getMyPublishStats();
 }

@@ -53,6 +53,9 @@
 						</view>
 					</view>
 
+					<!-- 协同过滤推荐 -->
+					<cf-recommend v-if="navIndex === 0" :limit="10"></cf-recommend>
+
 					<!-- 分类页-->
 					<view class="productList" v-if="navIndex === 1 && sortList.length>0">
 						<view class="sort acea-row" :class="sortList.length ? '' : 'no_pad'"
@@ -146,6 +149,7 @@
 	import hotSpot from '@/components/homeIndex/hotSpot.vue';
 	import group from "@/components/homeIndex/group.vue";
 	import bargain from "@/components/homeIndex/bargain.vue";
+	import cfRecommend from "@/components/homeIndex/cfRecommend.vue";
 	import pageFooter from "@/components/pageFooter/index.vue";
 		import {
 		getIndexData,
@@ -183,6 +187,7 @@
 			aTip,
 			homeComb,
 			recommend,
+			cfRecommend,
 			seckillData,
 			pageFooter,
 			coupon,
@@ -310,6 +315,8 @@
 			})
 		},
 		onShow() {
+			// 每次显示页面时重新加载首页数据
+			this.getIndexConfig();
 			// 分类样式3、4跳回首页tabbar处理
 			!this.bottomNavigationIsCustom&&uni.showTabBar()
 			let self = this;
@@ -440,10 +447,11 @@
 						that.isNodes++;
 					}, 100);
 				}).catch(err => {
+					uni.hideLoading();
+					that.reloadData();
 					return that.$util.Tips({
 						title: err
 					});
-					uni.hideLoading();
 				});
 			},
 			bindMore() {
@@ -574,6 +582,7 @@
 					});
 					this.reloadData();
 				}).catch(err => {
+					this.reloadData();
 					return this.$util.Tips({
 						title: err
 					});

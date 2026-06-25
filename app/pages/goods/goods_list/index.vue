@@ -1,4 +1,4 @@
-<template>
+﻿<template>
 	<view :data-theme="theme">
 		<view class="crmeb-product-list">
 			<!-- 搜索栏 -->
@@ -58,7 +58,7 @@
 				{{ loadTitle }}
 			</view>
 		</view>
-		<view class="crmeb-empty" v-if="productList.length == 0 && where.page > 1">
+		<view class="crmeb-empty" v-if="productList.length == 0 && where.page >= 1">
 			<view class="crmeb-empty__img">
 				<image :src="urlDomain + 'crmebimage/perset/staticImg/noShopper.png'"></image>
 			</view>
@@ -217,13 +217,13 @@
 </script>
 
 <style lang="scss" scoped>
-	/* ===== CRMEB Design System: Product List ===== */
-	$primary: #059669;
-	$primary-light: #ECFDF5;
-	$secondary: #10B981;
-	$accent: #D97706;
+	/* ===== 转享 Design System: Product List ===== */
+	$primary: #FF6B35;
+	$primary-light: #FFF8F3;
+	$secondary: #FFB627;
+	$accent: #FF6B35;
 	$fg: #0F172A;
-	$muted-bg: #F0F8F6;
+	$muted-bg: #FFF0E8;
 	$radius: 16rpx;
 	$radius-sm: 12rpx;
 
@@ -352,8 +352,8 @@
 		background: #fff;
 		border-radius: $radius;
 		overflow: hidden;
-		box-shadow: 0 2rpx 12rpx rgba(5, 150, 105, 0.06);
-		transition: transform 0.2s;
+		box-shadow: 0 4rpx 16rpx rgba(255, 107, 53, 0.07);
+		transition: transform 0.2s ease, box-shadow 0.2s ease;
 	}
 
 	.crmeb-pl__goods-item:active {
@@ -404,7 +404,7 @@
 	}
 
 	.crmeb-pl__badge.bargain {
-		background: linear-gradient(135deg, $accent, #f59e0b);
+		background: linear-gradient(135deg, $primary, $secondary);
 	}
 
 	.crmeb-pl__badge.group {
@@ -455,7 +455,7 @@
 		font-size: 22rpx;
 		color: $accent;
 		font-weight: 500;
-		background: #fef3c7;
+		background: #FFF0E8;
 		padding: 2rpx 12rpx;
 		border-radius: 20rpx;
 	}

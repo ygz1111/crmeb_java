@@ -49,4 +49,16 @@ public class SecondHandProductRequest implements Serializable {
 
     @ApiModelProperty(value = "product detail content (HTML)")
     private String content;
+
+    @ApiModelProperty(value = "AI category")
+    private String aiCategory;
+
+    @ApiModelProperty(value = "AI predicted price")
+    private BigDecimal aiPredictedPrice;
+
+    @ApiModelProperty(value = "AI confidence")
+    private String aiConfidence;
+
+    @ApiModelProperty(value = "category name")
+    private String category;
 }

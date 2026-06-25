@@ -1,164 +1,222 @@
+# CRMEB 开源商城系统 Java 版（已修改）
 
-<div align="center" >
-    <img src="https://images.gitee.com/uploads/images/2021/1109/164354_0aafe3d2_892944.gif" />
-</div>
-<div align="center">
-
-CRMEB开源商城系统Java版
-
-</div>
-
-<div align="center" >
-    <a href="http://www.crmeb.com?from=giteejava">
-        <img src="https://img.shields.io/badge/License-apache2.0-green.svg?style=flat" />
-    </a>
-    <a href='https://gitee.com/ZhongBangKeJi/crmeb_java/members'>
-        <img src='https://gitee.com/ZhongBangKeJi/crmeb_java/badge/fork.svg?theme=dark' alt='fork'></img>
-    </a>
-   <a href='https://gitee.com/ZhongBangKeJi/crmeb_java/stargazers'>
-        <img src='https://gitee.com/ZhongBangKeJi/crmeb_java/badge/star.svg?theme=dark' alt='star'></img>
-    </a>
-</div>
-
-####
-
-<div align="center">
-
-[官网](https://www.crmeb.com/?from=giteejava) |
-[在线体验](https://admin.java.crmeb.net) |
-[帮助文档](https://doc.crmeb.com/java/crmeb_java) |
-[技术社区](https://www.crmeb.com/ask?from=giteejava)
-
-[comment]: <> "[宽屏预览]&#40;https://gitee.com/ZhongBangKeJi/crmeb_java/blob/master/README.md&#41;"
-
-</div>
-
-<div align="center" >
-    <a href="https://gitee.com/ZhongBangKeJi/crmeb_java/blob/master/README.md">宽 屏 预 览</a>
-</div>
-
-<div align="center">
-    如果对您有帮助，您可以点右上角 "Star" ❤️ 支持一下 谢谢！
-</div>
-
-
----
-### 📖 项目介绍：
-
-CRMEB开源商城系统Java版，是一款基于Apache-2.0协议发布的开源电商解决方案。代码全开源无加密，可免费商用，适合各类企业及开发者快速构建多端一体化商城。
-
-#### 技术架构
-系统采用Java + Vue + uni-app技术栈，基于SpringBoot框架构建，前后端分离架构设计清晰。借助uni-app的跨端能力，轻松实现小程序、公众号、H5、APP、PC端全覆盖，数据统一、业务同步，极大提升开发与维护效率。同时，系统代码规范清晰，注释详尽，二次开发十分方便。
-
-#### 核心功能
-管理功能全面
-系统核心管理功能完善，包含商品管理（支持SKU、属性、分类、评价）、订单管理、用户管理、购物车、物流管理、财务统计、多种支付方式等。
-
-#### 丰富的营销工具
-10余种营销功能能充分满足日常需求，包括拼团、砍价、秒杀、优惠券、签到、积分、等级会员、余额充值、分销裂变、活动边框、氛围图等，可灵活设置活动规则。
-
-#### 可视化页面DIY装修
-系统支持页面DIY设计，内置21种组件可自由拖拽设置，无需编码即可快速搭建个性化页面。<br>
-图片热区：在一张图片中，为不同位置添加不同的跳转链接。<br>
-图片魔方：一个组件，6种布局样式可选，能灵活满足使用需求。<br>
-导航跳转：不仅能跳转商城内部页面，也能根据具体的运营环境跳转小程序、H5等。<br>
-每种组件都有多种样式可选，组件细节支持自由调整。<br>
-
-#### 社区共建计划
-我们致力于打造开发者友好生态，开放源码、持续更新功能模块，并欢迎开发者提交优化建议或贡献代码。通过共享技术成果，降低行业重复造轮子成本，推动开源电商系统的可持续发展。
-
-CRMEB开源商城PHP：https://gitee.com/ZhongBangKeJi/CRMEB
-
-
-系统代码全开源无加密，独立部署、二开方便，适用于企业新零售、分销、拼团、砍价，秒杀等各种业务需求。
-
-
-### 系统优势
-#### 成熟稳定的架构
-后端：SpringBoot + SpringSecurity，前端：Vue + ElementUI（PC管理端）与uni-app（移动端），多端并行开发，结构清晰。
-#### 规范的接口设计
-提供规范的RESTful API与数据结构，接口复用率高，逻辑层次清晰，便于二次开发与系统集成。
-#### 数据与统计
-集成ECharts实现多维数据看板，支持订单、用户、资金等多维度统计分析，数据可导出，助力运营决策。
-#### 高效开发支持
-支持Vue表单拖拽生成，大幅减少前端重复工作，提升开发效率。
-#### 精细权限控制
-基于Spring Security实现角色权限控制，可精确到按钮级别，保障系统安全。
-#### 高可用设计
-内置Redis队列，有效削峰解耦，提升系统并发能力与稳定性。
+基于 CRMEB-Java-KY-v1.4 改造的开源电商解决方案。在原版基础上新增了 **二手交易模块**（含 AI 定价分析）并优化了移动端体验。
 
 ---
 
-### 技术特点
-#### 💻 运行环境及框架：
-~~~
-1.	移动端uniapp开发框架 可生成H5 公众号 微信小程序
-2.	WEB Pc 管理后台使用Vue + Element UI 开发 兼容主流浏览器 ie11+
-3.	后台服务 Java SpringBoot + Mybatis-plus + Mysql + redis
-4.	运行环境 linux和windows等都支持,只要有Java环境和对应的数据库 redis
-5.	运行条件 Java 1.8 Mysql5.7
-~~~
+## 项目结构
 
-#### 🔧 Java项目框架 和 WEB PC 项目运行环境
-~~~
-1. SpringBoot 2.2.6.RELEASE
-2. Maven 3.6.1
-3. swagger-bootstrap-ui 1.0
-4. Mybatis Plus 3.3.1
-5. npm 6
-6. node 14
-7. vue 2.x
-8. element ui 2.13
-~~~
+```
+crmeb_java/
+├── crmeb/                          # Java 后端（SpringBoot + Mybatis-Plus）
+│   ├── crmeb-common/               #   公共层
+│   │   └── src/main/java/com/zbkj/common/
+│   │       ├── model/              #     实体类
+│   │       │   ├── product/        #       商品（StoreProduct 含二手/AI字段）
+│   │       │   ├── order/          #       订单
+│   │       │   ├── user/           #       用户
+│   │       │   ├── bargain/        #       砍价
+│   │       │   ├── combination/    #       拼团
+│   │       │   ├── seckill/        #       秒杀
+│   │       │   ├── coupon/         #       优惠券
+│   │       │   ├── finance/        #       财务
+│   │       │   ├── express/        #       快递/运费
+│   │       │   ├── system/         #       系统配置
+│   │       │   ├── wechat/         #       微信相关
+│   │       │   ├── article/        #       文章
+│   │       │   ├── category/       #       分类
+│   │       │   ├── page/           #       DIY页面
+│   │       │   ├── sms/            #       短信
+│   │       │   └── record/         #       访问记录
+│   │       ├── request/            #     请求参数
+│   │       ├── response/           #     响应对象
+│   │       ├── constants/          #     常量
+│   │       ├── enums/              #     枚举
+│   │       ├── exception/          #     异常
+│   │       ├── config/             #     公共配置
+│   │       ├── interceptor/        #     拦截器
+│   │       ├── utils/              #     工具类
+│   │       ├── annotation/         #     注解
+│   │       ├── token/              #     JWT Token
+│   │       └── vo/                 #     值对象
+│   │
+│   ├── crmeb-service/              #   业务层
+│   │   ├── src/main/java/com/zbkj/service/
+│   │   │   ├── service/            #     Service 接口
+│   │   │   │   └── impl/           #     实现
+│   │   │   ├── dao/                #     Mapper 接口
+│   │   │   └── util/               #     工具（含易联云打印）
+│   │   └── src/main/resources/mapper/  #   MyBatis XML
+│   │       ├── store/              #     商品/订单 Mapper
+│   │       ├── user/               #     用户 Mapper
+│   │       ├── system/             #     系统 Mapper
+│   │       ├── wechat/             #     微信 Mapper
+│   │       ├── marketing/          #     营销 Mapper
+│   │       ├── finance/            #     财务 Mapper
+│   │       ├── express/            #     快递 Mapper
+│   │       ├── article/            #     文章 Mapper
+│   │       └── category/           #     分类 Mapper
+│   │
+│   ├── crmeb-admin/                #   管理后台 API
+│   │   ├── src/main/java/com/zbkj/admin/
+│   │   │   ├── controller/         #     后台 Controller
+│   │   │   ├── service/            #     后台 Service
+│   │   │   ├── config/             #     后台配置
+│   │   │   ├── filter/             #     过滤器
+│   │   │   ├── manager/            #     权限管理
+│   │   │   ├── quartz/             #     定时任务
+│   │   │   ├── task/               #     业务任务
+│   │   │   └── util/               #     后台工具
+│   │   └── src/main/resources/
+│   │       ├── application.yml
+│   │       ├── application-dev.yml
+│   │       ├── application-beta.yml
+│   │       ├── application-prod.yml
+│   │       └── logback-spring.xml
+│   │
+│   ├── crmeb-front/                #   移动端 API
+│   │   ├── src/main/java/com/zbkj/front/
+│   │   │   ├── controller/
+│   │   │   │   ├── IndexController       - 首页
+│   │   │   │   ├── LoginController       - 登录
+│   │   │   │   ├── ProductController     - 商品
+│   │   │   │   ├── CartController        - 购物车
+│   │   │   │   ├── StoreOrderController  - 订单
+│   │   │   │   ├── PayController         - 支付
+│   │   │   │   ├── BargainController     - 砍价
+│   │   │   │   ├── CombinationController - 拼团
+│   │   │   │   ├── SecKillController     - 秒杀
+│   │   │   │   ├── CouponController      - 优惠券
+│   │   │   │   ├── UserController        - 用户
+│   │   │   │   ├── UserAddressController - 地址
+│   │   │   │   ├── UserSignController    - 签到
+│   │   │   │   ├── UserCollectController - 收藏
+│   │   │   │   ├── UserRechargeController- 充值
+│   │   │   │   ├── SecondHandController  - ⭐ 二手交易
+│   │   │   │   ├── ArticleController     - 文章
+│   │   │   │   ├── StoreController       - 门店
+│   │   │   │   ├── CityController        - 城市
+│   │   │   │   ├── WeChatController      - 微信
+│   │   │   │   ├── QrCodeController      - 二维码
+│   │   │   │   ├── PageDiyController     - 页面装修
+│   │   │   │   └── UploadFrontController - 上传
+│   │   │   ├── service/
+│   │   │   ├── interceptor/
+│   │   │   └── filter/
+│   │   └── src/main/resources/
+│   │
+│   ├── sql/
+│   ├── shell/
+│   ├── crmebimage/
+│   └── pom.xml
+│
+├── admin/                          # 管理后台前端（Vue 2 + ElementUI）
+│   ├── src/
+│   ├── build/
+│   ├── package.json
+│   └── README.md
+│
+├── app/                            # 移动端（uni-app / Vue 2）
+│   ├── pages/
+│   │   ├── index/                  #     首页
+│   │   ├── goods/                  #     商品
+│   │   ├── goods_cate/             #     分类
+│   │   ├── order_addcart/          #     购物车
+│   │   ├── order/                  #     订单
+│   │   ├── secondhand/             #     ⭐ 二手交易
+│   │   ├── activity/               #     活动
+│   │   ├── users/                  #     用户子包
+│   │   ├── promoter/               #     分销
+│   │   ├── news/                   #     资讯
+│   │   ├── infos/                  #     个人资料
+│   │   └── user/                   #     个人中心
+│   ├── components/
+│   ├── api/
+│   ├── store/
+│   ├── utils/
+│   ├── config/
+│   ├── pages.json
+│   ├── manifest.json
+│   └── package.json
+│
+├── crmeb_admin_log/
+├── crmeb_front_log/
+└── README.md
+```
 
 ---
 
-#### 🧭 项目代码包介绍
-~~~
-1. admin     WEB程序         PC端管理端 VUE + ElementUi
-2. app       移动商城         UniApp标准开发(H5 + 微信小程序)
-3. crmeb     Api            Java SpringBoot + mybatisPlus
-4. 接口文档   Api对应的接口文档也可以部署项目后查看
-5. 移动端 uniapp 开发 使用 HbuilderX 开发
-~~~
+## 主要改动
 
+### 新增：二手交易模块
+- **移动端**：`pages/secondhand/` — 商品发布页 + 我的发布列表
+- **后端 API**：`SecondHandController` — 发布/列表/删除接口
+- **AI 分析**：发布时自动调用 AI 进行商品分类、建议售价预测
+- **数据扩展**：`StoreProduct` 实体新增 `uid`、`itemCondition`、`aiPredictedPrice`、`aiCategory`、`aiConfidence`、`isSecondHand` 字段
+- **TabBar**：底部导航新增"发布"入口
+
+### 其他调整
+- 更新依赖版本：Lombok 1.18.34、Maven 编译插件 3.13.0
+- 数据库连接升级至 MySQL 8.0.33 驱动
+- 修复部分配置兼容性问题
+
+---
+
+## 技术栈
+
+| 层级 | 技术 |
+|------|------|
+| 后端框架 | SpringBoot 2.2.6.RELEASE |
+| ORM | Mybatis-Plus 3.3.1 |
+| 数据库 | MySQL 5.7+（驱动 8.0.33） |
+| 缓存 | Redis（Jedis） |
+| 权限 | Spring Security |
+| 管理后台 | Vue 2.x + ElementUI 2.13 |
+| 移动端 | uni-app（Vue 2 + Vuex） |
+| 构建工具 | Maven 3.6+ / npm 6+ |
+| JDK | 1.8 |
 
 ---
 
-### 系统演示
+## 运行环境要求
 
-![](crmeb/crmebimage/demoimage/c1.jpg)
-
-管理后台：https://admin.java.crmeb.net <br>
-账号：demo<br>
-密码：crmeb.com<br>
-
-H5端：https://java.crmeb.net<br>
-
-### 项目资料
-资料支持<br>
-使用文档：https://doc.crmeb.com/java/crmeb_java/1868<br>
-接口文档：https://s.apifox.cn/f6079100-abee-40fe-959d-846e44f1a048<br>
-数据字典：https://doc.crmeb.com/java/crmeb_java/5410<br>
-二开文档：https://doc.crmeb.com/java<br>
-技术社区：https://www.crmeb.com/ask/thread/list/152<br>
-
-安装教程<br>
-快速安装视频教程：  [点击查看](https://www.bilibili.com/video/BV1MAiiY5EtP/?spm_id_from=333.1387.search.video_card.click&vd_source=9cea4dcdafd21c93762100c496e0f2a3)<br>
-
-安装步骤详解：https://doc.crmeb.com/java/crmeb_java/2154<br>
+- JDK 1.8
+- MySQL 5.7+
+- Redis
+- Maven 3.6+
+- Node 14+ / npm 6+
 
 ---
-### CRMEB开源技术交流
-欢迎加入CRMEB开源技术交流群，扫码进群免费领取接口文档、功能清单、思维导图等资源！
-![](crmeb/crmebimage/demoimage/wellcomJavaGroup.jpg)
 
-您还可以在 [CRMEB技术社区](https://www.crmeb.com/ask/thread/list/152) 中提交Bug、交流解决方案、获取官方更新动态，CRMEB技术社区伴您一路前行。
+## 模块说明
 
+### crmeb — Java 后端
+Maven 多模块项目，四个子模块：
+- **crmeb-common**：实体类、枚举、工具、配置、异常
+- **crmeb-service**：核心业务逻辑、DAO 层
+- **crmeb-admin**：后台管理接口（端口 8080），含定时任务
+- **crmeb-front**：移动端接口（端口 8081）
 
-[![](crmeb/crmebimage/demoimage/251201002.jpg)](https://www.crmeb.com/index/java_merchant)
+### admin — 管理后台前端
+Vue CLI 构建，ElementUI 组件库，支持页面 DIY 装修、权限管理。
 
-[![](crmeb/crmebimage/demoimage/251201005.jpg)](https://www.crmeb.com/index/java_merchant)
+### app — 移动端（H5/小程序/App）
+uni-app 项目，一套代码发布多端（H5 / 微信小程序 / App）。
 
-[![](crmeb/crmebimage/demoimage/251201004.jpg)](https://www.crmeb.com/index/java_merchant)
+---
 
+## API 接口
+
+移动端 API 前缀（通过 `app/config/app.js` 配置）：
+- 普通接口：`/api/front/`
+- 公开接口：`/api/public/`
+
+默认开发地址：`http://localhost:20510`
+
+---
+
+## 项目资料
+
+- CRMEB 原版文档：https://doc.crmeb.com/java/crmeb_java
+- CRMEB 官网：https://www.crmeb.com
+- 技术社区：https://www.crmeb.com/ask

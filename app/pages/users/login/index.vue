@@ -387,14 +387,20 @@
 					this.$store.commit("SETUID", data.uid);
 					getUserInfo().then(res => {
 						this.$store.commit("UPDATE_USERINFO", res.data);
-						let backUrl = this.$Cache.get(BACK_URL) || "/pages/index/index";
-						if (backUrl.indexOf('/pages/users/login/index') !== -1) {
-							backUrl = '/pages/index/index';
-						}
-						uni.reLaunch({
-							url: backUrl
-						});
-					})
+						uni.showToast({ title: '登录成功', icon: 'success' });
+						setTimeout(() => {
+							let backUrl = this.$Cache.get(BACK_URL) || "/pages/index/index";
+							if (backUrl.indexOf('/pages/users/login/index') !== -1) {
+								backUrl = '/pages/index/index';
+							}
+							uni.reLaunch({ url: backUrl });
+						}, 1200);
+					}).catch(() => {
+						uni.showToast({ title: '登录成功', icon: 'success' });
+						setTimeout(() => {
+							uni.reLaunch({ url: '/pages/index/index' });
+						}, 1200);
+					});
 				},
 			}
 		};

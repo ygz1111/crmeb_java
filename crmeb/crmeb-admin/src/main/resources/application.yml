@@ -1,4 +1,4 @@
-﻿# CRMEB 相关配置
+# CRMEB 相关配置
 crmeb:
   version: CRMEB-JAVA-KY-v1.4 # 当前代码版本
   domain: #配合swagger使用 # 待部署域名

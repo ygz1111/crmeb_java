@@ -5,21 +5,11 @@ import javax.servlet.ServletOutputStream;
 import javax.servlet.WriteListener;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpServletResponseWrapper;
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
+import java.io.*;
+import java.nio.charset.StandardCharsets;
 
 /**
- * Response包装类
- * +----------------------------------------------------------------------
- * | CRMEB [ CRMEB赋能开发者，助力企业发展 ]
- * +----------------------------------------------------------------------
- * | Copyright (c) 2016~2025 https://www.crmeb.com All rights reserved.
- * +----------------------------------------------------------------------
- * | Licensed CRMEB并不是自由软件，未经许可不能去掉CRMEB相关版权
- * +----------------------------------------------------------------------
- * | Author: CRMEB Team <admin@crmeb.com>
- * +----------------------------------------------------------------------
- */
+ * Response包装类*/
 public class ResponseWrapper extends HttpServletResponseWrapper {
 
     private ByteArrayOutputStream buffer;
@@ -35,6 +25,11 @@ public class ResponseWrapper extends HttpServletResponseWrapper {
     @Override
     public ServletOutputStream getOutputStream() {
         return out;
+    }
+
+    @Override
+    public PrintWriter getWriter() throws IOException {
+        return new PrintWriter(new OutputStreamWriter(buffer, StandardCharsets.UTF_8), true);
     }
 
     @Override

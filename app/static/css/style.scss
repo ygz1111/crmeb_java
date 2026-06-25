@@ -1,6 +1,4 @@
 
-/* TEST - 标题变绿验证CSS生效 */
-.navigationBarTitleText, .uni-page-head__title { color: #10B981 !important; }
 .font-color,.font-color-red {
 	@include main_color(theme);
 }
@@ -655,7 +653,7 @@ uni-checkbox:not([disabled]) .uni-checkbox-input:hover{
 			}
 		}
 	}
-/* ===== CRMEB Fresh Mint Design System ===== */
+/* ===== 橙金主题设计系统 ===== */
 /* 全局圆角统一 */
 view, .card, .goods-card, .coupon-card {
   border-radius: 16rpx;
@@ -663,7 +661,7 @@ view, .card, .goods-card, .coupon-card {
 
 /* 卡片阴影 */
 .card, .goods-card, .coupon-card {
-  box-shadow: 0 4rpx 20rpx rgba(5, 150, 105, 0.08);
+  box-shadow: 0 4rpx 20rpx rgba(255, 107, 53, 0.08);
   background: #FFFFFF;
 }
 
@@ -675,7 +673,7 @@ text, view {
 /* 按钮全局 */
 button, .btn-primary {
   border-radius: 12rpx;
-  background: linear-gradient(135deg, #10B981, #059669);
+  background: linear-gradient(135deg, #FF6B35, #FFB627);
   color: #FFFFFF;
 }
 
@@ -687,8 +685,8 @@ button, .btn-primary {
 
 /* 标签 */
 .tag, .badge {
-  background: #ECFDF5;
-  color: #059669;
+  background: #FFF8F3;
+  color: #FF6B35;
   border-radius: 8rpx;
   padding: 4rpx 12rpx;
   font-size: 22rpx;

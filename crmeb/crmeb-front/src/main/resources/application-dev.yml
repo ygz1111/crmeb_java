@@ -1,8 +1,13 @@
-﻿# CRMEB 相关配置
+# CRMEB 相关配置
 crmeb:
   version: CRMEB-JAVA-KY-v1.4 # 当前代码版本
   imagePath: D:/RECM/crmeb_java/crmeb/ # 服务器图片路径配置 斜杠结尾
-  asyncConfig: false #是否同步config表数据到redis
+  asyncConfig: false
+  mlServiceUrl: http://localhost:3000 #是否同步config表数据到redis
+
+recommend:
+  server:
+    url: http://localhost:5000
 
 server:
   port: 20510
@@ -15,7 +20,7 @@ spring:
   datasource:
     type: com.alibaba.druid.pool.DruidDataSource
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://127.0.0.1:3306/single_open?characterEncoding=utf-8&useSSL=false&serverTimezone=GMT%2B8
+    url: jdbc:mysql://127.0.0.1:3306/single_open?characterEncoding=utf-8&useSSL=false&serverTimezone=GMT%2B8&allowPublicKeyRetrieval=true
     username: single_open
     password: 111111
   redis:
@@ -31,5 +36,7 @@ spring:
         max-idle: 10 # 连接池中的最大空闲连接
         min-idle: 0 # 连接池中的最小空闲连接
         time-between-eviction-runs: -1 #逐出扫描的时间间隔(毫秒) 如果为负数,则不运行逐出线程, 默认-1
+
+
 
 

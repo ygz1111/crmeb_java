@@ -1,7 +1,7 @@
 <template>
-	<view class="w-picker">
-		<view class="mask" :class="{'show':showPicker}" @tap="maskTap" @touchmove.stop.prevent catchtouchmove="true"></view>
-		<view class="w-picker-cnt" :class="{'show':showPicker}">
+	<view class="w-picker" :style="{'pointer-events': showPicker ? 'auto' : 'none'}">
+		<view class="mask" :class="{'show':showPicker}" @tap="maskTap" @touchmove.stop.prevent catchtouchmove="true" :style="{'pointer-events': showPicker ? 'auto' : 'none'}"></view>
+		<view class="w-picker-cnt" :class="{'show':showPicker}" :style="{'pointer-events': showPicker ? 'auto' : 'none'}">
 			<view class="w-picker-hd" @touchmove.stop.prevent catchtouchmove="true">
 			  <view class="w-picker-btn" @tap="pickerCancel">取消</view>
 			  <view class="w-picker-btn" :style="{'color':themeColor}" @tap="pickerConfirm">确定</view>

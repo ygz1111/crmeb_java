@@ -49,7 +49,7 @@
 			//校验token是否有效,true为有效，false为无效
 			tokenIsExistApi().then(res => {
 				this.globalData.tokenIsExist = res.data;
-			})
+			}).catch(() => {});
 
 			let that = this;
 			// #ifdef APP-PLUS || H5
@@ -212,7 +212,7 @@
 				// #ifdef H5
 				window.document.documentElement.setAttribute('data-theme', that.globalData.theme);
 				// #endif
-			})
+			}).catch(() => {});
 		},
 		async mounted() {
 			if (this.$store.getters.isLogin && !this.$Cache.get('USER_INFO')) await this.$store.dispatch('USERINFO');
@@ -240,20 +240,7 @@
 				})
 			}
 		},
-		onShow: function() {
-			// #ifdef H5
-			uni.getSystemInfo({
-				success(e) {
-					/* 窗口宽度大于420px且不在PC页面且不在移动设备时跳转至 PC.html 页面 */
-					if (e.windowWidth > 430 && !window.top.isPC && !/iOS|Android/i.test(e.system)) {
-						// window.location.pathname = 'https://java.crmeb.net/';
-						/* 若你的项目未设置根目录（默认为 / 时），则使用下方代码 */
-						window.location.pathname = '/static/html/pc.html';
-					}
-				}
-			})
-			// #endif
-		},
+		onShow: function() {},
 		onHide: function() {}
 	}
 </script>

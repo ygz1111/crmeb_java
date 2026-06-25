@@ -14,17 +14,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
- * 易联云打印订单
- * +----------------------------------------------------------------------
- * | CRMEB [ CRMEB赋能开发者，助力企业发展 ]
- * +----------------------------------------------------------------------
- * | Copyright (c) 2016~2025 https://www.crmeb.com All rights reserved.
- * +----------------------------------------------------------------------
- * | Licensed CRMEB并不是自由软件，未经许可不能去掉CRMEB相关版权
- * +----------------------------------------------------------------------
- * | Author: CRMEB Team <admin@crmeb.com>
- * +----------------------------------------------------------------------
- */
+ * 易联云打印订单*/
 @Slf4j
 @RestController
 @RequestMapping("api/admin/yly")

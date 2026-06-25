@@ -9,17 +9,7 @@ import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 
 /**
- * 推广列表参数
- * +----------------------------------------------------------------------
- * | CRMEB [ CRMEB赋能开发者，助力企业发展 ]
- * +----------------------------------------------------------------------
- * | Copyright (c) 2016~2025 https://www.crmeb.com All rights reserved.
- * +----------------------------------------------------------------------
- * | Licensed CRMEB并不是自由软件，未经许可不能去掉CRMEB相关版权
- * +----------------------------------------------------------------------
- * | Author: CRMEB Team <admin@crmeb.com>
- * +----------------------------------------------------------------------
- */
+ * 推广列表参数*/
 @Data
 @ApiModel(value = "RetailShopStairUserRequest对象", description = "推广等级参数")
 public class RetailShopStairUserRequest {

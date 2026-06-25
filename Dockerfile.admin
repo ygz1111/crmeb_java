@@ -1,0 +1,6 @@
+FROM docker.m.daocloud.io/eclipse-temurin:8-jre
+WORKDIR /app
+COPY crmeb/crmeb-admin/target/Crmeb-admin.jar app.jar
+RUN mkdir -p /home/crmeb/upload
+EXPOSE 20400
+ENTRYPOINT ["sh", "-c", "java ${JAVA_OPTS:-'-Xms128m -Xmx256m -XX:+UseG1GC'} -jar app.jar --spring.profiles.active=${SPRING_PROFILES_ACTIVE:-docker}"]

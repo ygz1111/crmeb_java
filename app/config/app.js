@@ -1,4 +1,4 @@
-﻿// +----------------------------------------------------------------------
+// +----------------------------------------------------------------------
 // | CRMEB [ CRMEB赋能开发者，助力企业发展 ]
 // +----------------------------------------------------------------------
 // | Copyright (c) 2016~2025 https://www.crmeb.com All rights reserved.
@@ -9,15 +9,11 @@
 // +----------------------------------------------------------------------
 //移动端商城API
 let domain = 'http://localhost:20510'
-// let domain = 'https://apif.java.crmeb.net'
 
 module.exports = {
 	// 请求域名 格式： https://您的域名
 	// #ifdef MP || APP-PLUS
-		// HTTP_REQUEST_URL:'',
-		HTTP_REQUEST_URL: domain,
-		// H5商城地址
-		HTTP_H5_URL: 'http://java.crmeb.net',
+		HTTP_REQUEST_URL:'http://localhost:20510',
 	// #endif
 	// #ifdef H5
 		HTTP_REQUEST_URL:domain,
@@ -35,3 +31,4 @@ module.exports = {
 	//分页最多显示条数
 	LIMIT: 10
 };
+

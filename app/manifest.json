@@ -1,6 +1,6 @@
 {
     "name" : "CRMEB",
-    "appid" : "__UNI__D911EFA",
+    "appid" : "__UNI__302906F",
     "description" : "crmeb商城",
     "versionName" : "2.1",
     "versionCode" : 2,
@@ -190,8 +190,9 @@
         },
         "router" : {
             "mode" : "history",
-            "base" : ""
+            "base" : "/h5/"
         },
+        "publicPath" : "/h5/",
         "domain" : "",
         "sdkConfigs" : {
             "maps" : {

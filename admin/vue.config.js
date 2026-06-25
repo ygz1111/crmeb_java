@@ -1,4 +1,4 @@
-﻿'use strict';
+'use strict';
 const path = require('path');
 const defaultSettings = require('./src/settings.js');
 
@@ -25,7 +25,7 @@ module.exports = {
    * Detail: https://cli.vuejs.org/config/#publicpath
    */
   transpileDependencies: ['element-ui', 'vuex', 'js-cookie', '@babel', 'resize-detector'],
-  publicPath: '/',
+  publicPath: process.env.NODE_ENV === 'production' ? '/admin/' : '/',
   outputDir: 'dist',
   assetsDir: 'static',
   lintOnSave: process.env.NODE_ENV === 'development',
@@ -38,6 +38,11 @@ module.exports = {
       errors: true,
     },
     proxy: {
+      '/api/front/recommend': {
+        target: 'http://localhost:5000',
+        changeOrigin: true,
+        pathRewrite: { '^/api/front/recommend': '/api/recommend' },
+      },
       '/api': {
         target: 'http://localhost:20500',
         changeOrigin: true,

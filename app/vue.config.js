@@ -1,8 +1,16 @@
-﻿module.exports = {
+module.exports = {
 	productionSourceMap: true,
 	devServer: {
 		port: 8080,
 		proxy: {
+			'/api/identify': {
+				target: 'http://localhost:3000',
+				changeOrigin: true,
+			},
+			'/api': {
+				target: 'http://localhost:20510',
+				changeOrigin: true,
+			},
 			'/crmebimage': {
 				target: 'http://localhost:20510',
 				changeOrigin: true,

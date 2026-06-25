@@ -1,17 +1,17 @@
-﻿/*定义全局颜色变量*/
-/*主色 — 翡翠绿系*/
-$main-color-theme1:#10B981;
-$main-color-theme2:#059669;
-$main-color-theme3:#10B981;
-$main-color-theme4:#059669;
-$main-color-theme5:#10B981;
+﻿/*定义全局颜色变量 — 转享·活力橙金主题*/
+/*主色 — 暖橙系 #FF6B35*/
+$main-color-theme1:#FF6B35;
+$main-color-theme2:#FF6B35;
+$main-color-theme3:#FF6B35;
+$main-color-theme4:#FF6B35;
+$main-color-theme5:#FF6B35;
 
-/* 辅色*/
-$second-color-theme1:#34D399;
-$second-color-theme2:#34D399;
-$second-color-theme3:#34D399;
-$second-color-theme4:#6EE7B7;
-$second-color-theme5:#6EE7B7;
+/* 辅色 — 金黄 #FFB627*/
+$second-color-theme1:#FFB627;
+$second-color-theme2:#FFB627;
+$second-color-theme3:#FFB627;
+$second-color-theme4:#FFB627;
+$second-color-theme5:#FFB627;
 
 /* 价格色 — 保持醒目红色*/
 $price-color-theme1:#EF4444;
@@ -21,91 +21,91 @@ $price-color-theme4:#EF4444;
 $price-color-theme5:#EF4444;
 
 /*左侧按钮*/
-$left-button-color1:#34D399;
-$left-button-color2:#34D399;
-$left-button-color3:#34D399;
-$left-button-color4:#6EE7B7;
-$left-button-color5:#6EE7B7;
+$left-button-color1:#FFB627;
+$left-button-color2:#FFB627;
+$left-button-color3:#FFB627;
+$left-button-color4:#FFB627;
+$left-button-color5:#FFB627;
 
-// 首页渐变 — 清新翠绿渐变
-$index-gradient-color1: 180deg, #ECFDF5 0%, #D1FAE5 100%;
-$index-gradient-color2: 180deg, #ECFDF5 0%, #D1FAE5 100%;
-$index-gradient-color3: 180deg, #ECFDF5 0%, #D1FAE5 100%;
-$index-gradient-color4: 180deg, #ECFDF5 0%, #D1FAE5 100%;
-$index-gradient-color5: 180deg, #ECFDF5 0%, #D1FAE5 100%;
+// 首页渐变 — 暖橙浅底
+$index-gradient-color1: 180deg, #FFF8F3 0%, #FFE9D6 100%;
+$index-gradient-color2: 180deg, #FFF8F3 0%, #FFE9D6 100%;
+$index-gradient-color3: 180deg, #FFF8F3 0%, #FFE9D6 100%;
+$index-gradient-color4: 180deg, #FFF8F3 0%, #FFE9D6 100%;
+$index-gradient-color5: 180deg, #FFF8F3 0%, #FFE9D6 100%;
 
 //
-$miaosha-grradient-color1:270deg, #10B981 0%, rgba(255, 255, 255, 0.2) 72%, rgba(255, 255, 255, 1) 100%;
-$miaosha-grradient-color2:270deg, #059669 0%, rgba(255, 255, 255, 0.2) 72%, rgba(255, 255, 255, 1) 100%;
-$miaosha-grradient-color3:270deg, #34D399 0%, rgba(255, 255, 255, 0.2) 72%, rgba(255, 255, 255, 1) 100%;
-$miaosha-grradient-color4:270deg, #10B981 0%, rgba(255, 255, 255, 0.2) 72%, rgba(255, 255, 255, 1) 100%;
-$miaosha-grradient-color5:270deg, #059669 0%, rgba(255, 255, 255, 0.2) 72%, rgba(255, 255, 255, 1) 100%;
+$miaosha-grradient-color1:270deg, #FF6B35 0%, rgba(255, 255, 255, 0.2) 72%, rgba(255, 255, 255, 1) 100%;
+$miaosha-grradient-color2:270deg, #FF6B35 0%, rgba(255, 255, 255, 0.2) 72%, rgba(255, 255, 255, 1) 100%;
+$miaosha-grradient-color3:270deg, #FFB627 0%, rgba(255, 255, 255, 0.2) 72%, rgba(255, 255, 255, 1) 100%;
+$miaosha-grradient-color4:270deg, #FF6B35 0%, rgba(255, 255, 255, 0.2) 72%, rgba(255, 255, 255, 1) 100%;
+$miaosha-grradient-color5:270deg, #FF6B35 0%, rgba(255, 255, 255, 0.2) 72%, rgba(255, 255, 255, 1) 100%;
 
-/*主渐变色 — 翡翠渐变*/
-$main-gradient-color1: 135deg, #10B981 0%, #059669 100%;
-$main-gradient-color2: 135deg, #34D399 0%, #10B981 100%;
-$main-gradient-color3: 135deg, #10B981 0%, #059669 100%;
-$main-gradient-color4: 135deg, #34D399 0%, #10B981 100%;
-$main-gradient-color5: 135deg, #10B981 0%, #059669 100%;
+/*主渐变色 — 橙金渐变*/
+$main-gradient-color1: 135deg, #FF6B35 0%, #FFB627 100%;
+$main-gradient-color2: 135deg, #FFB627 0%, #FF6B35 100%;
+$main-gradient-color3: 135deg, #FF6B35 0%, #FFB627 100%;
+$main-gradient-color4: 135deg, #FFB627 0%, #FF6B35 100%;
+$main-gradient-color5: 135deg, #FF6B35 0%, #FFB627 100%;
 
 /*辅色渐变*/
-$second-gradient-color1:135deg, #6EE7B7 0%, #34D399 100%;
-$second-gradient-color2:135deg, #A7F3D0 0%, #6EE7B7 100%;
-$second-gradient-color3:135deg, #6EE7B7 0%, #34D399 100%;
-$second-gradient-color4:135deg, #A7F3D0 0%, #6EE7B7 100%;
-$second-gradient-color5:135deg, #6EE7B7 0%, #34D399 100%;
+$second-gradient-color1:135deg, #FFD480 0%, #FFB627 100%;
+$second-gradient-color2:135deg, #FFE9B8 0%, #FFD480 100%;
+$second-gradient-color3:135deg, #FFD480 0%, #FFB627 100%;
+$second-gradient-color4:135deg, #FFE9B8 0%, #FFD480 100%;
+$second-gradient-color5:135deg, #FFD480 0%, #FFB627 100%;
 
 // 优惠券渐变色
-$coupons-gradient-color1:135deg, #10B981 0%, #059669 100%;
-$coupons-gradient-color2:135deg, #34D399 0%, #10B981 100%;
-$coupons-gradient-color3:135deg, #10B981 0%, #059669 100%;
-$coupons-gradient-color4:135deg, #34D399 0%, #10B981 100%;
-$coupons-gradient-color5:135deg, #10B981 0%, #059669 100%;
+$coupons-gradient-color1:135deg, #FF6B35 0%, #FFB627 100%;
+$coupons-gradient-color2:135deg, #FFB627 0%, #FF6B35 100%;
+$coupons-gradient-color3:135deg, #FF6B35 0%, #FFB627 100%;
+$coupons-gradient-color4:135deg, #FFB627 0%, #FF6B35 100%;
+$coupons-gradient-color5:135deg, #FF6B35 0%, #FFB627 100%;
 
 //砍价按钮渐变
-$bargain-btn-color1:135deg, #10B981 0%, #059669 100%;
-$bargain-btn-color2:135deg, #34D399 0%, #10B981 100%;
-$bargain-btn-color3:135deg, #10B981 0%, #059669 100%;
-$bargain-btn-color4:135deg, #34D399 0%, #10B981 100%;
-$bargain-btn-color5:135deg, #10B981 0%, #059669 100%;
+$bargain-btn-color1:135deg, #FF6B35 0%, #FFB627 100%;
+$bargain-btn-color2:135deg, #FFB627 0%, #FF6B35 100%;
+$bargain-btn-color3:135deg, #FF6B35 0%, #FFB627 100%;
+$bargain-btn-color4:135deg, #FFB627 0%, #FF6B35 100%;
+$bargain-btn-color5:135deg, #FF6B35 0%, #FFB627 100%;
 
 //分类页二级菜单按钮颜色
-$nav-two-btn1:#ECFDF5;
-$nav-two-btn2:#ECFDF5;
-$nav-two-btn3:#ECFDF5;
-$nav-two-btn4:#ECFDF5;
-$nav-two-btn5:#ECFDF5;
+$nav-two-btn1:#FFF8F3;
+$nav-two-btn2:#FFF8F3;
+$nav-two-btn3:#FFF8F3;
+$nav-two-btn4:#FFF8F3;
+$nav-two-btn5:#FFF8F3;
 
-$coupons-border1: 1px solid #10B981;
-$coupons-border2: 1px solid #059669;
-$coupons-border3: 1px solid #10B981;
-$coupons-border4: 1px solid #059669;
-$coupons-border5: 1px solid #10B981;
+$coupons-border1: 1px solid #FF6B35;
+$coupons-border2: 1px solid #FF6B35;
+$coupons-border3: 1px solid #FF6B35;
+$coupons-border4: 1px solid #FF6B35;
+$coupons-border5: 1px solid #FF6B35;
 
 // 优惠券浅色
-$coupons-light-color1:#D1FAE5;
-$coupons-light-color2:#D1FAE5;
-$coupons-light-color3:#D1FAE5;
-$coupons-light-color4:#D1FAE5;
-$coupons-light-color5:#D1FAE5;
+$coupons-light-color1:#FFE9D6;
+$coupons-light-color2:#FFE9D6;
+$coupons-light-color3:#FFE9D6;
+$coupons-light-color4:#FFE9D6;
+$coupons-light-color5:#FFE9D6;
 
 //tab下划线
-$tab-border-bottom1:4rpx solid #10B981;
-$tab-border-bottom2:4rpx solid #059669;
-$tab-border-bottom3:4rpx solid #10B981;
-$tab-border-bottom4:4rpx solid #059669;
-$tab-border-bottom5:4rpx solid #10B981;
+$tab-border-bottom1:4rpx solid #FF6B35;
+$tab-border-bottom2:4rpx solid #FF6B35;
+$tab-border-bottom3:4rpx solid #FF6B35;
+$tab-border-bottom4:4rpx solid #FF6B35;
+$tab-border-bottom5:4rpx solid #FF6B35;
 
 //小三角
-$bragin-border-rate1:#10B981 transparent transparent;
-$bragin-border-rate2:#059669 transparent transparent;
-$bragin-border-rate3:#10B981 transparent transparent;
-$bragin-border-rate4:#059669 transparent transparent;
-$bragin-border-rate5:#10B981 transparent transparent;
+$bragin-border-rate1:#FF6B35 transparent transparent;
+$bragin-border-rate2:#FF6B35 transparent transparent;
+$bragin-border-rate3:#FF6B35 transparent transparent;
+$bragin-border-rate4:#FF6B35 transparent transparent;
+$bragin-border-rate5:#FF6B35 transparent transparent;
 
 /*手机登录渐变色*/
-$logn-gradient-color1: 180deg, rgba(16,185,129,0.15) 0%, rgba(255,255,255,0) 100%;
-$logn-gradient-color2: 180deg, rgba(5,150,105,0.15) 0%, rgba(255,255,255,0) 100%;
-$logn-gradient-color3: 180deg, rgba(16,185,129,0.15) 0%, rgba(255,255,255,0) 100%;
-$logn-gradient-color4: 180deg, rgba(5,150,105,0.15) 0%, rgba(255,255,255,0) 100%;
-$logn-gradient-color5: 180deg, rgba(16,185,129,0.15) 0%, rgba(255,255,255,0) 100%;
+$logn-gradient-color1: 180deg, rgba(255,107,53,0.15) 0%, rgba(255,255,255,0) 100%;
+$logn-gradient-color2: 180deg, rgba(255,107,53,0.15) 0%, rgba(255,255,255,0) 100%;
+$logn-gradient-color3: 180deg, rgba(255,107,53,0.15) 0%, rgba(255,255,255,0) 100%;
+$logn-gradient-color4: 180deg, rgba(255,107,53,0.15) 0%, rgba(255,255,255,0) 100%;
+$logn-gradient-color5: 180deg, rgba(255,107,53,0.15) 0%, rgba(255,255,255,0) 100%;

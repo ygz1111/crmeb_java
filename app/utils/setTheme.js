@@ -12,19 +12,19 @@ let app = getApp();
 export function setThemeColor(){
 	switch (app.globalData.theme) {
 		case 'theme1':
-			return '#e93323';
+			return '#FF6B35';
 			break;
 		case 'theme2':
-			return '#FE5C2D';
+			return '#FF6B35';
 			break;
 		case 'theme3':
-			return '#42CA4D';
+			return '#FF6B35';
 			break;
 		case 'theme4':
-			return '#1DB0FC';
+			return '#FF6B35';
 			break;
 		case 'theme5':
-			return '#FF448F';
+			return '#FF6B35';
 			break;
 	}
 }

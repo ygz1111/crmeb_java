@@ -53,10 +53,14 @@
 				}
 			},
 			//富文本内容
-			description() {
-				return this.dataConfig.richText.val.replace(/<video/g, "<video style='width:100%'").replace(/\<img/gi, '<img style="max-width:100%;height:auto" ')
-					.replace(/style="text-wrap: wrap;"/gi, '');
-			}
+				description() {
+					const raw = this.dataConfig.richText.val;
+					// 屏蔽后端 DIY 下发的版权/备案/技术支持类文字
+					const blocklist = /备案|版权|ICP|技术支持|CRMEB|crmeb\.com|powered\s+by|品牌故事/i;
+					if (blocklist.test(raw)) return '';
+					return raw.replace(/<video/g, "<video style='width:100%'").replace(/\<img/gi, '<img style="max-width:100%;height:auto" ')
+						.replace(/style="text-wrap: wrap;"/gi, '');
+				}
 		},
 		methods: {
 

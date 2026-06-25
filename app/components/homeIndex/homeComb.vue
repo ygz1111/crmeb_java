@@ -85,7 +85,7 @@
 				</view>
 			</view>
 			<!-- #endif -->
-			<view v-if="tabShowConfig" class="navTabBox tabNav tui-skeletonpictrue acea-row" :style="'top:'+isTop">
+			<view v-if="false" class="navTabBox tabNav tui-skeletonpictrue acea-row" :style="'top:'+isTop">
 				<view class="longTab">
 					<scroll-view scroll-x="true" style="white-space: nowrap; display: flex;" scroll-with-animation
 						:scroll-left="tabLeft" show-scrollbar="true">
@@ -99,7 +99,6 @@
 								</view>
 							</view>
 						</view>
-
 					</scroll-view>
 				</view>
 				<view class="category">
@@ -107,7 +106,7 @@
 					<text v-if="!isShow" class="iconfont icon-xiangxia" @click="isShow=true"></text>
 				</view>
 			</view>
-			<view v-if="isShow" class="navChangeBox" catchtouchmove="true" :style="'top:'+isTop">
+			<view v-if="false" class="navChangeBox" catchtouchmove="true" :style="'top:'+isTop">
 				<view class="navChange">
 					<block v-for="(item,index) in tabList" :key="index">
 						<view class="titleBox">
@@ -119,12 +118,10 @@
 				<view class="mask" @touchmove.prevent :hidden="!isShow" @click="isShow=false"></view>
 			</view>
 		</view>
-
 		<!-- banner -->
-		<view class="swiperBg" :style="{ marginTop: swiperTop+'px'}">
+		<view class="swiperBg">
 			<view class="swiper page_swiper" v-if="navIndex === 0">
 				<swiper :autoplay="true" :circular="circular" :interval="intervalBanner" :duration="duration"
-					:previous-margin="swiperType==0?'30rpx':''" :next-margin="swiperType==0?'30rpx':''"
 					:current="swiperCur" @change="swiperChange">
 					<block v-for="(item,index) in banner" :key="index">
 						<swiper-item :style="[contentStyleBanner]" :class="{ active: index == swiperCur }"
@@ -154,10 +151,10 @@
 				</view>
 			</view>
 		</view>
-
+		<!-- 轮播图占位 -->
+		<view style="height: 460rpx;"></view>
 	</view>
 </template>
-
 <script>
 	// +----------------------------------------------------------------------
 	// | CRMEB [ CRMEB赋能开发者，助力企业发展 ]
@@ -280,17 +277,13 @@
 				}
 			},
 			//判断logo图是否展示
-			logoConfig() {
-				return this.dataConfig.logoConfig.url && this.dataConfig.searConfig.tabVal === 1
-			},
-			//logo图
-			logoUrl() {
-				if (this.isScrolled && this.dataConfig.logoFixConfig.url) {
-					return this.dataConfig.logoFixConfig.url
-				} else {
-					return this.dataConfig.logoConfig.url
-				}
-			},
+				logoConfig() {
+					return true // 转享：始终显示自有 logo
+				},
+				//logo图 — 硬编码指向自有品牌 logo，不再依赖后端 DIY 下发
+				logoUrl() {
+					return '/static/brand/logo.png'
+				},
 			//标签文字颜色
 			textColor() {
 				return this.dataConfig.fontColor.color[0].item;
@@ -314,7 +307,7 @@
 			searchBoxStyle() {
 				return {
 					borderRadius: this.dataConfig.contentStyle.val ? this.dataConfig.contentStyle.val + 'px' : '0',
-					backgroundColor: this.dataConfig.borderColor.color[0].item,
+					background: 'transparent',
 					color: this.dataConfig.textColor.color[0].item,
 					textAlign: this.dataConfig.textPosition.list[this.dataConfig.textPosition.tabVal].style,
 					// #ifdef MP
@@ -343,13 +336,10 @@
 		created() {
 			// #ifdef MP || APP-PLUS
 			this.isTop = (this.isSmallPage ? 0 : this.statusBarHeight) + 48 + 'px' //分类的top值
-			// this.tabShowConfig，true有分类,false无分类
-			if (!this.tabShowConfig) {
-				this.myMainHeight = (this.isSmallPage ? 0 : this.statusBarHeight) + 40 + 10; //头部tab切换页和搜索按钮的高度和，10是下边距
-			} else {
-				this.myMainHeight = (this.isSmallPage ? 0 : this.statusBarHeight) + 40 + 42; //头部tab切换页和搜索按钮的高度和
-			}
-			// #endif
+						this.isTop = (this.isSmallPage ? 0 : this.statusBarHeight) + 48 + 'px' //分类的top值
+						// 导航栏已隐藏，始终使用无导航栏高度
+						this.myMainHeight = (this.isSmallPage ? 0 : this.statusBarHeight) + 40 + 10; //头部tab切换页和搜索按钮的高度和，10是下边距
+						// #endif
 			
 			// #ifdef MP
 			const res = uni.getMenuButtonBoundingClientRect()
@@ -366,54 +356,26 @@
 				}
 			})
 			// #endif
-
 			// #ifdef H5
 			this.isTop = 0
 			this.myMainHeight = 'auto';
-
 			// #endif
-
 			this.isWidth = (this.mainWidth - 65) / 4;
 			setTimeout((e) => {
 				const query = uni.createSelectorQuery().in(this);
 				query.select('.header').boundingClientRect(res => {
-					if (res) this.marTop = res.height //头部的高度
+					if (res) this.marTop = res.height
 				}).exec();
-
-				//展示与不展示分类的距离值判断
 				if (!this.tabShowConfig) {
-					// 不展示分类
 					query.select('.swiperBg').boundingClientRect(res => {
-						// #ifdef H5
-						this.swiperTop = this.navHeight + this.marTop + this.statusBarHeight +
-							4; //轮播图的top值
-						//#endif
-						// #ifndef H5
-						if (this.isSmallPage) {
-							this.swiperTop = this.statusBarHeight; //轮播图的top值
-						} else {
-							this.swiperTop = this.statusBarHeight + 48; //轮播图的top值
-						}
-						//#endif
+						this.swiperTop = 0;
 					}).exec();
 				} else {
-					//展示分类
 					query.select('.navTabBox').boundingClientRect(data => {
-						this.navHeight = data.height //元素navHeight的高度
-						// #ifdef H5
-						this.swiperTop = this.navHeight + this.marTop + this.statusBarHeight +
-							4; //轮播图的top值
-						//#endif
-						// #ifndef H5
-						if (this.isSmallPage) {
-							this.swiperTop = 85; //轮播图的top值
-						} else {
-							this.swiperTop = this.statusBarHeight + 85; //轮播图的top值
-						}
-						//#endif
+						if (data) this.navHeight = data.height
+						this.swiperTop = 0;
 					}).exec();
 				}
-
 			}, 200)
 		},
 		methods: {
@@ -455,7 +417,6 @@
 		}
 	}
 </script>
-
 <style lang="scss" scoped>
 	.uninput {
 		/* #ifdef MP */
@@ -465,25 +426,19 @@
 		width: 100% !important;
 		/* #endif */
 	}
-
 	.icon-sousuo8 {
 		font-size: 15px;
-
 	}
-
 	.bgwhite {
 		background-color: #fff !important;
 	}
-
 	.mask {
 		z-index: 999;
 		top: 260rpx;
 	}
-
 	.navChangeBox {
 		position: relative;
 	}
-
 	.navChange {
 		background-color: #fff;
 		position: absolute;
@@ -496,54 +451,44 @@
 		grid-template-columns: repeat(5, 1fr);
 		grid-column-gap: 10rpx;
 		grid-row-gap: 20rpx;
-
 		.nobg {
 			background-color: #fff !important;
 		}
-
 		.titleBox {
 			height: 58rpx;
 			background: #F2F2F2;
 			border-radius: 8rpx;
 			text-align: center;
 		}
-
 		.title {
 			margin: 0 auto;
 			display: inline-block;
 			width: 118rpx;
 			height: 58rpx;
-			line-height: 58rpx;
+			line-height: 50rpx;
 			text-align: center;
-
 			opacity: 1;
 			color: #333333;
 			font-size: 24rpx;
 		}
-
 		.titleBox:nth-child(5n) {
 			margin-right: 0;
 		}
-
 		.titleBox:last-child {
 			margin-bottom: 0;
 		}
-
 		.changed {
 			border-radius: 8rpx;
 			@include cate-two-btn(theme);
 			@include coupons_border_color(theme);
-
 			.title {
 				@include main_color(theme);
 			}
 		}
 	}
-
 	.row-middle {
 		flex-direction: column;
 	}
-
 	.navTabBox {
 		width: 100%;
 		height: 66rpx;
@@ -553,7 +498,6 @@
 		display: flex;
 		justify-content: space-between;
 		z-index: 9;
-
 		&.isFixed {
 			z-index: 10;
 			position: fixed;
@@ -563,66 +507,57 @@
 			top: 0;
 			/* #endif */
 		}
-
 		.click {
 			color: white;
 		}
-
 		.longTab {
 			width: 94%;
-
 			.longItem {
 				//height: 72rpx;
 				display: inline-block;
-				// line-height: 52rpx;
+				// line-height: 62rpx;
 				text-align: center;
 				font-size: 28rpx;
 				color: #fff;
 				white-space: nowrap;
 				text-overflow: ellipsis;
 				margin-right: 42rpx;
-
 				&.click {
 					font-weight: bold;
 					font-size: 30rpx;
 					color: #fff;
 					font-weight: bold;
 				}
-
 				.name {
 					height: 48rpx;
 				}
 			}
-
 			.underlineBox {
 				margin-top: 8rpx;
 				height: 3px;
 				transition: .5s;
-
 				.underline {
 					width: 33rpx;
 					height: 4rpx;
 				}
 			}
 		}
-
 		.category {
 			height: 66rpx;
 			line-height: 46rpx;
 			z-index: 3;
-
 			// padding: 0 15rpx 0 25rpx;
 			.iconfont {
 				font-size: 24rpx;
 			}
 		}
 	}
-
-
 	.swiperBg {
+		position: absolute;
+		left: 0;
+		top: 0;
+		width: 100%;
 		z-index: 1;
-		margin-top: 10rpx;
-
 		.colorBg {
 			position: absolute;
 			left: 0;
@@ -630,61 +565,50 @@
 			height: 130rpx;
 			width: 100%;
 		}
-
 		.page_swiper {
 			position: relative;
 			width: 100%;
 			height: auto;
 			margin: 0 auto;
-			border-radius: 10rpx;
+			border-radius: 16rpx;
 			overflow: hidden;
 			z-index: 8;
-			padding:  0rpx 20rpx 0rpx;
-
+			padding: 0;
 			image {
 				width: 100%;
-				height: 310rpx;
+				height: 460rpx;
 				margin: 0 auto;
-				border-radius: 10rpx;
+				border-radius: 16rpx;
 			}
-
 			.acea-row.row-between-wrapper {
-				height: 310rpx;
+				height: 460rpx;
 				margin: 0 auto;
-				border-radius: 10rpx;
+				border-radius: 16rpx;
 			}
-
 			.acea-row.row-between-wrapper-1 {
 				width: 100%;
 			}
-
 			.acea-row.row-between-wrapper-2 {
-				width: 97%;
+				width: 100%;
 			}
-
 			swiper {
 				width: 100%;
 				display: block;
-				height: 310rpx;
-
+				height: 460rpx;
 				&.scalex {
 					/deep/.uni-swiper-slide-frame {
 						transform: translate(0, 0) !important;
 					}
 				}
 			}
-
 			image {
-				transform: scale(0.96);
 				transition: all 0.6s ease;
 			}
-
 			/deep/ swiper-item.active {
 				image {
 					transform: scale(1);
 				}
 			}
-
 			/*用来包裹所有的小圆点  */
 			.dots {
 				display: flex;
@@ -694,7 +618,6 @@
 				align-items: center;
 				width: 100%;
 			}
-
 			.dot-item {
 				width: 10rpx;
 				height: 10rpx;
@@ -702,7 +625,6 @@
 				border-radius: 50%;
 				margin: 0 6rpx;
 			}
-
 			/*未选中时的小圆点样式 */
 			.dot {
 				width: 16rpx;
@@ -713,54 +635,43 @@
 			}
 		}
 	}
-
 	.scrolled {
 		z-index: 5000;
 		position: fixed;
 		left: 0;
 		top: 0;
 		width: 100%;
-		background-color: #fff !important;
+				background-color: rgba(255,255,255,0.75) !important;
 		color: #000 !important;
 		transition: background-color .5s ease;
-
 		.longItem,
 		.click,
 		.category text {
 			color: #000 !important;
 		}
-
 		.btn .iconfont {
 			color: #333 !important;
 		}
-
 		.iconnum {
 			background: #333 !important;
 		}
-
 		.underline {
 			background: #000 !important;
 		}
-
 		.click {
 			&::after {
 				background-color: #fff !important;
 			}
 		}
-
 		.input,
 		.uninput {
-
-			background-color: #eee !important;
+					background-color: rgba(255,255,255,0.85) !important;
 		}
 	}
-
 	.page_count {
 		position: relative;
 		overflow: hidden;
 		background-repeat: no-repeat;
-
-
 		.bg-img {
 			position: absolute;
 			width: 100%;
@@ -775,14 +686,12 @@
 			z-index: 0;
 			filter: blur(0);
 			overflow: hidden;
-
 			img {
 				width: 100%;
 				height: 100%;
 				filter: blur(30rpx);
 				transform: scale(1.5);
 			}
-
 			.maskBg {
 				position: absolute;
 				bottom: 0;
@@ -792,58 +701,54 @@
 			}
 		}
 	}
-
 	.my-main {
 		left: 0;
 		position: fixed;
 		top: 0;
 		width: 100%;
 		z-index: 30;
+		background: transparent;
 		transition: background-color .5s ease;
 	}
-
 	.page_count {
-
 		.header {
 			width: 100%;
 			padding: 24rpx;
-
+			background: transparent;
 			.serch-wrapper {
 				align-items: center;
-
 				.logo {
-					width: 118rpx;
-					margin-right: 24rpx;
+					width: 220rpx;
+					margin-right: 16rpx;
 				}
-
 				image {
-					width: 118rpx;
-					height: 42rpx;
+					width: 220rpx;
+					height: 88rpx;
 				}
-
 				.input {
 					display: flex;
 					align-items: center;
-					width: 546rpx;
-					height: 55rpx;
-					padding-left: 20rpx;
+					flex: 1;
+					height: 64rpx;
+					padding-left: 24rpx;
 					font-size: 26rpx;
 					padding-right: 4rpx;
 					box-sizing: border-box;
-
+					background: transparent;
+					border: 1rpx solid rgba(255, 255, 255, 0.6);
+					border-radius: 32rpx;
+					color: #fff;
 					.iconfont {
-						margin-right: 4rpx;
-						font-size: 26rpx;
-						color: #666666;
+						margin-right: 8rpx;
+						font-size: 28rpx;
+						color: #fff;
 					}
 				}
 			}
-
 			.tabNav {
 				padding-top: 24rpx;
 			}
 		}
-
 		/* #ifdef MP || APP-PLUS */
 		.mp-header {
 			z-index: 999;
@@ -851,45 +756,46 @@
 			left: 0;
 			top: 0;
 			width: 100%;
+			background: transparent;
 			/* #ifdef H5 */
 			padding-bottom: 20rpx;
 			/* #endif */
-
 			.serch-wrapper {
 				height: 100%;
 				align-items: center;
 				padding: 0 24rpx 0 24rpx;
-
 				image {
 					width: 118rpx;
-					height: 42rpx;
+					height: 64rpx;
 					margin-right: 30rpx;
 				}
-
 				.input {
 					display: flex;
 					align-items: center;
 					/* #ifdef MP */
-					width: 365rpx;
+					flex: 1;
 					/* #endif */
 					/* #ifndef MP */
-					width: 546rpx;
+					flex: 1;
 					/* #endif */
 					/* #ifdef APP-PLUS */
 					flex: 1;
 					/* #endif */
-					height: 50rpx;
-					padding-left: 20rpx;
+					height: 60rpx;
+					padding-left: 24rpx;
 					font-size: 28rpx;
 					box-sizing: border-box;
-
+					background: transparent;
+					border: 1rpx solid rgba(255, 255, 255, 0.6);
+					border-radius: 30rpx;
+					color: #fff;
 					.iconfont {
 						margin-right: 20rpx;
+						color: #fff;
 					}
 				}
 			}
 		}
-
 		/* #endif */
 		.swiperTxt {
 			width: 100%;
@@ -897,12 +803,9 @@
 			line-height: 52rpx;
 			overflow: hidden;
 		}
-
 		.swiperTxt .text {
 			width: 100%;
-
 		}
-
 		.swiperTxt .text .label {
 			font-size: 20rpx;
 			color: #ff4c48;
@@ -913,21 +816,17 @@
 			line-height: 28rpx;
 			border: 2rpx solid #ff4947;
 		}
-
 		.swiperTxt .text .newsTitle {
 			font-size: 24rpx;
 		}
-
 		.swiperTxt swiper {
 			height: 100%;
 		}
 	}
-
 	.navChecked {
 		font-size: 32rpx !important;
 		font-weight: 500;
 	}
-
 	.checkColor {
 		@include main_color(theme);
 	}

@@ -1,0 +1,133 @@
+version: '3.8'
+
+services:
+  mysql:
+    image: docker.m.daocloud.io/mysql:8.0
+    container_name: crmeb-mysql
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: crmeb123456
+      MYSQL_DATABASE: single_open
+      TZ: Asia/Shanghai
+    command: >
+      --innodb-buffer-pool-size=128M
+      --max-connections=50
+      --character-set-server=utf8mb4
+      --collation-server=utf8mb4_unicode_ci
+      --lower-case-table-names=1
+    volumes:
+      - mysql-data:/var/lib/mysql
+      - ./crmeb/sql:/docker-entrypoint-initdb.d
+    networks:
+      - crmeb-net
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-u", "root", "-pcrmeb123456"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+
+  redis:
+    image: docker.m.daocloud.io/redis:7-alpine
+    container_name: crmeb-redis
+    restart: always
+    command: redis-server --maxmemory 64mb --maxmemory-policy allkeys-lru --appendonly no
+    volumes:
+      - redis-data:/data
+    networks:
+      - crmeb-net
+
+  crmeb-admin:
+    build:
+      context: .
+      dockerfile: Dockerfile.admin
+    container_name: crmeb-admin
+    restart: always
+    environment:
+      JAVA_OPTS: "-Xms128m -Xmx256m -XX:+UseG1GC -Dml.service.url=http://ai-server:3000"
+      SPRING_PROFILES_ACTIVE: docker
+    volumes:
+      - upload-data:/home/crmeb/upload
+    networks:
+      - crmeb-net
+    depends_on:
+      mysql:
+        condition: service_healthy
+      redis:
+        condition: service_started
+
+  crmeb-front:
+    build:
+      context: .
+      dockerfile: Dockerfile.front
+    container_name: crmeb-front
+    restart: always
+    environment:
+      JAVA_OPTS: "-Xms128m -Xmx256m -XX:+UseG1GC -Dml.service.url=http://ai-server:3000"
+      SPRING_PROFILES_ACTIVE: docker
+    volumes:
+      - upload-data:/home/crmeb/upload
+    networks:
+      - crmeb-net
+    depends_on:
+      mysql:
+        condition: service_healthy
+      redis:
+        condition: service_started
+
+  ai-server:
+    build:
+      context: .
+      dockerfile: Dockerfile.ai
+    container_name: crmeb-ai
+    restart: always
+    env_file:
+      - ai-server/.env.docker
+    networks:
+      - crmeb-net
+
+  recommend-server:
+    build:
+      context: .
+      dockerfile: Dockerfile.recommend
+    container_name: crmeb-recommend
+    restart: always
+    environment:
+      DB_HOST: mysql
+      DB_PORT: 3306
+      DB_USER: root
+      DB_PASSWORD: crmeb123456
+      DB_NAME: single_open
+      RECOMMEND_PORT: 5000
+    networks:
+      - crmeb-net
+    depends_on:
+      mysql:
+        condition: service_healthy
+
+  nginx:
+    image: docker.m.daocloud.io/nginx:alpine
+    container_name: crmeb-nginx
+    restart: always
+    ports:
+      - "80:80"
+    volumes:
+      - ./nginx/conf.d:/etc/nginx/conf.d
+      - ./admin/dist:/usr/share/nginx/html/admin:ro
+      - ./app/unpackage/dist/build/web:/usr/share/nginx/html/h5:ro
+      - upload-data:/home/crmeb/upload:ro
+    networks:
+      - crmeb-net
+    depends_on:
+      - crmeb-admin
+      - crmeb-front
+      - ai-server
+
+volumes:
+  mysql-data:
+  redis-data:
+  upload-data:
+
+networks:
+  crmeb-net:
+    driver: bridge
+
