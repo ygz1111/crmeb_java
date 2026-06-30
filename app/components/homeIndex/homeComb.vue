@@ -13,7 +13,7 @@
 			<view class="header">
 				<view class="serch-wrapper acea-row">
 					<view v-if="logoConfig" class="logo skeleton-rect">
-						<image :src="logoUrl" mode="scaleToFill"></image>
+						<image :src="logoUrl" mode="aspectFill"></image>
 					</view>
 					<navigator v-if="hotWords.length > 0" :url="'/pages/goods/goods_search/index?searchVal='+searchVal"
 						:style="[searchBoxStyle]" :class="logoConfig ? 'input' : 'uninput'" hover-class="none"
@@ -54,7 +54,7 @@
 				<!-- #endif -->
 					<view class="serch-wrapper acea-row">
 						<view v-if="logoConfig" class="logo tui-skeleton-rect">
-							<image :src="logoUrl" mode="scaleToFill"></image>
+							<image :src="logoUrl" mode="aspectFill"></image>
 						</view>
 						<navigator v-if="hotWords.length > 0"
 							:url="'/pages/goods/goods_search/index?searchVal='+searchVal" :style="[searchBoxStyle]"
@@ -335,11 +335,9 @@
 		},
 		created() {
 			// #ifdef MP || APP-PLUS
-			this.isTop = (this.isSmallPage ? 0 : this.statusBarHeight) + 48 + 'px' //分类的top值
-						this.isTop = (this.isSmallPage ? 0 : this.statusBarHeight) + 48 + 'px' //分类的top值
-						// 导航栏已隐藏，始终使用无导航栏高度
-						this.myMainHeight = (this.isSmallPage ? 0 : this.statusBarHeight) + 40 + 10; //头部tab切换页和搜索按钮的高度和，10是下边距
-						// #endif
+			this.isTop = (this.isSmallPage ? 0 : this.statusBarHeight) + 48 + 'px'
+			this.myMainHeight = (this.isSmallPage ? 0 : this.statusBarHeight) + 40 + 10;
+			// #endif
 			
 			// #ifdef MP
 			const res = uni.getMenuButtonBoundingClientRect()

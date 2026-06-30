@@ -178,7 +178,8 @@ export default {
         },
         // 编辑商品
         handleEdit(item) {
-            const editData = encodeURIComponent(JSON.stringify({
+            // TabBar页面不支持navigateTo传参，用全局变量传递编辑数据
+            getApp().globalData.editSecondHand = {
                 id: item.id,
                 storeName: item.storeName,
                 storeInfo: item.storeInfo,
@@ -187,9 +188,10 @@ export default {
                 price: item.price,
                 otPrice: item.otPrice,
                 image: item.image,
+                sliderImage: item.sliderImage,
                 location: item.location || ''
-            }));
-            uni.navigateTo({ url: '/pages/secondhand/publish?editData=' + editData });
+            };
+            uni.switchTab({ url: '/pages/secondhand/publish' });
         },
         // 删除商品
         handleDelete(item, index) {

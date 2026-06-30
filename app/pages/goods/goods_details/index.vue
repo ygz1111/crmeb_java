@@ -35,7 +35,7 @@
 			<view class="crmeb-detail__scroll-wrap">
 				<scroll-view :scroll-top="scrollTop" scroll-y="true" scroll-with-animation="true" :style="'height:'+height+'px;'" @scroll="scroll">
 					<view id="past0">
-						<productConSwiper :imgUrls="sliderImage" :videoline="videoLink" @videoPause="videoPause"></productConSwiper>
+						<productConSwiper :imgUrls="imgUrls" :videoline="videoLink" @videoPause="videoPause"></productConSwiper>
 						<activity-style v-if="productInfo.activityStyle" :productInfo="productInfo"></activity-style>
 						<view class="crmeb-detail__section">
 							<!-- Price Card -->
@@ -151,18 +151,9 @@
 					<text>{{ userCollect ? '&#9829;' : '&#9825;' }}</text>
 					<text>收藏</text>
 				</view>
-				<navigator class="crmeb-detail__footer-btn" open-type="switchTab" url="/pages/order_addcart/order_addcart" hover-class="none" v-if="type === 'normal'">
-					<text>&#128722;</text>
-					<text>购物车</text>
-				</navigator>
+
 				<view class="crmeb-detail__footer-actions" v-if="type === 'normal'">
-					<view v-if="attr.productSelect.stock <= 0">
-						<form @submit="joinCart" report-submit="true"><button class="crmeb-detail__action-btn disabled" form-type="submit">已售罄</button></form>
-					</view>
-					<view class="crmeb-detail__action-group" v-else>
-						<form @submit="joinCart" report-submit="true"><button class="crmeb-detail__action-btn cart" form-type="submit">加入购物车</button></form>
-						<form @submit="goBuy" report-submit="true"><button class="crmeb-detail__action-btn buy" form-type="submit">立即购买</button></form>
-					</view>
+					<form @submit="goBuy" report-submit="true"><button class="crmeb-detail__action-btn buy single" form-type="submit">立即购买</button></form>
 				</view>
 				<view class="crmeb-detail__footer-actions" v-if="type === 'video'">
 					<form @submit="goBuy" report-submit="true" v-if="attr.productSelect.stock > 0"><button class="crmeb-detail__action-btn buy" form-type="submit">立即购买</button></form>
@@ -228,6 +219,7 @@
 	import {
 		collectAdd,
 		collectDel,
+		getProductDetail,
 		getReplyList,
 		getReplyConfig
 	} from '@/api/store.js';
@@ -286,7 +278,6 @@
 				},
 				productValue: [],
 				isOpen: false,
-				attr: '请选择',
 				attrValue: '',
 				status: 1,
 				isAuto: false,
@@ -360,6 +351,13 @@
 				masterStatus:'',
 				openPages: '' ,//分享地址
 				videoLink: '',
+				good_list: [],
+				description: '',
+				coupon: [],
+				couponDeaultType: [{useType: 0}],
+				activityH5: [],
+				defaultCoupon: [],
+				type: 'normal',
 			}
 		},
 		components: {
@@ -373,7 +371,8 @@
 		},
 		computed: {
         ...mapGetters(['isLogin','uid','chatUrl']),
-        productInfo() { return this.storeInfo; },
+        productInfo() { return this.storeInfo || {}; },
+        attr() { return this.attribute; },
       },
 		watch:{
 			isLogin:{
@@ -544,21 +543,25 @@
 				getProductDetail(that.id, that.type).then(res => {
 					this.dataShow = 1;
 					this.masterStatus = res.data.masterStatus;
-					this.storeInfo = res.data.storeInfo;
-					this.userCollect = res.data.userCollect;
-					this.status = this.storeInfo.seckillStatus;
-					this.datatime = Number(this.storeInfo.timeSwap);
-					let sliderImage = JSON.parse(res.data.storeInfo.sliderImage);
+					var storeInfo = res.data.storeInfo || res.data.productInfo || {};
+					this.storeInfo = storeInfo;
+					this.userCollect = res.data.userCollect || false;
+					this.activityH5 = res.data.activityAllH5 || [];
+					this.description = (storeInfo.content || "");
+					this.status = storeInfo.seckillStatus;
+					this.datatime = Number(storeInfo.timeSwap);
+					var sliderImage = [];
+					try { sliderImage = JSON.parse(storeInfo.sliderImage || "[]"); } catch(e) { sliderImage = []; }
 					if (that.getFileType(sliderImage[0]) == 'video') {
 						//判断轮播图第一张是否是视频，如果是，就赋值给videoLink，并且将其在轮播图中删除
 						this.$set(this, 'videoLink', sliderImage[0]);
 						sliderImage.splice(0, 1);
 					}
 					this.imgUrls = sliderImage || [];
-					this.attribute.productAttr = res.data.productAttr;
-					this.productValue = res.data.productValue;
-					this.personNum = res.data.storeInfo.quota;
-					this.attribute.productSelect.num = res.data.storeInfo.num;
+					this.attribute.productAttr = res.data.productAttr || [];
+					this.productValue = res.data.productValue || {};
+					this.personNum = storeInfo.quota;
+					this.attribute.productSelect.num = storeInfo.num;
 					for(let key in res.data.productValue){
 						let obj = res.data.productValue[key];
 						that.skuArr.push(obj)
@@ -587,7 +590,7 @@
 					// #endif
 					// #ifdef MP
 					that.getQrcode();
-					that.imgTop = res.data.storeInfo.image
+					that.imgTop = storeInfo.image
 					// #endif
 					// #ifndef H5
 					that.downloadFilestoreImage();
@@ -601,11 +604,8 @@
 				    	that.showSkeleton = false
 				    }, 1000)
 				}).catch(err => {
-					that.$util.Tips({
-						title:err
-					},{
-						tab:3
-					})
+					that.showSkeleton = false;
+					uni.showToast({ title: err || "加载失败", icon: "none", duration: 2000 });
 				});
 			},
 			getFileType(fileName) {
@@ -664,7 +664,7 @@
 			DefaultSelect: function() {
 				let self = this, productAttr = self.attribute.productAttr,value = [];
 				for (var key in self.productValue) {
-					if (self.productValue[key].quota > 0) {
+					if (self.productValue[key].quota > 0 || self.productValue[key].stock > 0) {
 						value = productAttr.length ? key.split(",") : [];
 						break;
 					}
@@ -858,22 +858,19 @@
 				var that = this,
 					topArr = [],
 					heightArr = [];
-				for (var i = 0; i < that.navList.length; i++) { //productList
-					//获取元素所在位置
-					var query = wx.createSelectorQuery().in(this);
-					var idView = "#past" + i;
-					// if (!that.data.good_list.length && i == 2) {
-					//   var idView = "#past" + 3;
-					// }
-					query.select(idView).boundingClientRect();
-					query.exec(function(res) {
-						var top = res[0].top;
-						var height = res[0].height;
-						topArr.push(top);
-						heightArr.push(height);
-						that.topArr = topArr
-						that.heightArr = heightArr
-					});
+				for (var i = 0; i < that.navList.length; i++) {
+					try {
+						var query = uni.createSelectorQuery().in(this);
+						var idView = "#past" + i;
+						query.select(idView).boundingClientRect();
+						query.exec(function(res) {
+							if (!res || !res[0]) return;
+							topArr.push(res[0].top);
+							heightArr.push(res[0].height);
+							that.topArr = topArr
+							that.heightArr = heightArr
+						});
+					} catch(e) {}
 				};
 			},
 			/**
@@ -894,6 +891,29 @@
 			/*
 			 *  单独购买
 			 */
+			goBuy: function(e) {
+				var that = this;
+				var productId = (this.storeInfo.productId || this.storeInfo.id || this.id);
+				if (!productId) {
+					return that.$util.Tips({ title: '商品信息异常' });
+				}
+				this.$Order.getPreOrder("buyNow", [{
+					"attrValueId": parseFloat(this.attribute.productSelect.unique) || 0,
+					"seckillId": 0,
+					"productNum": 1,
+					"productId": parseFloat(productId)
+				}]);
+			},
+			goBuy: function(e) {
+				var that = this;
+				var productId = (this.storeInfo.productId || this.storeInfo.id || this.id);
+				if (!productId) return that.$util.Tips({ title: '商品信息异常' });
+				this.$Order.getPreOrder("buyNow", [{
+					"attrValueId": parseFloat(this.attribute.productSelect.unique) || 0,
+					"seckillId": 0, "productNum": 1,
+					"productId": parseFloat(productId)
+				}]);
+			},
 			openAlone: function() {
 				uni.navigateTo({
 					url: `/pages/goods/goods_details/index?id=${this.storeInfo.productId}`
@@ -1791,6 +1811,83 @@
 		border-radius: 8rpx;
 		text-align: center;
 	}
+
+.crmeb-detail{background:#f5f5f5;min-height:100vh;}
+.crmeb-detail__navbar{position:fixed;top:0;left:0;right:0;z-index:200;transition:background .3s;}
+.crmeb-detail__navbar--solid{background:#fff;box-shadow:0 2rpx 10rpx rgba(0,0,0,.06);}
+.crmeb-detail__navbar-inner{display:flex;align-items:flex-end;padding-bottom:10rpx;}
+.crmeb-detail__navbar-row{display:flex;align-items:center;justify-content:space-between;width:100%;padding:0 24rpx;position:relative;}
+.crmeb-detail__nav-back{color:#fff;font-size:36rpx;width:56rpx;height:56rpx;line-height:56rpx;text-align:center;background:rgba(0,0,0,.3);border-radius:50%;position:fixed;left:20rpx;z-index:10;}
+.crmeb-detail__nav-tabs{display:flex;gap:40rpx;margin:0 auto;}
+.crmeb-detail__nav-tab{font-size:28rpx;color:#666;padding-bottom:8rpx;}
+.crmeb-detail__nav-tab.on{color:#e93323;font-weight:600;border-bottom:4rpx solid #e93323;}
+.crmeb-detail__nav-more{color:#333;font-size:36rpx;width:56rpx;height:56rpx;line-height:56rpx;text-align:center;background:rgba(255,255,255,.8);border-radius:50%;position:fixed;right:20rpx;z-index:10;}
+.crmeb-detail__dropdown{position:fixed;right:20rpx;width:240rpx;background:#fff;border-radius:14rpx;box-shadow:0 4rpx 16rpx rgba(0,0,0,.1);z-index:300;padding:8rpx 0;}
+.crmeb-detail__dropdown-item{display:flex;align-items:center;padding:16rpx 24rpx;font-size:28rpx;color:#333;}
+.crmeb-detail__scroll-wrap{position:relative;}
+.crmeb-detail__section{background:#fff;margin:0 0 16rpx;}
+.crmeb-detail__price-card{padding:24rpx 30rpx;background:#fff;}
+.crmeb-detail__price-row{display:flex;align-items:center;justify-content:space-between;}
+.crmeb-detail__price{display:flex;align-items:baseline;color:#e93323;}
+.crmeb-detail__price-sign{font-size:28rpx;}
+.crmeb-detail__price-num{font-size:48rpx;font-weight:700;}
+.crmeb-detail__vip-badge{display:flex;align-items:center;margin-left:16rpx;background:#FFE7B9;border-radius:4px;padding:2rpx 8rpx;font-size:22rpx;color:#333;}
+.crmeb-detail__vip-icon{width:44rpx;height:28rpx;margin-right:4rpx;}
+.crmeb-detail__share-btn{font-size:40rpx;color:#999;padding:10rpx;}
+.crmeb-detail__title{font-size:30rpx;font-weight:600;color:#222;line-height:1.5;margin-top:12rpx;}
+.crmeb-detail__meta{display:flex;gap:24rpx;margin-top:16rpx;font-size:24rpx;color:#999;}
+.crmeb-detail__coupon{display:flex;align-items:center;margin-top:16rpx;padding:12rpx 16rpx;background:#FFF5F0;border-radius:8rpx;font-size:24rpx;}
+.crmeb-detail__coupon-tag{background:#e93323;color:#fff;padding:4rpx 12rpx;border-radius:4rpx;font-size:22rpx;}
+.crmeb-detail__arrow{color:#ccc;margin-left:auto;}
+.crmeb-detail__activity{display:flex;align-items:center;margin-top:12rpx;font-size:24rpx;}
+.crmeb-detail__activity-tags{display:flex;gap:12rpx;}
+.crmeb-detail__activity-tag{padding:4rpx 14rpx;border-radius:6rpx;font-size:22rpx;color:#fff;}
+.crmeb-detail__activity-tag.seckill{background:#e93323;}
+.crmeb-detail__activity-tag.bargain{background:#ff9500;}
+.crmeb-detail__activity-tag.group{background:#5ac8fa;}
+.crmeb-detail__specs{padding:24rpx 30rpx;border-top:1rpx solid #f5f5f5;}
+.crmeb-detail__specs-row{display:flex;align-items:center;font-size:26rpx;}
+.crmeb-detail__specs-label{color:#999;}
+.crmeb-detail__specs-value{color:#333;flex:1;}
+.crmeb-detail__specs-thumbs{display:flex;align-items:center;margin-top:14rpx;}
+.crmeb-detail__specs-thumb{width:66rpx;height:66rpx;border-radius:6rpx;margin-right:12rpx;}
+.crmeb-detail__specs-count{font-size:24rpx;color:#999;}
+.crmeb-detail__reviews{padding:24rpx 30rpx;border-top:1rpx solid #f5f5f5;background:#fff;margin-bottom:16rpx;}
+.crmeb-detail__reviews-header{display:flex;justify-content:space-between;font-size:28rpx;color:#333;margin-bottom:12rpx;}
+.crmeb-detail__reviews-count{color:#999;font-size:24rpx;}
+.crmeb-detail__reviews-link{font-size:24rpx;color:#999;}
+.crmeb-detail__recommend{padding:24rpx 30rpx;background:#fff;margin-bottom:16rpx;}
+.crmeb-detail__recommend-title{font-size:30rpx;font-weight:600;color:#333;margin-bottom:20rpx;}
+.crmeb-detail__recommend-grid{display:flex;gap:16rpx;}
+.crmeb-detail__recommend-item{flex:1;}
+.crmeb-detail__recommend-img{position:relative;width:100%;height:200rpx;border-radius:8rpx;overflow:hidden;}
+.crmeb-detail__recommend-img image{width:100%;height:100%;}
+.crmeb-detail__recommend-badge{position:absolute;top:6rpx;left:6rpx;padding:2rpx 8rpx;border-radius:4rpx;font-size:18rpx;color:#fff;background:#e93323;}
+.crmeb-detail__recommend-name{font-size:24rpx;color:#333;margin-top:8rpx;}
+.crmeb-detail__recommend-price{font-size:28rpx;color:#e93323;font-weight:600;margin-top:6rpx;}
+.crmeb-detail__desc{background:#fff;padding:30rpx;margin-bottom:16rpx;}
+.crmeb-detail__desc-title{font-size:30rpx;font-weight:600;color:#333;text-align:center;margin-bottom:24rpx;padding-bottom:16rpx;border-bottom:1rpx solid #f5f5f5;}
+.crmeb-detail__desc-content{font-size:28rpx;color:#666;line-height:1.8;}
+.crmeb-detail__footer{position:fixed;bottom:0;left:0;right:0;display:flex;align-items:center;background:#fff;height:100rpx;padding:0 20rpx 0 30rpx;border-top:1rpx solid #f0f0f0;z-index:99;padding-bottom:env(safe-area-inset-bottom);}
+.crmeb-detail__footer-btn{display:flex;flex-direction:column;align-items:center;justify-content:center;font-size:20rpx;color:#666;padding:0 16rpx;background:none;border:none;}
+.crmeb-detail__footer-btn::after{border:none;}
+.crmeb-detail__footer-actions{display:flex;flex:1;justify-content:flex-end;}
+.crmeb-detail__action-btn{width:240rpx;height:76rpx;line-height:76rpx;text-align:center;color:#fff;font-size:28rpx;border-radius:50rpx;border:none;padding:0;}
+.crmeb-detail__action-btn::after{border:none;}
+.crmeb-detail__action-btn.buy{background:linear-gradient(90deg,#e93323,#fa6514);border-radius:0 50rpx 50rpx 0;}
+.crmeb-detail__action-btn.single{width:480rpx;border-radius:50rpx;}
+.crmeb-detail__share-sheet{position:fixed;bottom:0;left:0;right:0;background:#fff;z-index:400;transform:translateY(100%);transition:transform .3s;border-radius:20rpx 20rpx 0 0;padding:30rpx;}
+.crmeb-detail__share-sheet.on{transform:translateY(0);}
+.crmeb-detail__share-grid{display:flex;justify-content:space-around;}
+.crmeb-detail__share-item{display:flex;flex-direction:column;align-items:center;font-size:24rpx;color:#666;background:none;border:none;padding:0;}
+.crmeb-detail__share-icon{width:80rpx;height:80rpx;margin-bottom:10rpx;}
+.crmeb-detail__share-cancel{text-align:center;margin-top:30rpx;padding-top:20rpx;border-top:1rpx solid #eee;font-size:28rpx;color:#999;}
+.crmeb-detail__mask{position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,.5);z-index:350;}
+.crmeb-detail__mask--transparent{position:fixed;top:0;left:0;right:0;bottom:0;background:transparent;z-index:250;}
+.crmeb-detail__poster{position:fixed;left:50%;top:50%;transform:translate(-50%,-50%);width:450rpx;height:714rpx;z-index:500;}
+.crmeb-detail__poster image{width:100%;height:100%;}
+.crmeb-detail__canvas{position:fixed;z-index:-5;opacity:0;}
+
 </style>
 
 

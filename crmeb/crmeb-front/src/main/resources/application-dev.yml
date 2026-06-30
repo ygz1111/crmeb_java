@@ -3,11 +3,16 @@ crmeb:
   version: CRMEB-JAVA-KY-v1.4 # 当前代码版本
   imagePath: D:/RECM/crmeb_java/crmeb/ # 服务器图片路径配置 斜杠结尾
   asyncConfig: false
-  mlServiceUrl: http://localhost:3000 #是否同步config表数据到redis
 
 recommend:
   server:
     url: http://localhost:5000
+
+# Qwen-VL 配置（开发环境）：把你的 DashScope key 填在 api-key 上，或通过环境变量 QWEN_API_KEY 注入
+qwen:
+  api-key: sk-ws-H.REHPEIY.srsX.MEYCIQDqop-GqEX_EnbDAaKpiEpnycSzcZvfqBd4hD5_QthhygIhAM0y3rJwWgVodtECm_PqCbIg3WemuvRA6QiG7OlJlPf4
+  api-url: https://dashscope.aliyuncs.com/api/v1/services/aigc/multimodal-generation/generation
+  model: qwen-vl-max
 
 server:
   port: 20510

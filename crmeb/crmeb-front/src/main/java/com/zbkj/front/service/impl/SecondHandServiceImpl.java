@@ -63,10 +63,8 @@ public class SecondHandServiceImpl implements SecondHandService {
         for (StoreProduct product : list) {
             IndexProductResponse resp = new IndexProductResponse();
             BeanUtils.copyProperties(product, resp);
-            // 给图片拼接完整域名前缀，解决H5跨端口显示问题
-            if (resp.getImage() != null && !resp.getImage().isEmpty() && !resp.getImage().startsWith("http")) {
-                resp.setImage(systemAttachmentService.prefixImage(resp.getImage()));
-            }
+            // 图片URL不手动前缀，ResponseFilter会自动为/api/front/响应添加CDN前缀
+            // 手动前缀会导致ResponseFilter二次前缀，造成图片URL损坏
             
             // 设置分类名称（如果有分类ID）
             if (product.getCateId() != null && !product.getCateId().isEmpty()) {
@@ -119,8 +117,10 @@ public class SecondHandServiceImpl implements SecondHandService {
         product.setItemCondition(request.getItemCondition());
         product.setStock(ObjectUtil.isNotNull(request.getStock()) ? request.getStock() : 1);
         product.setUnitName(ObjectUtil.isNotNull(request.getUnitName()) ? request.getUnitName() : "piece");
-        product.setImage(request.getImage());
-        product.setSliderImage(request.getSliderImage());
+        // 清除图片URL中的域名前缀，确保数据库只存相对路径
+        // （upload响应会被ResponseFilter自动加前缀，这里需去除）
+        product.setImage(systemAttachmentService.clearPrefix(request.getImage()));
+        product.setSliderImage(systemAttachmentService.clearPrefix(request.getSliderImage()));
         product.setIsShow(true);
         product.setIsDel(false);
         product.setIsHot(false);
@@ -206,6 +206,69 @@ public class SecondHandServiceImpl implements SecondHandService {
         result.put("success", saved);
 
         return result;
+    }
+
+    @Override
+    public CommonPage<IndexProductResponse> getPublicList(PageParamRequest pageParamRequest) {
+        com.github.pagehelper.PageHelper.startPage(pageParamRequest.getPage(), pageParamRequest.getLimit());
+
+        com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper<StoreProduct> wrapper =
+            new com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper<>();
+        wrapper.eq(StoreProduct::getIsSecondHand, true);
+        wrapper.eq(StoreProduct::getIsDel, false);
+        wrapper.eq(StoreProduct::getIsShow, true);
+        wrapper.orderByDesc(StoreProduct::getId);
+
+        List<StoreProduct> list = storeProductService.list(wrapper);
+        List<IndexProductResponse> responseList = new ArrayList<>();
+        for (StoreProduct product : list) {
+            IndexProductResponse resp = new IndexProductResponse();
+            BeanUtils.copyProperties(product, resp);
+            responseList.add(resp);
+        }
+        return CommonPage.restPage(responseList);
+    }
+
+    @Override
+    public Boolean update(SecondHandProductRequest request) {
+        Integer uid = userService.getUserId();
+        if (request.getId() == null) {
+            throw new RuntimeException("商品ID不能为空");
+        }
+
+        StoreProduct product = storeProductService.getById(request.getId());
+        if (product == null) {
+            throw new RuntimeException("商品不存在");
+        }
+        if (!product.getUid().equals(uid)) {
+            throw new RuntimeException("无权修改该商品");
+        }
+
+        // 更新字段
+        product.setStoreName(request.getStoreName());
+        product.setKeyword(request.getStoreName());
+        product.setStoreInfo(request.getStoreInfo());
+        product.setCateId(request.getCateId());
+        product.setPrice(request.getPrice());
+        product.setOtPrice(request.getOtPrice());
+        product.setItemCondition(request.getItemCondition());
+        if (request.getStock() != null) {
+            product.setStock(request.getStock());
+        }
+        if (request.getImage() != null) {
+            product.setImage(systemAttachmentService.clearPrefix(request.getImage()));
+        }
+        if (request.getSliderImage() != null) {
+            product.setSliderImage(systemAttachmentService.clearPrefix(request.getSliderImage()));
+        }
+        if (request.getAiCategory() != null) {
+            product.setAiCategory(request.getAiCategory());
+        }
+        if (request.getAiPredictedPrice() != null) {
+            product.setAiPredictedPrice(request.getAiPredictedPrice());
+        }
+
+        return storeProductService.updateById(product);
     }
 
     @Override

@@ -1,15 +1,8 @@
-﻿.idea/
-app/unpackage
-Crmeb-2022-01-04.log
-crmeb_front_log
-crmeb/LOG_HOME_IS_UNDEFINED
-*.
-*.
-.DS_Store
-<<<<<<< HEAD
-=======
+# IDE
+.idea/
+*.iml
 
-# Large files
+# 大文件
 *.zip
 *.sql
 *.dump
@@ -17,30 +10,38 @@ crmeb/LOG_HOME_IS_UNDEFINED
 *.rar
 *.7z
 
-# Working directories
-.claude/
->>>>>>> 6332e5584c59ad3c1c3eab43b79261a53c5a20e6
-
 # 环境变量（包含 API Key，禁止上传）
 .env
 .env.docker
 .env.local
 .env.production
 
-
 # Node 依赖
 node_modules/
 .npm-cache/
+
 # Java 编译产物
 target/
 *.class
 *.jar
 *.war
-# IDE
-*.iml
+
 # 日志
 *.log
 crmeb_admin_log/
 crmeb_front_log/
+
 # 系统文件
+.DS_Store
 Thumbs.db
+nul
+
+# uni-app
+app/unpackage
+
+# 工作目录
+.claude/
+.mimocode/
+
+# Python
+recommend-server/__pycache__/

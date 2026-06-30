@@ -290,7 +290,7 @@
 			//内容圆角
 			contentStyle() {
 				return {
-					'border-radius': this.dataConfig.contentStyle.val ? 2*this.dataConfig.contentStyle.val + 'rpx' : '0'
+					'border-radius': this.dataConfig.contentStyle.val ? this.dataConfig.contentStyle.val * 2 + 'rpx' : '0'
 				};
 			},
 		},

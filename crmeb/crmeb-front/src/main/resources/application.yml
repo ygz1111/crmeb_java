@@ -19,6 +19,12 @@ crmeb:
     - /druid/**
     - api/front/pagediy/info
 
+# Qwen-VL 大模型配置（二手商品 AI 识别），key 仅在后端读取，绝不下发到前端
+qwen:
+  api-key: ${QWEN_API_KEY:}  # 推荐通过环境变量 QWEN_API_KEY 注入；也可直接填在此处
+  api-url: https://dashscope.aliyuncs.com/api/v1/services/aigc/multimodal-generation/generation
+  model: qwen-vl-max
+
 # 配置端口
 server:
   port: 8081

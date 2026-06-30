@@ -61,4 +61,7 @@ public class SecondHandProductRequest implements Serializable {
 
     @ApiModelProperty(value = "category name")
     private String category;
+
+    @ApiModelProperty(value = "product id (for update)")
+    private Integer id;
 }

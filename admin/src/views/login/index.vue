@@ -7,15 +7,7 @@
         : { backgroundImage: 'url(' + backgroundImageMo + ')' }
     "
   >
-    <div class="container" :class="[fullWidth > 768 ? 'containerSamll' : 'containerBig']">
-      <template v-if="fullWidth > 768">
-        <swiper :options="swiperOption" class="swiperPross">
-          <swiper-slide v-for="(item, index) in swiperList" :key="index" class="swiperPic">
-            <img :src="item.pic" />
-          </swiper-slide>
-          <div slot="pagination" class="swiper-pagination" />
-        </swiper>
-      </template>
+    <div class="container containerCenter">
       <div class="index_from page-account-container">
         <div class="page-account-top">
           <div class="page-account-top-logo">
@@ -82,7 +74,6 @@
 <script>
 import Cookies from 'js-cookie';
 import { validUsername } from '@/utils/validate';
-import '@/assets/js/canvas-nest.min.js';
 import { getLoginPicApi } from '@/api/user';
 import { getStoreStaff } from '@/libs/public';
 import VerifitionVerify from './verifition/Verify.vue';
@@ -187,9 +178,7 @@ export default {
     this.onBlurAccount();
     this.$nextTick(() => {
       if (this.screenWidth < 768) {
-        document.getElementsByTagName('canvas')[0].removeAttribute('class', 'index_bg');
       } else {
-        document.getElementsByTagName('canvas')[0].className = 'index_bg';
       }
     });
     if (this.loginForm.account === '') {
@@ -198,19 +187,11 @@ export default {
       this.$refs.pwd.focus();
     }
   },
-  beforeCreate() {
-    if (this.fullWidth < 768) {
-      document.getElementsByTagName('canvas')[0].removeAttribute('class', 'index_bg');
-    } else {
-      document.getElementsByTagName('canvas')[0].className = 'index_bg';
-    }
-  },
   destroyed() {
     // window.removeEventListener('storage', this.afterQRScan)
   },
   beforeDestroy: function () {
     window.removeEventListener('resize', this.handleResize);
-    document.getElementsByTagName('canvas')[0].removeAttribute('class', 'index_bg');
   },
   methods: {
     //校验成功之后
@@ -238,9 +219,7 @@ export default {
     handleResize(event) {
       this.fullWidth = document.body.clientWidth;
       if (this.fullWidth < 768) {
-        document.getElementsByTagName('canvas')[0].removeAttribute('class', 'index_bg');
       } else {
-        document.getElementsByTagName('canvas')[0].className = 'index_bg';
       }
     },
     getInfo() {
@@ -500,47 +479,23 @@ $subsidiary-color: #808695;
   height: 40px;
 }
 
-.swiperPross {
-  border-radius: 6px 0px 0px 6px;
-  overflow: hidden;
-}
-
-.swiperPross,
-.swiperPic,
-.swiperPic img {
-  width: 286px;
-  height: 100%;
-}
-
-.swiperPic img {
-  width: 100%;
-  height: 100%;
-}
-
 .container {
-  height: 400px !important;
+  height: auto !important;
+  min-height: 400px;
   padding: 0 !important;
-  /*overflow: hidden;*/
   border-radius: 6px;
   z-index: 1;
-  display: flex;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.1);
 }
 
-.containerSamll {
-  /*width: 56% !important;*/
-  width: 670px;
+.containerCenter {
+  width: 384px;
   background: #fff !important;
-}
-
-.containerBig {
-  width: auto !important;
-  background: #f7f7f7 !important;
 }
 
 .index_from {
   width: 384px;
   padding: 0 40px 32px 40px;
-  height: 400px;
   box-sizing: border-box;
 }
 

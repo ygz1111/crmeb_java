@@ -13,7 +13,7 @@ import Layout from '@/layout';
 const financialRouter = {
   path: '/financial',
   component: Layout,
-  redirect: '/financial/flow',
+  redirect: '/financial/brokerage',
   name: 'Financial',
   meta: {
     title: '财务',
@@ -21,10 +21,28 @@ const financialRouter = {
   },
   children: [
     {
-      path: 'flow',
+      path: 'brokerage',
+      component: () => import('@/views/financial/brokerage/index'),
+      name: 'FinancialBrokerage',
+      meta: { title: '佣金记录', icon: '' },
+    },
+    {
+      path: 'commission/template',
+      component: () => import('@/views/financial/commission/withdrawal/index'),
+      name: 'FinancialCommission',
+      meta: { title: '申请提现', icon: '' },
+    },
+    {
+      path: 'record/charge',
       component: () => import('@/views/financial/record/charge/index'),
-      name: 'FinancialFlow',
-      meta: { title: '交易流水', icon: '' },
+      name: 'FinancialCharge',
+      meta: { title: '充值记录', icon: '' },
+    },
+    {
+      path: 'record/monitor',
+      component: () => import('@/views/financial/record/monitor/index'),
+      name: 'FinancialMonitor',
+      meta: { title: '资金监控', icon: '' },
     },
   ],
 };

@@ -3,24 +3,24 @@
 	<view class="pictureCube skeleton-rect"  :style="[boxStyle]" v-if="picList.length&&(imageH>0||style==3)">
 		<view class="grid_box"  :style="[gridColumns]" v-if="[0,1,2,4,5].includes(style)">
 			<image class="center" v-for="(item,index) in picList" :key="index" @click="goDetail(item)" :src="item.image"
-				:mode="item.radioVal === '0' ? 'scaleToFill' : item.radioVal === '1' ? 'aspectFit' : 'aspectFill'"
+				:mode="item.radioVal === '0' ? 'aspectFill' : item.radioVal === '1' ? 'aspectFit' : 'aspectFill'"
 				:style="[imageStyle]"></image>
 		</view>
 		<view class="advertItem04" v-if="style==3" :style="[widthStyle]">
 			<view class="item" @click="goDetail(picList[0])">
 				<image class="img-left center" :src="picList[0].image" :style="[radiusStyle]"
-					:mode="picList[0].radioVal === '0' ? 'scaleToFill' : picList[0].radioVal === '1' ? 'aspectFit' : 'aspectFill'">
+					:mode="picList[0].radioVal === '0' ? 'aspectFill' : picList[0].radioVal === '1' ? 'aspectFit' : 'aspectFill'">
 				</image>
 			</view>
 			<view class="item item-right" :style="[gapStyle]">
 				<view class="pic" @click="goDetail(picList[1])">
 					<image class="img-right center" :src="picList[1].image" :style="[radiusStyle]"
-						:mode="picList[1].radioVal === '0' ? 'scaleToFill' : picList[1].radioVal === '1' ? 'aspectFit' : 'aspectFill'">
+						:mode="picList[1].radioVal === '0' ? 'aspectFill' : picList[1].radioVal === '1' ? 'aspectFit' : 'aspectFill'">
 					</image>
 				</view>
 				<view class="pic" @click="goDetail(picList[2])">
 					<image class="img-right center" :src="picList[2].image" :style="[radiusStyle]"
-						:mode="picList[2].radioVal === '0' ? 'scaleToFill' : picList[2].radioVal === '1' ? 'aspectFit' : 'aspectFill'">
+						:mode="picList[2].radioVal === '0' ? 'aspectFill' : picList[2].radioVal === '1' ? 'aspectFit' : 'aspectFill'">
 					</image>
 				</view>
 			</view>

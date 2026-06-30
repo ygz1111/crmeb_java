@@ -1076,7 +1076,7 @@ public class OrderServiceImpl implements OrderService {
 //        storeOrder.setPayType(request.getPayType());
         storeOrder.setUseIntegral(computedOrderPriceResponse.getUsedIntegral());
         storeOrder.setGainIntegral(gainIntegral);
-        storeOrder.setMark(StringEscapeUtils.escapeHtml4(request.getMark()));
+        storeOrder.setMark(StrUtil.isNotBlank(request.getMark()) ? StringEscapeUtils.escapeHtml4(request.getMark()) : "");
         storeOrder.setCombinationId(orderInfoVo.getCombinationId());
         storeOrder.setPinkId(orderInfoVo.getPinkId());
         storeOrder.setSeckillId(orderInfoVo.getSeckillId());

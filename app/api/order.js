@@ -272,3 +272,6 @@ export function getPayConfig(preOrderNo) {
 export function getOrderPayConfig() {
 	return request.get(`pay/get/config`);
 }
+export function createOrderApi(data) {
+  return request.post("order/create", data);
+}

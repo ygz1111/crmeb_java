@@ -1230,10 +1230,6 @@ public class StoreProductServiceImpl extends ServiceImpl<StoreProductDao, StoreP
     @Override
     public StoreProduct getH5Detail(Integer id) {
         LambdaQueryWrapper<StoreProduct> lqw = Wrappers.lambdaQuery();
-        lqw.select(StoreProduct::getId, StoreProduct::getImage, StoreProduct::getStoreName, StoreProduct::getSliderImage,
-                StoreProduct::getOtPrice, StoreProduct::getStock, StoreProduct::getSales, StoreProduct::getPrice, StoreProduct::getActivity,
-                StoreProduct::getFicti, StoreProduct::getIsSub, StoreProduct::getBrowse, StoreProduct::getUnitName,
-                StoreProduct::getBarCode, StoreProduct::getCateId);
         lqw.eq(StoreProduct::getId, id);
         lqw.eq(StoreProduct::getIsRecycle, false);
         lqw.eq(StoreProduct::getIsDel, false);

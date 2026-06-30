@@ -1,6 +1,6 @@
 <template>
 	<view class="easy-loadimage" :style="[boxStyle]" :id="uid">
-		<image class="origin-img" :style="[imageRadius]" :src="imageSrc" mode="scaleToFill" v-if="loadImg&&!isLoadError"
+		<image class="origin-img" :style="[imageRadius]" :src="imageSrc" mode="aspectFill" v-if="loadImg&&!isLoadError"
 			v-show="showImg" :class="{'no-transition':!openTransition,'show-transition':showTransition&&openTransition}"
 			@load="handleImgLoad" @error="handleImgError">
 		</image>

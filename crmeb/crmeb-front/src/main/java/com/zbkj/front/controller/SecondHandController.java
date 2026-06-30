@@ -31,10 +31,22 @@ public class SecondHandController {
         return CommonResult.success(secondHandService.publish(request));
     }
 
+    @ApiOperation(value = "update second hand product")
+    @RequestMapping(value = "/secondhand/update", method = RequestMethod.POST)
+    public CommonResult<Boolean> update(@RequestBody @Validated SecondHandProductRequest request) {
+        return CommonResult.success(secondHandService.update(request));
+    }
+
     @ApiOperation(value = "get my second hand product list")
     @RequestMapping(value = "/secondhand/mylist", method = RequestMethod.GET)
     public CommonResult<CommonPage<IndexProductResponse>> getMyList(@Validated PageParamRequest pageParamRequest) {
         return CommonResult.success(secondHandService.getMyList(pageParamRequest));
+    }
+
+    @ApiOperation(value = "get public second hand product list (no login)")
+    @RequestMapping(value = "/secondhand/list", method = RequestMethod.GET)
+    public CommonResult<CommonPage<IndexProductResponse>> getPublicList(@Validated PageParamRequest pageParamRequest) {
+        return CommonResult.success(secondHandService.getPublicList(pageParamRequest));
     }
 
     @ApiOperation(value = "delete second hand product")

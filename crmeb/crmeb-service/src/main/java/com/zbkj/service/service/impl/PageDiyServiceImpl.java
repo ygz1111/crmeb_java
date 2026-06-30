@@ -252,9 +252,9 @@ public class PageDiyServiceImpl extends ServiceImpl<PageDiyDao, PageDiy> impleme
 
         PageDiyResponse response = new PageDiyResponse();
         BeanUtils.copyProperties(pageDiy, response);
-//        String modifiedJsonString = getModifiedJsonString(jsonContext.jsonString());
-//        response.setValue(JSON.parseObject(modifiedJsonString));
-        response.setValue(JSON.parseObject(pageDiy.getValue()));
+        // 替换DIY配置中的素材相对路径为完整URL，确保前端能正确加载图片
+        String modifiedJsonString = getModifiedJsonString(pageDiy.getValue());
+        response.setValue(JSON.parseObject(modifiedJsonString));
         return response;
     }
 
@@ -290,6 +290,10 @@ public class PageDiyServiceImpl extends ServiceImpl<PageDiyDao, PageDiy> impleme
         // 替换指定前缀的键
         String adminApiPath = UploadConstants.UPLOAD_FILE_KEYWORD;
         String newPrefix = systemConfigService.getValueByKey(SysConfigConstants.CONFIG_LOCAL_UPLOAD_URL);
+        // 如果未配置上传URL前缀，直接返回原始数据，避免替换出错误地址
+        if (StrUtil.isBlank(newPrefix)) {
+            return diyValue;
+        }
         JsonElement modifiedJsonElement = replaceJsonValue(jsonElement, adminApiPath, newPrefix);
 
         // 将修改后的 JSON 数据转换回字符串

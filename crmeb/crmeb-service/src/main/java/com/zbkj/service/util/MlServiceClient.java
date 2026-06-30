@@ -1,87 +1,32 @@
 package com.zbkj.service.util;
 
 import cn.hutool.core.codec.Base64;
-import com.google.gson.Gson;
-import com.google.gson.JsonObject;
-import com.google.gson.JsonParser;
 import lombok.extern.slf4j.Slf4j;
 
-import java.io.*;
-import java.net.HttpURLConnection;
-import java.net.URL;
-import java.nio.charset.StandardCharsets;
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
 @Slf4j
 public class MlServiceClient {
 
-    private static final Gson gson = new Gson();
-
-    /**
-     * 读取 ML 服务地址，支持通过系统属性 ml.service.url 配置
-     * 本地开发: http://localhost:3000
-     * Docker 环境: http://ai-server:3000
-     */
-    private static String getMlServiceUrl() {
-        return System.getProperty("ml.service.url", "http://localhost:3000");
-    }
-
     public static Map<String, Object> classifyImage(byte[] imageBytes) throws IOException {
-        String ML_SERVICE_URL = getMlServiceUrl();
-        URL url = new URL(ML_SERVICE_URL + "/api/identify");
-        HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-        conn.setDoOutput(true);
-        conn.setRequestMethod("POST");
-        conn.setRequestProperty("Content-Type", "application/json");
-        conn.setConnectTimeout(30000);
-        conn.setReadTimeout(30000);
+        String dataUri = "data:image/jpeg;base64," + Base64.encode(imageBytes);
+        Map<String, Object> raw = QwenClient.identify(dataUri);
+        if (raw == null) return null;
 
-        // 将图片字节转为 Base64 数据 URI
-        String base64Image = Base64.encode(imageBytes);
-        String dataUri = "data:image/jpeg;base64," + base64Image;
-
-        Map<String, Object> requestBody = new HashMap<>();
-        requestBody.put("image", dataUri);
-
-        try (OutputStream os = conn.getOutputStream()) {
-            os.write(gson.toJson(requestBody).getBytes(StandardCharsets.UTF_8));
+        // 该方法的历史契约：confidence 返回 Double（0~1），与新接口的 "98.5%" 字符串不同
+        Map<String, Object> result = new HashMap<>(raw);
+        Object conf = raw.get("confidence");
+        if (conf instanceof String) {
+            try {
+                String s = ((String) conf).replace("%", "");
+                result.put("confidence", Double.parseDouble(s) / 100.0);
+            } catch (NumberFormatException e) {
+                result.put("confidence", 0.85);
+            }
         }
-
-        String response = readResponse(conn);
-        log.info("ML classify response: {}", response);
-
-        try {
-            JsonObject json = JsonParser.parseString(response).getAsJsonObject();
-            Map<String, Object> result = new HashMap<>();
-
-            // 新 AI 服务返回: { rawLabel, confidence, name, category, suggestedOriginalPrice, defaultDesc }
-            if (json.has("rawLabel")) {
-                result.put("rawLabel", json.get("rawLabel").getAsString());
-            }
-            if (json.has("name")) {
-                result.put("name", json.get("name").getAsString());
-            }
-            if (json.has("category")) {
-                result.put("category", json.get("category").getAsString());
-            }
-            if (json.has("defaultDesc")) {
-                result.put("defaultDesc", json.get("defaultDesc").getAsString());
-            }
-            if (json.has("suggestedOriginalPrice")) {
-                result.put("suggestedOriginalPrice", json.get("suggestedOriginalPrice").getAsBigDecimal());
-            }
-            // confidence 可能为 "98.5%" 或数字，统一转为 Double
-            if (json.has("confidence")) {
-                String confStr = json.get("confidence").getAsString().replace("%", "");
-                result.put("confidence", Double.parseDouble(confStr) / 100.0);
-            }
-
-            return result;
-        } catch (Exception e) {
-            log.error("Failed to parse ML classify response: {}", response, e);
-            return null;
-        }
+        return result;
     }
 
     public static Map<String, Object> predictPrice(String category, String condition, Double originalPrice) throws IOException {
@@ -130,61 +75,9 @@ public class MlServiceClient {
     }
 
     /**
-     * 接收前端传来的 data URI，转发给 AI 服务识别
+     * 接收前端传来的 data URI，由 Java 后端直接调用 Qwen 识别
      */
     public static Map<String, Object> identifyFromDataUri(String dataUri) throws IOException {
-        String ML_SERVICE_URL = getMlServiceUrl();
-        URL url = new URL(ML_SERVICE_URL + "/api/identify");
-        HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-        conn.setDoOutput(true);
-        conn.setRequestMethod("POST");
-        conn.setRequestProperty("Content-Type", "application/json");
-        conn.setConnectTimeout(30000);
-        conn.setReadTimeout(30000);
-
-        Map<String, Object> requestBody = new HashMap<>();
-        requestBody.put("image", dataUri);
-
-        try (OutputStream os = conn.getOutputStream()) {
-            os.write(gson.toJson(requestBody).getBytes(StandardCharsets.UTF_8));
-        }
-
-        String response = readResponse(conn);
-        log.info("AI identify proxy response: {}", response);
-
-        try {
-            JsonObject json = JsonParser.parseString(response).getAsJsonObject();
-            Map<String, Object> result = new HashMap<>();
-            if (json.has("rawLabel")) result.put("rawLabel", json.get("rawLabel").getAsString());
-            if (json.has("name")) result.put("name", json.get("name").getAsString());
-            if (json.has("category")) result.put("category", json.get("category").getAsString());
-            if (json.has("defaultDesc")) result.put("defaultDesc", json.get("defaultDesc").getAsString());
-            if (json.has("suggestedOriginalPrice")) result.put("suggestedOriginalPrice", json.get("suggestedOriginalPrice").getAsBigDecimal());
-            if (json.has("confidence")) {
-                String confStr = json.get("confidence").getAsString().replace("%", "");
-                result.put("confidence", confStr + "%");
-            }
-            return result;
-        } catch (Exception e) {
-            log.error("Failed to parse AI identify response: {}", response, e);
-            return null;
-        }
-    }
-
-    private static String readResponse(HttpURLConnection conn) throws IOException {
-        int code = conn.getResponseCode();
-        InputStream is = (code >= 200 && code < 300) ? conn.getInputStream() : conn.getErrorStream();
-        if (is == null) {
-            throw new IOException("No response from AI server, HTTP " + code);
-        }
-        try (BufferedReader br = new BufferedReader(
-                new InputStreamReader(is, StandardCharsets.UTF_8))) {
-            StringBuilder sb = new StringBuilder();
-            String line;
-            while ((line = br.readLine()) != null) {
-                sb.append(line);
-            }
-            return sb.toString();
-        }
+        return QwenClient.identify(dataUri);
     }
 }

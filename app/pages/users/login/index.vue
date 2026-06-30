@@ -283,11 +283,17 @@
 						})
 						.then(res => {
 							let data = res.data;
-							let newTime = Math.round(new Date() / 1000);
 							this.$store.commit("LOGIN", {
 								'token': res.data.token
 							});
 							uni.hideLoading();
+							if (data && data.uid) {
+							this.$store.commit("SETUID", data.uid);
+							}
+							uni.showToast({ title: "登录成功", icon: "success" });
+							setTimeout(() => {
+								uni.switchTab({ url: "/pages/user/index" });
+							}, 500);
 							that.getUserInfo(data);
 						})
 						.catch(res => {
@@ -373,7 +379,14 @@
 							this.$store.commit("LOGIN", {
 								'token': data.token
 							});
+							if (data && data.uid) {
+								this.$store.commit("SETUID", data.uid);
+							}
 							uni.hideLoading();
+							uni.showToast({ title: '登录成功', icon: 'success' });
+							setTimeout(() => {
+								uni.switchTab({ url: '/pages/user/index' });
+							}, 800);
 							that.getUserInfo(data);
 						})
 						.catch(e => {
@@ -384,22 +397,15 @@
 						});
 				}),
 				getUserInfo(data){
-					this.$store.commit("SETUID", data.uid);
+					if (data && data.uid) {
+						this.$store.commit("SETUID", data.uid);
+					}
 					getUserInfo().then(res => {
-						this.$store.commit("UPDATE_USERINFO", res.data);
-						uni.showToast({ title: '登录成功', icon: 'success' });
-						setTimeout(() => {
-							let backUrl = this.$Cache.get(BACK_URL) || "/pages/index/index";
-							if (backUrl.indexOf('/pages/users/login/index') !== -1) {
-								backUrl = '/pages/index/index';
-							}
-							uni.reLaunch({ url: backUrl });
-						}, 1200);
+						if (res && res.data) {
+							this.$store.commit("UPDATE_USERINFO", res.data);
+						}
 					}).catch(() => {
-						uni.showToast({ title: '登录成功', icon: 'success' });
-						setTimeout(() => {
-							uni.reLaunch({ url: '/pages/index/index' });
-						}, 1200);
+						// getUserInfo非关键，用户已登录
 					});
 				},
 			}

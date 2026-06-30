@@ -3,30 +3,31 @@
 	<view class="swiperBg" :style="[boxStyle]">
 		<view class="swiper page_swiper" :class="docConfig" v-if="imgUrls.length">
 			<swiper :autoplay="true" :circular="true" :interval="3000" :duration="500"
-				:indicator-active-color="docColor" :current="swiperCur"
+				:indicator-active-color="docColor" :current="swiperCur" :previous-margin="swiperType==0?'40rpx':''" :next-margin="swiperType==0?'40rpx':''"
+				:style="[swiperBoxStyle]"
 				@change="swiperChange">
 				<block v-for="(item,index) in imgUrls" :key="index">
 					<swiper-item :class="{ active: index == swiperCur }">
 						<view @click="goDetail(item)" class='slide-navigator acea-row row-between-wrapper tui-skeleton-rect'>
-							<image :src="item.img" mode="aspectFill" :style="[imgStyle]" class="slide-image aa"></image>
+							<image :src="processImgUrl(item.img)" mode="aspectFill" :style="[imgStyle]" class="slide-image aa"></image>
 						</view>
 					</swiper-item>
 				</block>
 			</swiper>
 			<view v-if="docType === 0" class="dots" :style="[dotStyle]">
-				<block v-for="(item,index) in imgUrls" :key="index">
-					<view class="dot-item"
-						:style="{'background-color': swiperCur === index ? (dataConfig.themeStyleConfig.tabVal?dataConfig.docColor.color[0].item:themeColor)  : ''}">
-					</view>
-				</block>
-			</view>
-			<view v-if="docType === 1" class="dots" :style="[dotStyle]">
-				<block v-for="(item,index) in imgUrls" :key="index">
-					<view class="dot"
-						:style="{'background-color': swiperCur === index ? (dataConfig.themeStyleConfig.tabVal?dataConfig.docColor.color[0].item:themeColor)  : ''}">
-					</view>
-				</block>
-			</view>
+			<block v-for="(item,index) in imgUrls" :key="index">
+				<view class="dot-item"
+					:style="{'background-color': swiperCur === index ? activeDotColor  : ''}">
+				</view>
+			</block>
+		</view>
+		<view v-if="docType === 1" class="dots" :style="[dotStyle]">
+			<block v-for="(item,index) in imgUrls" :key="index">
+				<view class="dot"
+					:style="{'background-color': swiperCur === index ? activeDotColor  : ''}">
+				</view>
+			</block>
+		</view>
 		</view>
 	</view>
 </template>
@@ -55,15 +56,16 @@
 			merId: {}
 		},
 		data() {
-			return {
-				indicatorDots: false,
-				imgUrls: [], //图片轮播数据
-				txtStyle: this.dataConfig.txtStyle.type, //指示器位置
-				imageH: 380,
-				swiperCur: 0,
-				themeColor:this.$options.filters.filterTheme(app.globalData.theme)
-			};
-		},
+		return {
+			indicatorDots: false,
+			imgUrls: [], //图片轮播数据
+			txtStyle: this.dataConfig.txtStyle ? this.dataConfig.txtStyle.type : 0, //指示器位置
+			imageH: 310,
+			swiperCur: 0,
+			imgHost: this.$Cache.get("imgHost") || '', //图片域名前缀
+			themeColor:this.$options.filters.filterTheme(app.globalData.theme)
+		};
+	},
 		watch: {
 			imageH(nVal, oVal) {
 				let self = this
@@ -71,93 +73,141 @@
 			}
 		},
 		computed: {
-			//指示器样式
-			dotStyle() {
-				return {
-					padding: '0 50rpx',
-					justifyContent: this.dataConfig.txtStyle.tabVal === 1 ? 'center' : this.dataConfig.txtStyle
-						.tabVal === 2 ? 'flex-end' : 'flex-start'
-				}
-			},
-			//指示器类型，0圆，1直，2无
-			docType() {
-				return this.dataConfig.docConfig.tabVal
-			},
-			//轮播图样式
-			swiperType(){
-				return this.dataConfig.swiperStyleConfig.tabVal
-			},
-			//最外层盒子的样式
-			boxStyle() {
-				return {
-					borderRadius: this.dataConfig.bgStyle.val * 2 + 'rpx',
-					background: `linear-gradient(${this.dataConfig.bgColor.color[0].item}, ${this.dataConfig.bgColor.color[1].item})`,
-					margin: (this.dataConfig.mbConfig.val + 10) * 2 + 'rpx' + ' ' + 0 +
-						' ' + 0,
-					padding: (this.dataConfig.upConfig.val + 12) * 2 + 'rpx' + ' ' + '0rpx' + ' ' + this.dataConfig.downConfig.val *
-						2 + 'rpx'
-				}
-			},
-			//指示器颜色
-			docColor() {
-				return this.dataConfig.docColor.color[0].item + '!important'
-			},
-			//指示器样式
-			docConfig() {
-				if (this.dataConfig.docConfig.tabVal == 1) {
-					return 'square'
-				} else if (this.dataConfig.docConfig.tabVal == 2) {
-					return 'nodoc'
-				} else {
-					return 'circular'
-				}
-			},
-			//内容圆角
-			imgStyle() {
-				return {
-					"border-radius": this.dataConfig.contentStyle.val * 2 + 'rpx'
-				}
+		//指示器样式
+		dotStyle() {
+			if (!this.dataConfig.txtStyle) return { padding: '0 50rpx', justifyContent: 'flex-start' };
+			return {
+				padding: '0 50rpx',
+				justifyContent: this.dataConfig.txtStyle.tabVal === 1 ? 'center' : this.dataConfig.txtStyle
+					.tabVal === 2 ? 'flex-end' : 'flex-start'
 			}
 		},
-		created() {
-			this.imgUrls = this.dataConfig.swiperConfig.list
+		//指示器类型，0圆，1直，2无
+		docType() {
+			return this.dataConfig.docConfig ? this.dataConfig.docConfig.tabVal : 0
 		},
-		mounted() {
-			let that = this;
-			this.$nextTick(function() {
+		//轮播图样式
+		swiperType(){
+			return this.dataConfig.swiperStyleConfig ? this.dataConfig.swiperStyleConfig.tabVal : 0
+		},
+		//最外层盒子的样式
+		boxStyle() {
+			let bgStyleVal = (this.dataConfig.bgStyle && this.dataConfig.bgStyle.val) ? this.dataConfig.bgStyle.val : 0;
+			let mbVal = (this.dataConfig.mbConfig && this.dataConfig.mbConfig.val) ? this.dataConfig.mbConfig.val : 0;
+			let lrVal = (this.dataConfig.lrConfig && this.dataConfig.lrConfig.val) ? this.dataConfig.lrConfig.val : 0;
+			let upVal = (this.dataConfig.upConfig && this.dataConfig.upConfig.val) ? this.dataConfig.upConfig.val : 0;
+			let downVal = (this.dataConfig.downConfig && this.dataConfig.downConfig.val) ? this.dataConfig.downConfig.val : 0;
+			let bgColor0 = (this.dataConfig.bgColor && this.dataConfig.bgColor.color && this.dataConfig.bgColor.color[0]) ? this.dataConfig.bgColor.color[0].item : '#fff';
+			let bgColor1 = (this.dataConfig.bgColor && this.dataConfig.bgColor.color && this.dataConfig.bgColor.color[1]) ? this.dataConfig.bgColor.color[1].item : '#fff';
+			return {
+				borderRadius: bgStyleVal * 2 + 'rpx',
+				background: `linear-gradient(${bgColor0}, ${bgColor1})`,
+				margin: mbVal * 2 + 'rpx' + ' ' + lrVal * 2 + 'rpx' + ' ' + 0,
+				padding: upVal * 2 + 'rpx' + ' ' + '20rpx' + ' ' + downVal * 2 + 'rpx'
+			}
+		},
+		//指示器颜色
+		docColor() {
+			return (this.dataConfig.docColor && this.dataConfig.docColor.color && this.dataConfig.docColor.color[0]) ? this.dataConfig.docColor.color[0].item + '!important' : ''
+		},
+		//指示器样式
+		docConfig() {
+			if (!this.dataConfig.docConfig) return 'circular';
+			if (this.dataConfig.docConfig.tabVal == 1) {
+				return 'square'
+			} else if (this.dataConfig.docConfig.tabVal == 2) {
+				return 'nodoc'
+			} else {
+				return 'circular'
+			}
+		},
+		//选中指示点颜色
+		activeDotColor() {
+			let useCustom = this.dataConfig.themeStyleConfig && this.dataConfig.themeStyleConfig.tabVal;
+			if (useCustom && this.dataConfig.docColor && this.dataConfig.docColor.color && this.dataConfig.docColor.color[0]) {
+				return this.dataConfig.docColor.color[0].item;
+			}
+			return this.themeColor;
+		},
+			//内容圆角
+		imgStyle() {
+			let height = '400rpx';
+			if (this.dataConfig.swiperHeight && this.dataConfig.swiperHeight.val > 0) {
+				height = this.dataConfig.swiperHeight.val * 2 + 'rpx';
+			}
+			return {
+				"border-radius": (this.dataConfig.contentStyle && this.dataConfig.contentStyle.val) ? this.dataConfig.contentStyle.val * 2 + 'rpx' : '0',
+				"height": height
+			}
+		},
+		//swiper 容器高度（uni-app 默认 150px，会把图片挤压/裁剪，必须与 imgStyle 高度一致）
+		swiperBoxStyle() {
+			let height = '400rpx';
+			if (this.dataConfig.swiperHeight && this.dataConfig.swiperHeight.val > 0) {
+				height = this.dataConfig.swiperHeight.val * 2 + 'rpx';
+			}
+			return {
+				"height": height
+			}
+		}
+		},
+		created() {
+		this.imgUrls = (this.dataConfig.swiperConfig && this.dataConfig.swiperConfig.list) ? this.dataConfig.swiperConfig.list : []
+	},
+	mounted() {
+		let that = this;
+		this.$nextTick(function() {
+			if (that.imgUrls.length > 0 && that.imgUrls[0].img) {
 				uni.getImageInfo({
-					src: that.setDomain(that.imgUrls[0].img),
+					src: that.processImgUrl(that.imgUrls[0].img),
 					success: function(res) {
 						that.$set(that, 'imageH', res.height);
 					},
 					fail: function(error) {
-						that.$set(that, 'imageH', 380);
+						that.$set(that, 'imageH', 400);
 					}
 				})
-			})
-		},
-		methods: {
-			//替换安全域名
-			setDomain: function(url) {
-				return url; // Don't convert http->https for local dev
-				url = url ? url.toString() : '';
-				//本地调试打开,生产请注销
-				
-			},
-			swiperChange(e) {
-				let {
-					current,
-					source
-				} = e.detail;
-				if (source === 'autoplay' || source === 'touch') {
-					this.swiperCur = e.detail.current;
-				}
-			},
-			goDetail(url) {
-				let path = url.info[1].value
-				this.$util.navigateTo(path);
 			}
+		})
+	},
+	methods: {
+		//处理图片地址，拼接域名前缀
+		processImgUrl(url) {
+			if (!url) return '';
+			url = url.toString();
+			// 如果已经是完整URL（http/https开头），直接返回
+			if (url.indexOf('http://') > -1 || url.indexOf('https://') > -1) return url;
+			// 如果是相对路径（以crmebimage开头），拼接imgHost前缀
+			if (url.indexOf('crmebimage') === 0 || url.indexOf('/crmebimage') === 0) {
+				return this.imgHost + url;
+			}
+			return url;
+		},
+		//替换安全域名
+		setDomain: function(url) {
+			url = url ? url.toString() : '';
+			if (!url) return url;
+			if (url.indexOf('http://') > -1 || url.indexOf('https://') > -1) return url;
+			if (url.indexOf('crmebimage') === 0 || url.indexOf('/crmebimage') === 0) {
+				return this.imgHost + url;
+			}
+			return url;
+		},
+		swiperChange(e) {
+			let {
+				current,
+				source
+			} = e.detail;
+			if (source === 'autoplay' || source === 'touch') {
+				this.swiperCur = e.detail.current;
+			}
+		},
+		goDetail(url) {
+			if (!url.info || !url.info[1]) return;
+			let path = url.info[1].value;
+			this.$util.navigateTo(path);
 		}
+	}
 	}
 </script>
 
@@ -235,6 +285,7 @@
 			}
 
 			image {
+				transform: scale(0.93);
 				transition: all 0.6s ease;
 			}
 

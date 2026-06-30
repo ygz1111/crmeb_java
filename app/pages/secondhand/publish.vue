@@ -375,7 +375,7 @@
 <script>
 import { HTTP_REQUEST_URL } from '@/config/app.js';
 import { identifyProduct, calculateRecommendedPrice } from './ai.js';
-import { publishSecondHand } from '@/api/secondhand.js';
+import { publishSecondHand, updateSecondHand } from '@/api/secondhand.js';
 import { mapGetters } from 'vuex';
 import provinces from '@/components/wPicker/city-data/province.js';
 import citys from '@/components/wPicker/city-data/city.js';
@@ -415,33 +415,41 @@ export default {
     }
   },
   onLoad(options) {
-    if (options && options.editData) {
-      try {
-        const editItem = JSON.parse(decodeURIComponent(options.editData));
-        this.isEditMode = true;
-        this.editId = editItem.id;
-        this.formData.title = editItem.storeName || '';
-        this.formData.category = editItem.category || '';
-        this.formData.condition = editItem.itemCondition || '95新';
-        this.formData.desc = editItem.storeInfo || '';
-        this.formData.price = editItem.price || null;
-        this.formData.originalPrice = editItem.otPrice || null;
-        this.formData.location = editItem.location || '同城面交';
-        this.formData.detailAddress = editItem.detailAddress || '';
-        if (editItem.image) {
-          this.uploadImages = [editItem.image];
-        }
-        const catIdx = this.categoryOptions.indexOf(editItem.category);
-        if (catIdx !== -1) this.categoryIndex = catIdx;
-        const conIdx = this.conditionOptions.indexOf(editItem.itemCondition);
-        if (conIdx !== -1) this.conditionIndex = conIdx;
-        this.recalculatePrices();
-      } catch (e) {
-        console.error('解析编辑数据失败', e);
-      }
-    }
+    // TabBar页面的onLoad只触发一次，使用onShow加载编辑数据
   },
   onShow() {
+    // 从全局变量读取编辑数据（TabBar页面不支持URL传参）
+    const editItem = getApp().globalData.editSecondHand;
+    if (editItem && editItem.id && !this.isEditMode) {
+      this.isEditMode = true;
+      this.editId = editItem.id;
+      this.formData.title = editItem.storeName || '';
+      this.formData.category = editItem.category || '';
+      this.formData.condition = editItem.itemCondition || '95新';
+      this.formData.desc = editItem.storeInfo || '';
+      this.formData.price = editItem.price || null;
+      this.formData.originalPrice = editItem.otPrice || null;
+      this.formData.location = editItem.location || '同城面交';
+      this.formData.detailAddress = editItem.detailAddress || '';
+      if (editItem.image) {
+        this.uploadImages = [editItem.image];
+      }
+      if (editItem.sliderImage) {
+        try {
+          this.uploadImages = JSON.parse(editItem.sliderImage);
+        } catch (e) {
+          this.uploadImages = editItem.sliderImage.split(',').filter(function(u) { return u; });
+        }
+      }
+      const catIdx = this.categoryOptions.indexOf(editItem.category);
+      if (catIdx !== -1) this.categoryIndex = catIdx;
+      const conIdx = this.conditionOptions.indexOf(editItem.itemCondition);
+      if (conIdx !== -1) this.conditionIndex = conIdx;
+      this.recalculatePrices();
+      // 清除全局变量，避免下次进入时重复加载
+      getApp().globalData.editSecondHand = null;
+    }
+
     if (!this.isLogin) {
       uni.showModal({
         title: '提示',
@@ -717,7 +725,13 @@ export default {
       try {
         const uploadedImages = [];
         for (let i = 0; i < that.uploadImages.length; i++) {
-          const uploadResult = await that.uploadImage(that.uploadImages[i]);
+          const img = that.uploadImages[i];
+          // 编辑模式：已有图片URL直接使用，无需重新上传
+          if (that.isEditMode && (img.indexOf("crmebimage/") !== -1 || img.indexOf("http") === 0)) {
+            uploadedImages.push(img);
+            continue;
+          }
+          const uploadResult = await that.uploadImage(img);
           if (uploadResult) {
             uploadedImages.push(uploadResult);
           }
@@ -742,7 +756,7 @@ export default {
           otPrice: that.formData.originalPrice || that.formData.price,
           itemCondition: that.formData.condition,
           image: uploadedImages[0] || '',
-          sliderImage: uploadedImages.join(','),
+          sliderImage: JSON.stringify(uploadedImages),
           stock: 1,
           unitName: '件',
           aiCategory: that.aiResult?.category || that.formData.category,
@@ -750,38 +764,57 @@ export default {
           aiConfidence: that.aiResult?.confidence || '',
           location: that.formData.location + (that.provinceIdx >= 0 ? ' ' + that.provinceList[that.provinceIdx].label + (that.cityIdx >= 0 ? that.cityList[that.cityIdx].label : '') + (that.areaIdx >= 0 ? that.areaList[that.areaIdx].label : '') : '') + (that.formData.detailAddress ? ' ' + that.formData.detailAddress : '')
         };
-        
+
+        // 编辑模式：带上商品ID
+        if (that.isEditMode && that.editId) {
+          submitData.id = that.editId;
+        }
+
         console.log('提交数据：', submitData);
-        
-        const res = await publishSecondHand(submitData);
-        
+
+        let res;
+        if (that.isEditMode) {
+          res = await updateSecondHand(submitData);
+        } else {
+          res = await publishSecondHand(submitData);
+        }
+
         that.publishLoading = false;
-        
+
         if (res && res.code === 200) {
-          uni.showModal({
-            title: '🎉 发布成功',
-            content: '您的商品已成功发布到二手市场！是否查看我的发布？',
-            confirmText: '查看',
-            cancelText: '继续发布',
-            success: function(modalRes) {
-              that.resetForm();
-              if (modalRes.confirm) {
-                uni.navigateTo({ url: '/pages/secondhand/mylist' });
+          if (that.isEditMode) {
+            that.isEditMode = false;
+            that.editId = null;
+            uni.showToast({ title: '保存成功', icon: 'success' });
+            setTimeout(() => {
+              uni.switchTab({ url: '/pages/secondhand/mylist' });
+            }, 800);
+          } else {
+            uni.showModal({
+              title: '🎉 发布成功',
+              content: '您的商品已成功发布到二手市场！是否查看我的发布？',
+              confirmText: '查看',
+              cancelText: '继续发布',
+              success: function(modalRes) {
+                that.resetForm();
+                if (modalRes.confirm) {
+                  uni.navigateTo({ url: '/pages/secondhand/mylist' });
+                }
               }
-            }
-          });
+            });
+          }
         } else {
           uni.showToast({
-            title: res?.message || '发布失败，请重试',
+            title: res?.message || (that.isEditMode ? '保存失败' : '发布失败'),
             icon: 'none',
             duration: 3000
           });
         }
       } catch (error) {
         that.publishLoading = false;
-        console.error('发布失败详情:', error);
+        console.error('失败详情:', error);
         uni.showToast({
-          title: error.message || error.msg || '发布失败，请检查网络',
+          title: error.message || error.msg || (that.isEditMode ? '保存失败，请重试' : '发布失败，请检查网络'),
           icon: 'none'
         });
       }

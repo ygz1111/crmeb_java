@@ -12,6 +12,10 @@ public interface SecondHandService {
 
     Map<String, Object> publish(SecondHandProductRequest request);
 
+    Boolean update(SecondHandProductRequest request);
+
+    CommonPage<IndexProductResponse> getPublicList(PageParamRequest pageParamRequest);
+
     Boolean delete(Integer productId);
     
     // 获取用户发布商品统计

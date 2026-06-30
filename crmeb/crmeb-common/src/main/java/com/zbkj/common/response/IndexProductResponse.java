@@ -81,6 +81,9 @@ public class IndexProductResponse {
 
     @ApiModelProperty(value = "is second hand")
     private Boolean isSecondHand;
+
+    @ApiModelProperty(value = "slider images")
+    private String sliderImage;
     
     @ApiModelProperty(value = "category name")
     private String cateName;

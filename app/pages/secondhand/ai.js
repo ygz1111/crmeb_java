@@ -120,13 +120,11 @@ export async function identifyProduct(imagePath) {
   
   try {
     const base64Data = await getBase64Image(imagePath);
-    
-    // H5 直连 AI Server，小程序走后端代理
-    let identifyUrl = 'http://localhost:3000/api/identify';
-    // #ifdef MP-WEIXIN
-    identifyUrl = HTTP_REQUEST_URL + '/api/front/secondhand/identify';
-    // #endif
-    
+
+    // 统一走 Java 后端，由后端持有 Qwen API key 并直连阿里云 DashScope。
+    // H5 / 小程序 / APP 都用同一个接口，方便后续迁移到小程序而不用改前端
+    const identifyUrl = HTTP_REQUEST_URL + '/api/front/secondhand/identify';
+
     return new Promise((resolve, reject) => {
       uni.request({
         url: identifyUrl,
@@ -140,15 +138,11 @@ export async function identifyProduct(imagePath) {
         success: (res) => {
           if (res.statusCode === 200) {
             const data = res.data;
-            // H5 直连返回的是 AI 原始结果，小程序走代理返回 {code:200, data:...}
             if (data && data.code === 200 && data.data) {
-              console.log('AI 识别成功(代理):', data.data);
+              console.log('AI 识别成功:', data.data);
               resolve(data.data);
-            } else if (data && data.name) {
-              console.log('AI 识别成功(直连):', data);
-              resolve(data);
             } else {
-              reject(new Error(data?.error || '识别失败'));
+              reject(new Error(data?.message || data?.error || '识别失败'));
             }
           } else {
             reject(new Error('识别服务器返回异常'));
