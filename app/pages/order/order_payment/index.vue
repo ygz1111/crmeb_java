@@ -64,6 +64,7 @@
 		mapGetters
 	} from "vuex";
 	import store from '@/store'
+	import request from '@/utils/request.js'
 	let app = getApp();
 	export default {
 		data() {
@@ -397,39 +398,21 @@
 			},
 			//立即支付
 			toOrderPay: Debounce(function() {
-				if (!this.payType) return this.$util.Tips({ title: '请选择支付方式' });
 				var that = this;
 				var goPages = '/pages/order/order_pay_status/index?order_id=' + this.orderNo;
 				uni.showLoading({ title: '支付中...' });
 				this.isBuy = true;
 				// 模拟支付（大学期末项目）
-				that.$store.dispatch('getPayConfig').then(function() {
-					uni.request({
-						url: require('@/config/app.js').HTTP_REQUEST_URL + '/api/front/pay/mock',
-						method: 'POST',
-						header: {
-							'Authori-zation': uni.getStorageSync('LOGIN_STATUS') || '',
-							'content-type': 'application/json'
-						},
-						data: { orderNo: that.orderNo },
-						success: function(res) {
-							uni.hideLoading();
-							if (res.data && res.data.code === 200) {
-								uni.showToast({ title: '支付成功', icon: 'success' });
-								setTimeout(function() {
-									uni.redirectTo({ url: goPages + '&status=1' });
-								}, 800);
-							} else {
-								that.isBuy = false;
-								uni.showToast({ title: res.data.message || '支付失败', icon: 'none' });
-							}
-						},
-						fail: function() {
-							uni.hideLoading();
-							that.isBuy = false;
-							uni.showToast({ title: '支付失败', icon: 'none' });
-						}
-					});
+				request.post("pay/mock", { orderNo: that.orderNo }).then(function(res) {
+					uni.hideLoading();
+					uni.showToast({ title: '支付成功', icon: 'success' });
+					setTimeout(function() {
+						uni.redirectTo({ url: goPages + '&status=1' });
+					}, 800);
+				}).catch(function(err) {
+					uni.hideLoading();
+					that.isBuy = false;
+					uni.showToast({ title: typeof err === 'string' ? err : (err.message || '支付失败'), icon: 'none' });
 				});
 			})
 		},

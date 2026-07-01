@@ -73,11 +73,11 @@ public class StoreOrderController {
     @ApiOperation(value = "订单列表")
     @RequestMapping(value = "/list", method = RequestMethod.GET)
     @ApiImplicitParams ({
-        @ApiImplicitParam(name = "type", value = "评价等级|0=未支付,1=待发货,2=待收货,3=待评价,4=已完成,-3=售后/退款", required = true)
+        @ApiImplicitParam(name = "type", value = "评价等级|0=未支付,1=待发货,2=待收货,3=待评价,4=已完成,-1=全部,-3=售后/退款", required = false)
     })
     public CommonResult<CommonPage<OrderDetailResponse>> orderList(
             @RequestParam(name = "keywords", required = false) String keywords,
-            @RequestParam(name = "type") Integer type,
+            @RequestParam(name = "type", required = false, defaultValue = "-1") Integer type,
             @ModelAttribute PageParamRequest pageRequest) {
         return CommonResult.success(CommonPage.restPage(orderService.list(keywords, type, pageRequest)));
     }

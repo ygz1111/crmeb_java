@@ -48,6 +48,8 @@
 							<home-title v-if="item.name == 'titles'&&!item.isHide" :dataConfig="item"></home-title>
 							<!-- 商品列表 -->
 							<goodList v-if="item.name == 'goodList'&&!item.isHide" :dataConfig="item" @detail="goDetail"></goodList>
+							<!-- 二手物品（折扣优选下方） -->
+							<secondHand v-if="item.name == 'goodList'&&!item.isHide && navIndex === 0"></secondHand>
 							<!-- 选项卡商品列表-->
 							<homeTab v-if="item.name == 'homeTab'&&!item.isHide" :dataConfig="item" @detail="goDetail"></homeTab>
 						</view>
@@ -73,8 +75,6 @@
 							</view>
 						</view>
 					</view>
-					<!-- 二手物品 -->
-					<secondHand v-if="navIndex === 0"></secondHand>
 					<!-- 推荐商品，分类商品列表-->
 					<recommend v-if="categoryId>0" ref="recommendIndex" :categoryId='categoryId'
 						:isShowTitle="isShowTitle" @getRecommendLength="getRecommendLength"></recommend>

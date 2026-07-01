@@ -1,4 +1,4 @@
-﻿<template>
+<template>
 	<view :data-theme="theme">
 		<view class="crmeb-orders">
 			<!-- Header -->
@@ -147,7 +147,9 @@
 					limit: that.limit
 				};
 				if (that.orderStatus !== -1) {
-					data.status = that.orderStatus;
+					data.type = that.orderStatus;
+				} else {
+					data.type = -999;
 				}
 				getOrderList(data).then(res => {
 					let list = res.data.list || [];

@@ -17,6 +17,10 @@
         uid = #{uid}
         <if test="status != null ">
             <choose>
+                <when test="status == -999">
+                    and `paid` = 1
+                    and `refund_status` = 0
+                </when>
                 <when test="status == 0">
                     and `status` = 0
                     and `paid` = 0

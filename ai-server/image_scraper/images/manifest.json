@@ -1,0 +1,602 @@
+[
+  {
+    "filename": "clothing_01.jpg",
+    "path": "crmebimage/public/product/clothing/clothing_01.jpg",
+    "keyword": "clothing product white background",
+    "width": 3648,
+    "height": 5472,
+    "photographer": "Marina Podrez"
+  },
+  {
+    "filename": "clothing_02.jpg",
+    "path": "crmebimage/public/product/clothing/clothing_02.jpg",
+    "keyword": "clothing product white background",
+    "width": 4000,
+    "height": 6000,
+    "photographer": "Atlantic Ambience"
+  },
+  {
+    "filename": "clothing_03.jpg",
+    "path": "crmebimage/public/product/clothing/clothing_03.jpg",
+    "keyword": "clothing product white background",
+    "width": 3426,
+    "height": 5139,
+    "photographer": "cottonbro studio"
+  },
+  {
+    "filename": "clothing_04.jpg",
+    "path": "crmebimage/public/product/clothing/clothing_04.jpg",
+    "keyword": "clothing product white background",
+    "width": 2134,
+    "height": 3200,
+    "photographer": "Sarah Dorweiler"
+  },
+  {
+    "filename": "clothing_05.jpg",
+    "path": "crmebimage/public/product/clothing/clothing_05.jpg",
+    "keyword": "clothing product white background",
+    "width": 2333,
+    "height": 3500,
+    "photographer": "Darina Belonogova"
+  },
+  {
+    "filename": "clothing_06.jpg",
+    "path": "crmebimage/public/product/clothing/clothing_06.jpg",
+    "keyword": "clothing product white background",
+    "width": 3360,
+    "height": 5040,
+    "photographer": "Timur Weber"
+  },
+  {
+    "filename": "clothing_07.jpg",
+    "path": "crmebimage/public/product/clothing/clothing_07.jpg",
+    "keyword": "clothing product white background",
+    "width": 4000,
+    "height": 6000,
+    "photographer": "Dmitriy Steinke"
+  },
+  {
+    "filename": "clothing_08.jpg",
+    "path": "crmebimage/public/product/clothing/clothing_08.jpg",
+    "keyword": "clothing product white background",
+    "width": 2333,
+    "height": 3500,
+    "photographer": "Darina Belonogova"
+  },
+  {
+    "filename": "clothing_09.jpg",
+    "path": "crmebimage/public/product/clothing/clothing_09.jpg",
+    "keyword": "clothing product white background",
+    "width": 3840,
+    "height": 5760,
+    "photographer": "Ayodeji Fatunla"
+  },
+  {
+    "filename": "clothing_10.jpg",
+    "path": "crmebimage/public/product/clothing/clothing_10.jpg",
+    "keyword": "clothing product white background",
+    "width": 4050,
+    "height": 6075,
+    "photographer": "Hanna Pad"
+  },
+  {
+    "filename": "clothing_11.jpg",
+    "path": "crmebimage/public/product/clothing/clothing_11.jpg",
+    "keyword": "clothing product white background",
+    "width": 3927,
+    "height": 5890,
+    "photographer": "MART  PRODUCTION"
+  },
+  {
+    "filename": "clothing_12.jpg",
+    "path": "crmebimage/public/product/clothing/clothing_12.jpg",
+    "keyword": "clothing product white background",
+    "width": 4000,
+    "height": 6000,
+    "photographer": "Muneeb Malhotra"
+  },
+  {
+    "filename": "clothing_13.jpg",
+    "path": "crmebimage/public/product/clothing/clothing_13.jpg",
+    "keyword": "clothing product white background",
+    "width": 2000,
+    "height": 3000,
+    "photographer": "Polina Tankilevitch"
+  },
+  {
+    "filename": "clothing_14.jpg",
+    "path": "crmebimage/public/product/clothing/clothing_14.jpg",
+    "keyword": "clothing product white background",
+    "width": 4000,
+    "height": 6000,
+    "photographer": "MART  PRODUCTION"
+  },
+  {
+    "filename": "clothing_15.jpg",
+    "path": "crmebimage/public/product/clothing/clothing_15.jpg",
+    "keyword": "clothing product white background",
+    "width": 2000,
+    "height": 3000,
+    "photographer": "Polina Tankilevitch"
+  },
+  {
+    "filename": "clothing_16.jpg",
+    "path": "crmebimage/public/product/clothing/clothing_16.jpg",
+    "keyword": "clothing product white background",
+    "width": 4000,
+    "height": 6000,
+    "photographer": "Sergei Starostin"
+  },
+  {
+    "filename": "clothing_17.jpg",
+    "path": "crmebimage/public/product/clothing/clothing_17.jpg",
+    "keyword": "clothing product white background",
+    "width": 4000,
+    "height": 6000,
+    "photographer": "Muneeb Malhotra"
+  },
+  {
+    "filename": "clothing_18.jpg",
+    "path": "crmebimage/public/product/clothing/clothing_18.jpg",
+    "keyword": "clothing product white background",
+    "width": 4068,
+    "height": 6102,
+    "photographer": "Hanna Pad"
+  },
+  {
+    "filename": "clothing_19.jpg",
+    "path": "crmebimage/public/product/clothing/clothing_19.jpg",
+    "keyword": "clothing product white background",
+    "width": 3466,
+    "height": 5192,
+    "photographer": "Pavel Danilyuk"
+  },
+  {
+    "filename": "clothing_20.jpg",
+    "path": "crmebimage/public/product/clothing/clothing_20.jpg",
+    "keyword": "clothing product white background",
+    "width": 4106,
+    "height": 6159,
+    "photographer": "Vie Studio"
+  },
+  {
+    "filename": "electronics_01.jpg",
+    "path": "crmebimage/public/product/electronics/electronics_01.jpg",
+    "keyword": "laptop product white",
+    "width": 3571,
+    "height": 5356,
+    "photographer": "Hanna Pad"
+  },
+  {
+    "filename": "electronics_02.jpg",
+    "path": "crmebimage/public/product/electronics/electronics_02.jpg",
+    "keyword": "laptop product white",
+    "width": 4480,
+    "height": 6720,
+    "photographer": "www.kaboompics.com"
+  },
+  {
+    "filename": "electronics_03.jpg",
+    "path": "crmebimage/public/product/electronics/electronics_03.jpg",
+    "keyword": "laptop product white",
+    "width": 4000,
+    "height": 6000,
+    "photographer": "alleksana"
+  },
+  {
+    "filename": "electronics_04.jpg",
+    "path": "crmebimage/public/product/electronics/electronics_04.jpg",
+    "keyword": "laptop product white",
+    "width": 2268,
+    "height": 4032,
+    "photographer": "Диана Дунаева"
+  },
+  {
+    "filename": "electronics_05.jpg",
+    "path": "crmebimage/public/product/electronics/electronics_05.jpg",
+    "keyword": "laptop product white",
+    "width": 3648,
+    "height": 5472,
+    "photographer": "Erika Andrade"
+  },
+  {
+    "filename": "electronics_06.jpg",
+    "path": "crmebimage/public/product/electronics/electronics_06.jpg",
+    "keyword": "laptop product white",
+    "width": 4160,
+    "height": 6240,
+    "photographer": "Hanna Pad"
+  },
+  {
+    "filename": "electronics_07.jpg",
+    "path": "crmebimage/public/product/electronics/electronics_07.jpg",
+    "keyword": "laptop product white",
+    "width": 3155,
+    "height": 5610,
+    "photographer": "Adrian Regeci"
+  },
+  {
+    "filename": "electronics_08.jpg",
+    "path": "crmebimage/public/product/electronics/electronics_08.jpg",
+    "keyword": "laptop product white",
+    "width": 4000,
+    "height": 6000,
+    "photographer": "Mikhail Nilov"
+  },
+  {
+    "filename": "electronics_09.jpg",
+    "path": "crmebimage/public/product/electronics/electronics_09.jpg",
+    "keyword": "laptop product white",
+    "width": 3414,
+    "height": 5122,
+    "photographer": "Hanna Pad"
+  },
+  {
+    "filename": "electronics_10.jpg",
+    "path": "crmebimage/public/product/electronics/electronics_10.jpg",
+    "keyword": "laptop product white",
+    "width": 3927,
+    "height": 5890,
+    "photographer": "MART  PRODUCTION"
+  },
+  {
+    "filename": "electronics_11.jpg",
+    "path": "crmebimage/public/product/electronics/electronics_11.jpg",
+    "keyword": "laptop product white",
+    "width": 4409,
+    "height": 6613,
+    "photographer": "www.kaboompics.com"
+  },
+  {
+    "filename": "electronics_12.jpg",
+    "path": "crmebimage/public/product/electronics/electronics_12.jpg",
+    "keyword": "laptop product white",
+    "width": 3648,
+    "height": 5472,
+    "photographer": "Hanna Pad"
+  },
+  {
+    "filename": "electronics_13.jpg",
+    "path": "crmebimage/public/product/electronics/electronics_13.jpg",
+    "keyword": "laptop product white",
+    "width": 4480,
+    "height": 6720,
+    "photographer": "www.kaboompics.com"
+  },
+  {
+    "filename": "electronics_14.jpg",
+    "path": "crmebimage/public/product/electronics/electronics_14.jpg",
+    "keyword": "laptop product white",
+    "width": 4589,
+    "height": 6884,
+    "photographer": "Alpha En"
+  },
+  {
+    "filename": "electronics_15.jpg",
+    "path": "crmebimage/public/product/electronics/electronics_15.jpg",
+    "keyword": "laptop product white",
+    "width": 4000,
+    "height": 6000,
+    "photographer": "Mikhail Nilov"
+  },
+  {
+    "filename": "bags_01.jpg",
+    "path": "crmebimage/public/product/bags/bags_01.jpg",
+    "keyword": "handbag product white background",
+    "width": 3298,
+    "height": 4947,
+    "photographer": "Valentin Ivantsov"
+  },
+  {
+    "filename": "bags_02.jpg",
+    "path": "crmebimage/public/product/bags/bags_02.jpg",
+    "keyword": "handbag product white background",
+    "width": 4000,
+    "height": 6000,
+    "photographer": "Muneeb Malhotra"
+  },
+  {
+    "filename": "bags_03.jpg",
+    "path": "crmebimage/public/product/bags/bags_03.jpg",
+    "keyword": "handbag product white background",
+    "width": 4000,
+    "height": 6000,
+    "photographer": "Muneeb Malhotra"
+  },
+  {
+    "filename": "bags_04.jpg",
+    "path": "crmebimage/public/product/bags/bags_04.jpg",
+    "keyword": "handbag product white background",
+    "width": 3840,
+    "height": 5760,
+    "photographer": "Valentin Ivantsov"
+  },
+  {
+    "filename": "bags_05.jpg",
+    "path": "crmebimage/public/product/bags/bags_05.jpg",
+    "keyword": "handbag product white background",
+    "width": 5248,
+    "height": 7868,
+    "photographer": "Dhanjit Sharma"
+  },
+  {
+    "filename": "bags_06.jpg",
+    "path": "crmebimage/public/product/bags/bags_06.jpg",
+    "keyword": "handbag product white background",
+    "width": 4000,
+    "height": 6000,
+    "photographer": "Muneeb Malhotra"
+  },
+  {
+    "filename": "bags_07.jpg",
+    "path": "crmebimage/public/product/bags/bags_07.jpg",
+    "keyword": "handbag product white background",
+    "width": 3639,
+    "height": 5459,
+    "photographer": "Valentin Ivantsov"
+  },
+  {
+    "filename": "bags_08.jpg",
+    "path": "crmebimage/public/product/bags/bags_08.jpg",
+    "keyword": "handbag product white background",
+    "width": 4000,
+    "height": 6000,
+    "photographer": "Muneeb Malhotra"
+  },
+  {
+    "filename": "bags_09.jpg",
+    "path": "crmebimage/public/product/bags/bags_09.jpg",
+    "keyword": "handbag product white background",
+    "width": 4000,
+    "height": 6000,
+    "photographer": "Muneeb Malhotra"
+  },
+  {
+    "filename": "bags_10.jpg",
+    "path": "crmebimage/public/product/bags/bags_10.jpg",
+    "keyword": "handbag product white background",
+    "width": 3508,
+    "height": 4961,
+    "photographer": "Muneeb Malhotra"
+  },
+  {
+    "filename": "beauty_01.jpg",
+    "path": "crmebimage/public/product/beauty/beauty_01.jpg",
+    "keyword": "cosmetics product white",
+    "width": 4326,
+    "height": 6489,
+    "photographer": "ROMAN ODINTSOV"
+  },
+  {
+    "filename": "beauty_02.jpg",
+    "path": "crmebimage/public/product/beauty/beauty_02.jpg",
+    "keyword": "cosmetics product white",
+    "width": 4480,
+    "height": 6720,
+    "photographer": "ROMAN ODINTSOV"
+  },
+  {
+    "filename": "beauty_03.jpg",
+    "path": "crmebimage/public/product/beauty/beauty_03.jpg",
+    "keyword": "cosmetics product white",
+    "width": 4480,
+    "height": 6720,
+    "photographer": "ROMAN ODINTSOV"
+  },
+  {
+    "filename": "beauty_04.jpg",
+    "path": "crmebimage/public/product/beauty/beauty_04.jpg",
+    "keyword": "cosmetics product white",
+    "width": 4480,
+    "height": 6720,
+    "photographer": "ROMAN ODINTSOV"
+  },
+  {
+    "filename": "beauty_05.jpg",
+    "path": "crmebimage/public/product/beauty/beauty_05.jpg",
+    "keyword": "cosmetics product white",
+    "width": 3425,
+    "height": 5138,
+    "photographer": "ROMAN ODINTSOV"
+  },
+  {
+    "filename": "beauty_06.jpg",
+    "path": "crmebimage/public/product/beauty/beauty_06.jpg",
+    "keyword": "cosmetics product white",
+    "width": 4460,
+    "height": 5946,
+    "photographer": "mearlywan"
+  },
+  {
+    "filename": "beauty_07.jpg",
+    "path": "crmebimage/public/product/beauty/beauty_07.jpg",
+    "keyword": "cosmetics product white",
+    "width": 3124,
+    "height": 4686,
+    "photographer": "www.kaboompics.com"
+  },
+  {
+    "filename": "beauty_08.jpg",
+    "path": "crmebimage/public/product/beauty/beauty_08.jpg",
+    "keyword": "cosmetics product white",
+    "width": 3072,
+    "height": 4608,
+    "photographer": "Laura Chouette"
+  },
+  {
+    "filename": "beauty_09.jpg",
+    "path": "crmebimage/public/product/beauty/beauty_09.jpg",
+    "keyword": "cosmetics product white",
+    "width": 3549,
+    "height": 6309,
+    "photographer": "mearlywan"
+  },
+  {
+    "filename": "beauty_10.jpg",
+    "path": "crmebimage/public/product/beauty/beauty_10.jpg",
+    "keyword": "cosmetics product white",
+    "width": 4271,
+    "height": 5694,
+    "photographer": "mearlywan"
+  },
+  {
+    "filename": "home_01.jpg",
+    "path": "crmebimage/public/product/home/home_01.jpg",
+    "keyword": "kitchen appliance product",
+    "width": 4160,
+    "height": 6240,
+    "photographer": "Mohammad abasi"
+  },
+  {
+    "filename": "home_02.jpg",
+    "path": "crmebimage/public/product/home/home_02.jpg",
+    "keyword": "kitchen appliance product",
+    "width": 3512,
+    "height": 6240,
+    "photographer": "Mohammad abasi"
+  },
+  {
+    "filename": "home_03.jpg",
+    "path": "crmebimage/public/product/home/home_03.jpg",
+    "keyword": "kitchen appliance product",
+    "width": 3648,
+    "height": 5472,
+    "photographer": "Mohammad abasi"
+  },
+  {
+    "filename": "home_04.jpg",
+    "path": "crmebimage/public/product/home/home_04.jpg",
+    "keyword": "kitchen appliance product",
+    "width": 3512,
+    "height": 6240,
+    "photographer": "Mohammad abasi"
+  },
+  {
+    "filename": "home_05.jpg",
+    "path": "crmebimage/public/product/home/home_05.jpg",
+    "keyword": "kitchen appliance product",
+    "width": 3585,
+    "height": 5180,
+    "photographer": "Valentin Ivantsov"
+  },
+  {
+    "filename": "home_06.jpg",
+    "path": "crmebimage/public/product/home/home_06.jpg",
+    "keyword": "kitchen appliance product",
+    "width": 3953,
+    "height": 5929,
+    "photographer": "Charlotte May"
+  },
+  {
+    "filename": "home_07.jpg",
+    "path": "crmebimage/public/product/home/home_07.jpg",
+    "keyword": "kitchen appliance product",
+    "width": 3512,
+    "height": 6240,
+    "photographer": "Mohammad abasi"
+  },
+  {
+    "filename": "home_08.jpg",
+    "path": "crmebimage/public/product/home/home_08.jpg",
+    "keyword": "kitchen appliance product",
+    "width": 4160,
+    "height": 6240,
+    "photographer": "damla selen demir"
+  },
+  {
+    "filename": "home_09.jpg",
+    "path": "crmebimage/public/product/home/home_09.jpg",
+    "keyword": "kitchen appliance product",
+    "width": 4160,
+    "height": 6240,
+    "photographer": "Mohammad abasi"
+  },
+  {
+    "filename": "home_10.jpg",
+    "path": "crmebimage/public/product/home/home_10.jpg",
+    "keyword": "kitchen appliance product",
+    "width": 2730,
+    "height": 4096,
+    "photographer": "Pew Nguyen"
+  },
+  {
+    "filename": "sports_01.jpg",
+    "path": "crmebimage/public/product/sports/sports_01.jpg",
+    "keyword": "sports shoes product",
+    "width": 6520,
+    "height": 8150,
+    "photographer": "Melvin Buezo"
+  },
+  {
+    "filename": "sports_02.jpg",
+    "path": "crmebimage/public/product/sports/sports_02.jpg",
+    "keyword": "sports shoes product",
+    "width": 1808,
+    "height": 2571,
+    "photographer": "Pranay Patel"
+  },
+  {
+    "filename": "sports_03.jpg",
+    "path": "crmebimage/public/product/sports/sports_03.jpg",
+    "keyword": "sports shoes product",
+    "width": 3999,
+    "height": 6000,
+    "photographer": "Gustavo Gimenez"
+  },
+  {
+    "filename": "sports_04.jpg",
+    "path": "crmebimage/public/product/sports/sports_04.jpg",
+    "keyword": "sports shoes product",
+    "width": 3648,
+    "height": 5472,
+    "photographer": "RAFAEL  QUATY"
+  },
+  {
+    "filename": "sports_05.jpg",
+    "path": "crmebimage/public/product/sports/sports_05.jpg",
+    "keyword": "sports shoes product",
+    "width": 2667,
+    "height": 4000,
+    "photographer": "Arturo Añez."
+  },
+  {
+    "filename": "sports_06.jpg",
+    "path": "crmebimage/public/product/sports/sports_06.jpg",
+    "keyword": "sports shoes product",
+    "width": 4000,
+    "height": 6000,
+    "photographer": "shyam mishra"
+  },
+  {
+    "filename": "sports_07.jpg",
+    "path": "crmebimage/public/product/sports/sports_07.jpg",
+    "keyword": "sports shoes product",
+    "width": 1984,
+    "height": 2976,
+    "photographer": "Nobleseed Nobleseed"
+  },
+  {
+    "filename": "sports_08.jpg",
+    "path": "crmebimage/public/product/sports/sports_08.jpg",
+    "keyword": "sports shoes product",
+    "width": 4000,
+    "height": 6000,
+    "photographer": "HamZa NOUASRIA"
+  },
+  {
+    "filename": "sports_09.jpg",
+    "path": "crmebimage/public/product/sports/sports_09.jpg",
+    "keyword": "sports shoes product",
+    "width": 4000,
+    "height": 6000,
+    "photographer": "Christopher Beck"
+  },
+  {
+    "filename": "sports_10.jpg",
+    "path": "crmebimage/public/product/sports/sports_10.jpg",
+    "keyword": "sports shoes product",
+    "width": 2667,
+    "height": 4000,
+    "photographer": "Arturo Añez."
+  }
+]
